@@ -47,32 +47,54 @@ const verifyProjectName = (req, res, next) => {
 
 
 /* istanbul ignore next */
-const saveProject = async (req, res) => {
-  const projectName = req.projectName;
-  const existingProject = await findProject(projectName);
+const findProjects = async (req, res, next) => {
+  const name = req.projectName;
+  let projectDoc = [];
 
-  if (existingProject) {
+  try {
+    projectDoc = await Project.find({ name });
+  } catch (error) {
+    /* istanbul ignore next */
+    console.error(error); // eslint-disable-line no-console
+    projectDoc = null;
+  }
+
+  if (projectDoc.length === 0) {
+    projectDoc = null;
+  }
+
+  req.projectDoc = projectDoc; // eslint-disable-line no-param-reassign
+  return next();
+};
+
+
+/* istanbul ignore next */
+const saveProject = async (req, res) => {
+  const name = req.projectName;
+  const projectDoc = req.projectDoc;
+
+  if (projectDoc) {
     return res.status(404).json({ result: 'error', error: 'project_already_exist' });
   }
 
   const project = {
-    name: projectName,
+    name,
     token: 'token',
     dateCreated: new Date(),
     dateUpdated: new Date(),
     isActive: true,
   };
 
-  let projectDoc;
+  let newProjectDoc;
   try {
-    projectDoc = await Project.create(project);
+    newProjectDoc = await Project.create(project);
   } catch (error) {
     /* istanbul ignore next */
     console.error(error); // eslint-disable-line no-console
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
 
-  return res.status(200).json({ result: 'ok', projectName, saved: projectDoc });
+  return res.status(200).json({ result: 'ok', name, saved: newProjectDoc });
 };
 
-export { validateProjectName, verifyProjectName, saveProject };
+export { validateProjectName, verifyProjectName, findProjects, saveProject };
