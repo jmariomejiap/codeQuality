@@ -1,27 +1,6 @@
 import _ from 'lodash';
+import uuidv1 from 'uuid/v1';
 import Project from '../../models/project';
-
-
-/* istanbul ignore next */
-/*
-const findProject = async(name) => {
-  let projectDoc = [];
-
-  try {
-    projectDoc = await Project.find({ name });
-  } catch (error) {
-    
-    console.error(error); // eslint-disable-line no-console
-    return null;
-  }
-
-  if (projectDoc.length === 0) {
-    return null;
-  }
-
-  return projectDoc[0];
-};
-*/
 
 
 const validateProjectName = (req, res, next) => {
@@ -82,7 +61,7 @@ const saveProject = async (req, res) => {
 
   const project = {
     name,
-    token: 'token',
+    token: uuidv1(),
     dateCreated: new Date(),
     dateUpdated: new Date(),
     isActive: true,

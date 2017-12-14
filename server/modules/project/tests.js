@@ -1,6 +1,6 @@
 import test from 'ava';
-// import supertest from 'supertest';
 import supertest from 'supertest-as-promised'; // eslint-disable-line
+import uuidv1 from 'uuid/v1';
 import server from '../../server';
 import Project from '../../models/project';
 
@@ -16,14 +16,14 @@ test.beforeEach(async () => {
   const dummyProjects = [
     {
       name: 'projectTest',
-      token: 'token',
+      token: uuidv1(),
       dateCreated: new Date(),
       dateUpdated: new Date(),
       isActive: true,
     },
     {
       name: 'projectTest2',
-      token: 'token2',
+      token: uuidv1(),
       dateCreated: new Date(),
       dateUpdated: new Date(),
       isActive: true,
