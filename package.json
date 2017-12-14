@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Code Quality Server and web app to visualize Test Coverage of multiple repositories",
   "scripts": {
-    "test": "cross-env NODE_ENV=test PORT=8080 MONGO_URL=mongodb://localhost:27017/codeQuality-test node node_modules/.bin/ava -v",
+    "test": "cross-env NODE_ENV=test PORT=8080 MONGO_URL=mongodb://localhost:27017/codeQuality-test node node_modules/.bin/ava --serial -v",
     "watch:test": "npm run test -- --watch",
     "cover": "nyc npm run test",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
@@ -47,7 +47,9 @@
     "react-router": "2.4.1",
     "redux": "3.5.2",
     "redux-thunk": "2.1.0",
-    "sanitize-html": "1.11.4"
+    "sanitize-html": "1.11.4",
+    "supertest": "^3.0.0",
+    "supertest-as-promised": "^4.0.2"
   },
   "devDependencies": {
     "ava": "0.15.2",
@@ -99,7 +101,6 @@
     "rimraf": "2.5.2",
     "sinon": "1.17.4",
     "style-loader": "0.13.1",
-    "supertest": "1.2.0",
     "url-loader": "0.5.7",
     "webpack": "2.1.0-beta.8",
     "webpack-dev-middleware": "1.6.1",
@@ -119,6 +120,7 @@
       "client/**/*.js",
       "server/**/*.js"
     ],
+    "concurrency": 1,
     "failFast": true,
     "babel": "inherit",
     "require": [

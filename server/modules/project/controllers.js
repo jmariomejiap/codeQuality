@@ -1,14 +1,16 @@
 import _ from 'lodash';
 import Project from '../../models/project';
 
+
 /* istanbul ignore next */
+/*
 const findProject = async(name) => {
   let projectDoc = [];
 
   try {
     projectDoc = await Project.find({ name });
   } catch (error) {
-    /* istanbul ignore next */
+    
     console.error(error); // eslint-disable-line no-console
     return null;
   }
@@ -19,6 +21,7 @@ const findProject = async(name) => {
 
   return projectDoc[0];
 };
+*/
 
 
 const validateProjectName = (req, res, next) => {
@@ -97,4 +100,21 @@ const saveProject = async (req, res) => {
   return res.status(200).json({ result: 'ok', name, saved: newProjectDoc });
 };
 
-export { validateProjectName, verifyProjectName, findProjects, saveProject };
+
+/* istanbul ignore next */
+const getAllprojects = async (req, res) => {
+  let projectDoc = [];
+
+  try {
+    projectDoc = await Project.find({ });
+  } catch (error) {
+    /* istanbul ignore next */
+    console.error(error); // eslint-disable-line no-console
+    return res.status(500).json({ result: 'error', error: 'internal_error' });
+  }
+
+  return res.status(200).json({ result: 'ok', projects: projectDoc });
+};
+
+
+export { validateProjectName, verifyProjectName, findProjects, saveProject, getAllprojects };
