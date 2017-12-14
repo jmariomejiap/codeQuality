@@ -1,6 +1,32 @@
 import Post from './models/post';
+import Project from './models/project';
 
 export default function () {
+  const codeQualityDummy = async () => {
+    const projectsCount = await Project.count();
+    if (projectsCount > 0) {
+      return;
+    }
+
+    await Project.create({
+      name: 'dummyProject1',
+      token: 'dummyToken1',
+      dateCreated: new Date(),
+      dateUpdated: new Date(),
+      isActive: true,
+    });
+
+    await Project.create({
+      name: 'dummyProject2',
+      token: 'dummyToken2',
+      dateCreated: new Date(),
+      dateUpdated: new Date(),
+      isActive: true,
+    });
+  };
+  codeQualityDummy();
+
+
   Post.count().exec((err, count) => {
     if (count > 0) {
       return;
