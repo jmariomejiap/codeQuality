@@ -37,6 +37,7 @@ import dummyData from './dummyData';
 import serverConfig from './config';
 import project from './modules/project/routes';
 import branches from './modules/branches/routes';
+import commits from './modules/commits/routes';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -60,6 +61,8 @@ app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', posts);
 app.use('/api/v1/project', project);
 app.use('/api/v1/branches', branches);
+app.use('/api/v1/commit', commits);
+
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
   const head = Helmet.rewind();

@@ -146,7 +146,8 @@
     "reporter": [
       "lcov",
       "text",
-      "html"
+      "html",
+      "json"
     ]
   }
 }
