@@ -6,7 +6,10 @@ const router = new Router();
 router.post('/',
   Controller.validateParams,
   Controller.parseJson,
-  Controller.good
+  Controller.findProject,
+  Controller.findBranch,
+  Controller.createRecord,
+  Controller.updateProject
 );
 
 export default router;

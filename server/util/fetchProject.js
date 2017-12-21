@@ -2,11 +2,11 @@ import Project from '../models/project';
 
 
 /* istanbul ignore next */
-const fetchProject = async (name) => {
+const fetchProject = async (projectName) => {
   let projectDoc;
 
   try {
-    projectDoc = await Project.find({ name });
+    projectDoc = await Project.find({ name: projectName });
   } catch (error) {
     return null;
   }

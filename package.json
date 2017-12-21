@@ -147,7 +147,7 @@
       "lcov",
       "text",
       "html",
-      "json"
+      "json-summary"
     ]
   }
 }

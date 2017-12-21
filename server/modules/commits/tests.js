@@ -1,11 +1,19 @@
 import test from 'ava';
 import supertest from 'supertest-as-promised';
 import uuidv1 from 'uuid/v1';
+import fetchProject from '../../util/fetchProject';
 import server from '../../server';
 import Project from '../../models/project';
 import Branches from '../../models/branches';
+import ProjectCommits from '../../models/commits';
+import { commitExample, invalidExample } from '../../util/commitExample';
+
 
 const internals = {};
+internals.commitExJson = JSON.stringify(commitExample);
+internals.invalidCommitJson = JSON.stringify(invalidExample);
+internals.tokenExample = '27d5fa70-e36b-11e7-85d1-3f5dc44bac81';
+
 
 test.before('connecting to codeQuality, branchs test', async () => {
   internals.reqAgent = await supertest(server);
@@ -15,6 +23,7 @@ test.before('connecting to codeQuality, branchs test', async () => {
 test.beforeEach(async () => {
   await Project.remove({});
   await Branches.remove({});
+  await ProjectCommits.remove({});
 
   const dummyProject = {
     name: 'projectTestCommits',
@@ -44,6 +53,7 @@ test.beforeEach(async () => {
   await Branches.create(dummyBranches);
 });
 
+
 test('should fail if token or commitJson are missing', async (t) => {
   const res = await internals.reqAgent
     .post('/api/v1/commit')
@@ -52,4 +62,70 @@ test('should fail if token or commitJson are missing', async (t) => {
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
   t.is(res.body.error, 'invalid_value');
+});
+
+
+test('should create a new branch if not available', async (t) => {
+  const projectDoc = await fetchProject('projectTestCommits');
+
+  await internals.reqAgent
+    .post('/api/v1/commit')
+    .send({ token: projectDoc[0].token, branch: 'featureBranch2', commitJson: internals.commitExJson });
+
+  const newBranchesDoc = await Branches.find({});
+
+  t.is(newBranchesDoc.length, 4);
+});
+
+
+test('should Not Create a new branch if already exists', async (t) => {
+  const projectDoc = await fetchProject('projectTestCommits');
+
+  await internals.reqAgent
+    .post('/api/v1/commit')
+    .send({ token: projectDoc[0].token, branch: 'develop', commitJson: internals.commitExJson });
+
+  const newBranchesDoc = await Branches.find({});
+
+  t.is(newBranchesDoc.length, 3);
+});
+
+
+test('should fail if commit JSON is incomplete', async (t) => {
+  const projectDoc = await fetchProject('projectTestCommits');
+
+  const res = await internals.reqAgent
+    .post('/api/v1/commit')
+    .send({ token: projectDoc[0].token, branch: 'develop', commitJson: internals.invalidCommitJson });
+
+  t.is(res.status, 404);
+  t.is(res.body.result, 'error');
+  t.is(res.body.error, 'incomplete_json');
+});
+
+
+test('should create a new commit record', async (t) => {
+  const projectDoc = await fetchProject('projectTestCommits');
+
+  const res = await internals.reqAgent
+    .post('/api/v1/commit')
+    .send({ token: projectDoc[0].token, branch: 'develop', commitJson: internals.commitExJson });
+
+  const newBranchesDoc = await Branches.find({});
+  const projectCommitDoc = await ProjectCommits.find({});
+
+  t.is(newBranchesDoc.length, 3);
+  t.is(projectCommitDoc.length, 1);
+  t.is(res.status, 200);
+});
+
+
+test('should update projects date', async (t) => {
+  const projectDocStart = await fetchProject('projectTestCommits');
+
+  const res = await internals.reqAgent
+    .post('/api/v1/commit')
+    .send({ token: projectDocStart[0].token, branch: 'develop', commitJson: internals.commitExJson });
+
+  t.is(res.status, 200);
 });
