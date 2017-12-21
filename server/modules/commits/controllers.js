@@ -6,8 +6,11 @@ import ProjectCommits from '../../models/commits';
 const validateParams = (req, res, next) => {
   const token = req.body.token;
   const commitJson = req.body.commitJson;
+  const author = req.body.author;
+  const branch = req.body.branch;
+  const commitHash = req.body.commitHash;
 
-  if (!token || !commitJson) {
+  if (!token || !commitJson || !author || !branch || !commitHash) {
     return res.status(404).json({ result: 'error', error: 'invalid_value' });
   }
 
@@ -76,8 +79,8 @@ const createRecord = async (req, res, next) => {
     branch: req.body.branch,
     commitDate: new Date(),
     testCoveragePorcentages: req.coverage,
-    author: 'incoming author',
-    gitCommitHash: 'incoming hash',
+    author: req.body.author,
+    gitCommitHash: req.body.commitHash,
   };
 
   try {
