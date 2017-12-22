@@ -6,7 +6,7 @@ const projectCommits = new Schema({
   token: { type: String, require: true },
   branch: { type: String, require: true },
   commitDate: { type: Date, require: true },
-  testCoveragePorcentage: { type: Number, require: true },
+  testCoveragePorcentage: { type: Object, require: true },
   author: { type: String, require: true },
   gitCommitHash: { type: String, require: true },
 });

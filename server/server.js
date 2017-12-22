@@ -38,6 +38,7 @@ import serverConfig from './config';
 import project from './modules/project/routes';
 import branches from './modules/branches/routes';
 import commits from './modules/commits/routes';
+import commitsHistory from './modules/commitsHistory/routes';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -62,6 +63,7 @@ app.use('/api', posts);
 app.use('/api/v1/project', project);
 app.use('/api/v1/branches', branches);
 app.use('/api/v1/commit', commits);
+app.use('/api/v1/commitshistory', commitsHistory);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {

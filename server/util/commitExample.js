@@ -65,5 +65,15 @@ const invalidExample = {
   },
 };
 
+const generateExamples = (example, num) => {
+  const arrayExamples = [];
 
-export { commitExample, invalidExample };
+  for (let i = 0; i < num; i ++) {
+    arrayExamples.push(example);
+  }
+
+  return arrayExamples;
+};
+
+
+export { commitExample, invalidExample, generateExamples };
