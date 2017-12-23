@@ -1,29 +1,75 @@
 import Post from './models/post';
 import Project from './models/project';
+import Branches from './models/branches';
+import ProjectCommits from './models/commits';
+import uuidv1 from 'uuid/v1';
+import { commitExample } from './util/commitExample';
+
+
 
 export default function () {
   const codeQualityDummy = async () => {
     const projectsCount = await Project.count();
+
     if (projectsCount > 0) {
       return;
     }
 
-    await Project.create({
+    const projectDoc = await Project.create({
       name: 'dummyProject1',
-      token: 'dummyToken1',
+      token: uuidv1(),
       dateCreated: new Date(),
       dateUpdated: new Date(),
       isActive: true,
     });
 
-    await Project.create({
-      name: 'dummyProject2',
-      token: 'dummyToken2',
-      dateCreated: new Date(),
-      dateUpdated: new Date(),
-      isActive: true,
-    });
+    const dummyBranches = [
+      {
+        projectId: projectDoc._id,
+        name: 'master',
+      },
+      {
+        projectId: projectDoc._id,
+        name: 'develop',
+      },
+      {
+        projectId: projectDoc._id,
+        name: 'featureBranch1',
+      },
+    ];
+
+    await Branches.create(dummyBranches);
+
+    const dummyCommit = [
+      {
+        projectId: projectDoc._id,
+        branch: 'develop',
+        commitDate: new Date(),
+        testCoveragePorcentage: commitExample,
+        author: 'mySelf',
+        gitCommitHash: 'adefe45a',
+      },
+      {
+        projectId: projectDoc._id,
+        branch: 'develop',
+        commitDate: new Date(),
+        testCoveragePorcentage: commitExample,
+        author: 'mySelf',
+        gitCommitHash: 'adefe45a',
+      },
+      {
+        projectId: projectDoc._id,
+        branch: 'develop',
+        commitDate: new Date(),
+        testCoveragePorcentage: commitExample,
+        author: 'mySelf',
+        gitCommitHash: 'adefe45a',
+      },
+    ];
+
+    await ProjectCommits.create(dummyCommit);
   };
+
   codeQualityDummy();
 
 
