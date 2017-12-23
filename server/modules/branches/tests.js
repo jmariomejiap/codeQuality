@@ -28,15 +28,15 @@ test.beforeEach(async () => {
 
   const dummyBranches = [
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       name: 'master',
     },
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       name: 'develop',
     },
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       name: 'featureBranch1',
     },
   ];
@@ -57,7 +57,7 @@ test('should fail if query has no valid projectId ', async (t) => {
 
 test('should fail if token is empty ', async (t) => {
   const res = await internals.reqAgent
-    .get('/api/v1/branches?token=');
+    .get('/api/v1/branches?projectId=');
 
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
@@ -66,9 +66,9 @@ test('should fail if token is empty ', async (t) => {
 
 
 test('should fail if token is no match ', async (t) => {
-  const wrongToken = '27d5fa70-e36b-11e7-85d1-3f5dc44bac81';
+  const wrongProjectId = '27d5fa70-e36b-11e7-85d1-3f5dc44bac81';
   const res = await internals.reqAgent
-    .get(`/api/v1/branches?token=${wrongToken}`);
+    .get(`/api/v1/branches?projectId=${wrongProjectId}`);
 
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
@@ -79,7 +79,7 @@ test('should fail if token is no match ', async (t) => {
 test('should return all available branches', async (t) => {
   const projectDoc = await fetchProject('projectTestBranches');
   const res = await internals.reqAgent
-    .get(`/api/v1/branches?token=${projectDoc[0].token}`);
+    .get(`/api/v1/branches?projectId=${projectDoc[0]._id}`);
 
   t.is(res.status, 200);
   t.is(res.body.result, 'ok');
