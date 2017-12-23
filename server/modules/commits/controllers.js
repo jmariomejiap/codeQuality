@@ -11,7 +11,7 @@ const validateParams = (req, res, next) => {
   const commitHash = req.body.commitHash;
 
   if (!token || !commitJson || !author || !branch || !commitHash) {
-    return res.status(404).json({ result: 'error', error: 'invalid_value' });
+    return res.status(404).json({ result: 'error', error: 'missing_params' });
   }
 
   return next();

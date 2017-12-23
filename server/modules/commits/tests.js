@@ -61,7 +61,7 @@ test('should fail if token or commitJson are missing, or any of the required par
 
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
-  t.is(res.body.error, 'invalid_value');
+  t.is(res.body.error, 'missing_params');
 });
 
 
