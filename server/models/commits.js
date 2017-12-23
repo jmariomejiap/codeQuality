@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const projectCommits = new Schema({
-  token: { type: String, require: true },
+  projectId: { type: String, require: true },
   branch: { type: String, require: true },
   commitDate: { type: Date, require: true },
   testCoveragePorcentage: { type: Object, require: true },

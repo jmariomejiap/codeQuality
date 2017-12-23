@@ -4,13 +4,13 @@ import ProjectCommits from '../../models/commits';
 
 
 const validateParams = (req, res, next) => {
-  const token = req.body.token;
+  const projectId = req.body.projectId;
   const commitJson = req.body.commitJson;
   const author = req.body.author;
   const branch = req.body.branch;
   const commitHash = req.body.commitHash;
 
-  if (!token || !commitJson || !author || !branch || !commitHash) {
+  if (!projectId || !commitJson || !author || !branch || !commitHash) {
     return res.status(404).json({ result: 'error', error: 'missing_params' });
   }
 
@@ -33,16 +33,16 @@ const parseJson = (req, res, next) => {
 
 /* istanbul ignore next */
 const findProject = async (req, res, next) => {
-  const token = req.body.token;
+  const projectId = req.body.projectId;
   let projectDoc;
 
   try {
-    projectDoc = await Project.find({ token });
+    projectDoc = await Project.findById(projectId);
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
 
-  if (projectDoc.length === 0) {
+  if (!projectDoc) {
     return res.status(404).json({ result: 'error', error: 'invalid_value_project' });
   }
 
@@ -53,7 +53,7 @@ const findProject = async (req, res, next) => {
 
 /* istanbul ignore next */
 const findBranch = async (req, res, next) => {
-  const token = req.body.token;
+  const projectId = req.body.projectId;
   const branch = req.body.branch;
   let branchesDoc;
 
@@ -65,7 +65,7 @@ const findBranch = async (req, res, next) => {
 
   if (branchesDoc.length === 0) {
     // new branch
-    await Branches.create({ token, name: branch });
+    await Branches.create({ projectId, name: branch });
   }
 
   return next();
@@ -75,7 +75,7 @@ const findBranch = async (req, res, next) => {
 /* istanbul ignore next */
 const createRecord = async (req, res, next) => {
   const commit = {
-    token: req.body.token,
+    projectId: req.body.projectId,
     branch: req.body.branch,
     commitDate: new Date(),
     testCoveragePorcentages: req.coverage,
@@ -95,10 +95,10 @@ const createRecord = async (req, res, next) => {
 
 /* istanbul ignore next */
 const updateProject = async (req, res) => {
-  const token = req.body.token;
+  const projectId = req.body.projectId;
 
   try {
-    await Project.update({ token }, { $set: { dateUpdated: new Date() } });
+    await Project.update({ projectId }, { $set: { dateUpdated: new Date() } });
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }

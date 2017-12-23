@@ -25,15 +25,15 @@ export default function () {
 
     const dummyBranches = [
       {
-        token: projectDoc.token,
+        projectId: projectDoc._id,
         name: 'master',
       },
       {
-        token: projectDoc.token,
+        projectId: projectDoc._id,
         name: 'develop',
       },
       {
-        token: projectDoc.token,
+        projectId: projectDoc._id,
         name: 'featureBranch1',
       },
     ];
@@ -42,7 +42,7 @@ export default function () {
 
     const dummyCommit = [
       {
-        token: projectDoc.token,
+        projectId: projectDoc._id,
         branch: 'develop',
         commitDate: new Date(),
         testCoveragePorcentage: commitExample,
@@ -50,7 +50,7 @@ export default function () {
         gitCommitHash: 'adefe45a',
       },
       {
-        token: projectDoc.token,
+        projectId: projectDoc._id,
         branch: 'develop',
         commitDate: new Date(),
         testCoveragePorcentage: commitExample,
@@ -58,7 +58,7 @@ export default function () {
         gitCommitHash: 'adefe45a',
       },
       {
-        token: projectDoc.token,
+        projectId: projectDoc._id,
         branch: 'develop',
         commitDate: new Date(),
         testCoveragePorcentage: commitExample,

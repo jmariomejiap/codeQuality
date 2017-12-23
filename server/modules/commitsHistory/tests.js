@@ -34,15 +34,15 @@ test.beforeEach(async () => {
 
   const dummyBranches = [
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       name: 'master',
     },
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       name: 'develop',
     },
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       name: 'featureBranch1',
     },
   ];
@@ -51,7 +51,7 @@ test.beforeEach(async () => {
 
   const dummyCommit = [
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       branch: 'develop',
       commitDate: new Date(),
       testCoveragePorcentage: internals.commitExample,
@@ -59,7 +59,7 @@ test.beforeEach(async () => {
       gitCommitHash: 'adefe45a',
     },
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       branch: 'develop',
       commitDate: new Date(),
       testCoveragePorcentage: internals.commitExample,
@@ -67,7 +67,7 @@ test.beforeEach(async () => {
       gitCommitHash: 'adefe45a',
     },
     {
-      token: projectDoc.token,
+      projectId: projectDoc._id,
       branch: 'develop',
       commitDate: new Date(),
       testCoveragePorcentage: internals.commitExample,
@@ -80,11 +80,11 @@ test.beforeEach(async () => {
 });
 
 
-test('should fail if token or branch are missing', async (t) => {
+test('should fail if projectId or branch are missing', async (t) => {
   const projectDoc = await fetchProject('projectTestCommitsHistory');
 
   const res = await internals.reqAgent
-    .get(`/api/v1/commitshistory?token=${projectDoc[0].token}&limit=30`);
+    .get(`/api/v1/commitshistory?projectId=${projectDoc[0]._id}&limit=30`);
 
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
@@ -92,11 +92,11 @@ test('should fail if token or branch are missing', async (t) => {
 });
 
 
-test('should fail if token or branch are invalid', async (t) => {
+test('should fail if projectId or branch are invalid', async (t) => {
   const projectDoc = await fetchProject('projectTestCommitsHistory');
 
   const res = await internals.reqAgent
-    .get(`/api/v1/commitshistory?token=${projectDoc[0].token}&branch=feature1`);
+    .get(`/api/v1/commitshistory?projectId=${projectDoc[0]._id}&branch=feature1`);
 
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
@@ -108,7 +108,7 @@ test('should fail if limit given is NaN', async (t) => {
   const projectDoc = await fetchProject('projectTestCommitsHistory');
 
   const res = await internals.reqAgent
-    .get(`/api/v1/commitshistory?token=${projectDoc[0].token}&branch=develop&limit=boom`);
+    .get(`/api/v1/commitshistory?projectId=${projectDoc[0]._id}&branch=develop&limit=boom`);
 
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
@@ -120,7 +120,7 @@ test('should return an array of commits', async (t) => {
   const projectDoc = await fetchProject('projectTestCommitsHistory');
 
   const res = await internals.reqAgent
-    .get(`/api/v1/commitshistory?token=${projectDoc[0].token}&branch=develop`);
+    .get(`/api/v1/commitshistory?projectId=${projectDoc[0]._id}&branch=develop`);
 
   t.is(res.status, 200);
   t.is(res.body.result, 'ok');
@@ -131,7 +131,7 @@ test('should return an array of 5 commits if limit give is 5', async (t) => {
   const projectDoc = await fetchProject('projectTestCommitsHistory');
 
   const temp = {
-    token: projectDoc[0].token,
+    projectId: projectDoc[0]._id,
     branch: 'feature1',
     commitDate: new Date(),
     testCoveragePorcentage: internals.commitExample,
@@ -144,7 +144,7 @@ test('should return an array of 5 commits if limit give is 5', async (t) => {
   await ProjectCommits.create(arrCommits);
 
   const res = await internals.reqAgent
-    .get(`/api/v1/commitshistory?token=${projectDoc[0].token}&branch=feature1&limit=5`);
+    .get(`/api/v1/commitshistory?projectId=${projectDoc[0]._id}&branch=feature1&limit=5`);
 
   t.is(res.status, 200);
   t.is(res.body.result, 'ok');
@@ -156,7 +156,7 @@ test('should return an array of 20 commits if No limit is given', async (t) => {
   const projectDoc = await fetchProject('projectTestCommitsHistory');
 
   const temp = {
-    token: projectDoc[0].token,
+    projectId: projectDoc[0]._id,
     branch: 'feature1',
     commitDate: new Date(),
     testCoveragePorcentage: internals.commitExample,
@@ -169,7 +169,7 @@ test('should return an array of 20 commits if No limit is given', async (t) => {
   await ProjectCommits.create(arrCommits);
 
   const res = await internals.reqAgent
-    .get(`/api/v1/commitshistory?token=${projectDoc[0].token}&branch=feature1`);
+    .get(`/api/v1/commitshistory?projectId=${projectDoc[0]._id}&branch=feature1`);
 
   t.is(res.status, 200);
   t.is(res.body.result, 'ok');

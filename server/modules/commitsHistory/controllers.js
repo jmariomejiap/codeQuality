@@ -1,11 +1,11 @@
 import ProjectCommits from '../../models/commits';
 
 const validateParams = (req, res, next) => {
-  const token = req.query.token;
+  const projectId = req.query.projectId;
   const branch = req.query.branch;
   const limit = (!req.query.limit) ? 20 : parseInt(req.query.limit, 10);
 
-  if (!token || !branch || !limit) {
+  if (!projectId || !branch || !limit) {
     return res.status(404).json({ result: 'error', error: 'missing_params' });
   }
 
@@ -16,13 +16,13 @@ const validateParams = (req, res, next) => {
 
 /* istanbul ignore next */
 const findCommits = async (req, res, next) => {
-  const token = req.query.token;
+  const projectId = req.query.projectId;
   const branch = req.query.branch;
 
   let commitsDoc;
 
   try {
-    commitsDoc = await ProjectCommits.find({ token, branch });
+    commitsDoc = await ProjectCommits.find({ projectId, branch });
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
