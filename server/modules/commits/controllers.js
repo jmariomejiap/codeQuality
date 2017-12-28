@@ -27,7 +27,6 @@ const parseJson = (req, res, next) => {
     return res.status(404).json({ result: 'error', error: 'incomplete_json' });
   }
 
-  console.log('coverage.total', coverage.total);
   req.coverage = coverage.total; // eslint-disable-line no-param-reassign
   return next();
 };
