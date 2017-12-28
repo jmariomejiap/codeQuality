@@ -10,9 +10,8 @@ import { commitExample, invalidExample } from '../../util/commitExample';
 
 
 const internals = {};
-internals.commitExJson = JSON.stringify(commitExample);
-internals.invalidCommitJson = JSON.stringify(invalidExample);
-internals.bufferCommitJson = '<Buffer 7b 3a 34 37 2c 22 73 6b 69 70 70 ... >';
+internals.commitExJson = commitExample;
+internals.invalidCommitJson = invalidExample;
 internals.tokenExample = '27d5fa70-e36b-11e7-85d1-3f5dc44bac81';
 
 
@@ -89,19 +88,6 @@ test('should Not Create a new branch if already exists', async (t) => {
   const newBranchesDoc = await Branches.find({});
 
   t.is(newBranchesDoc.length, 3);
-});
-
-
-test('should fail if commit JSON is an invalid type', async (t) => {
-  const projectDoc = await fetchProject('projectTestCommits');
-
-  const res = await internals.reqAgent
-    .post('/api/v1/commit')
-    .send({ projectId: projectDoc[0]._id, branch: 'develop', commitJson: internals.bufferCommitJson, author: 'jm', commitHash: 'ad345234h' });
-
-  t.is(res.status, 500);
-  t.is(res.body.result, 'error');
-  t.is(res.body.error, 'internal_error');
 });
 
 

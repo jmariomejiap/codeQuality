@@ -19,13 +19,7 @@ const validateParams = (req, res, next) => {
 
 
 const parseJson = (req, res, next) => {
-  let coverage;
-
-  try {
-    coverage = JSON.parse(req.body.commitJson);
-  } catch (error) {
-    return res.status(500).json({ result: 'error', error: 'internal_error' });
-  }
+  const coverage = req.body.commitJson;
 
   const { lines, statements, functions, branches } = coverage.total;
 
@@ -41,6 +35,8 @@ const parseJson = (req, res, next) => {
 /* istanbul ignore next */
 const findProject = async (req, res, next) => {
   const projectId = req.body.projectId;
+  console.log('findProject controller projectId =', projectId);
+
   let projectDoc;
 
   try {
