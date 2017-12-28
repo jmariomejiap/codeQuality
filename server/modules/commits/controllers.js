@@ -19,7 +19,14 @@ const validateParams = (req, res, next) => {
 
 
 const parseJson = (req, res, next) => {
-  const coverage = JSON.parse(req.body.commitJson);
+  let coverage;
+
+  try {
+    coverage = JSON.parse(req.body.commitJson);
+  } catch (error) {
+    return res.status(500).json({ result: 'error', error: 'internal_error' });
+  }
+
   const { lines, statements, functions, branches } = coverage.total;
 
   if (!lines || !statements || !functions || !branches) {
