@@ -35,8 +35,6 @@ const parseJson = (req, res, next) => {
 /* istanbul ignore next */
 const findProject = async (req, res, next) => {
   const projectId = req.body.projectId;
-  console.log('findProject controller projectId =', projectId);
-
   let projectDoc;
 
   try {
