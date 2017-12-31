@@ -4,13 +4,13 @@ import ProjectCommits from '../../models/commits';
 
 
 const validateParams = (req, res, next) => {
-  const projectId = req.body.projectId;
+  const token = req.body.token;
   const commitJson = req.body.commitJson;
   const author = req.body.author;
   const branch = req.body.branch;
   const commitHash = req.body.commitHash;
 
-  if (!projectId || !commitJson || !author || !branch || !commitHash) {
+  if (!token || !commitJson || !author || !branch || !commitHash) {
     return res.status(404).json({ result: 'error', error: 'missing_params' });
   }
 
@@ -34,16 +34,16 @@ const parseJson = (req, res, next) => {
 
 /* istanbul ignore next */
 const findProject = async (req, res, next) => {
-  const projectId = req.body.projectId;
+  const token = req.body.token;
   let projectDoc;
 
   try {
-    projectDoc = await Project.findById(projectId);
+    projectDoc = await Project.find({ token });
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
 
-  if (!projectDoc) {
+  if (projectDoc.length === 0) {
     return res.status(404).json({ result: 'error', error: 'invalid_value_project' });
   }
 
