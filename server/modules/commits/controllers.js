@@ -47,28 +47,26 @@ const findProject = async (req, res, next) => {
     return res.status(404).json({ result: 'error', error: 'invalid_value_project' });
   }
 
-  req.projectDoc = projectDoc; // eslint-disable-line no-param-reassign
+  req.projectDoc = projectDoc[0]; // eslint-disable-line no-param-reassign
   return next();
 };
 
 
 /* istanbul ignore next */
 const findBranch = async (req, res, next) => {
-  const projectId = req.body.projectId;
+  const projectId = req.projectDoc._id;
   const branch = req.body.branch;
   let branchesDoc;
 
   try {
-    branchesDoc = await Branches.find({ name: branch });
+    branchesDoc = await Branches.find({ name: branch, projectId });
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
-
   if (branchesDoc.length === 0) {
     // new branch
     await Branches.create({ projectId, name: branch });
   }
-
   return next();
 };
 
@@ -76,7 +74,7 @@ const findBranch = async (req, res, next) => {
 /* istanbul ignore next */
 const createRecord = async (req, res, next) => {
   const commit = {
-    projectId: req.body.projectId,
+    projectId: req.projectDoc._id,
     branch: req.body.branch,
     commitDate: new Date(),
     testCoveragePorcentage: req.coverage,
@@ -96,7 +94,7 @@ const createRecord = async (req, res, next) => {
 
 /* istanbul ignore next */
 const updateProject = async (req, res) => {
-  const projectId = req.body.projectId;
+  const projectId = req.projectDoc._id;
 
   try {
     await Project.update({ projectId }, { $set: { dateUpdated: new Date() } });
