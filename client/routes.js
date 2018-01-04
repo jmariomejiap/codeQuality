@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './modules/App/App';
+import Dashboard from './dashboard';
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
@@ -38,6 +39,10 @@ export default (
           cb(null, require('./modules/Post/pages/PostDetailPage/PostDetailPage').default);
         });
       }}
+    />
+    <Route
+      path="/dashboard"
+      component={Dashboard}
     />
   </Route>
 );
