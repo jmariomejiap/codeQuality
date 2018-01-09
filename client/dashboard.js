@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import CreateDialog from './modules/App/components/createProjectDialog';
 import NewHeader from './modules/App/components/newHeader';
@@ -13,7 +13,6 @@ class Dashboard extends React.Component {
       drawerOpen: false,
       createProjectOpen: false,
     };
-
     this.handleDrawer = this.handleDrawer.bind(this);
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
@@ -62,11 +61,15 @@ class Dashboard extends React.Component {
               Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
             </CardText>
           </Card>
-          <DashboardContainers />
+          <DashboardContainers branches={this.props.branches} />
         </div>
       </div>
     );
   }
 }
+
+Dashboard.propTypes = {
+  branches: PropTypes.array,
+};
 
 export default Dashboard;

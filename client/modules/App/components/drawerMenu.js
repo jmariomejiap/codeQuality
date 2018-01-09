@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import { spacing, typography } from 'material-ui/styles';
-import { white, grey900, grey700, black } from 'material-ui/styles/colors';
+import { white, grey900, grey700, black, grey300 } from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
 // import {Link} from 'react-router';
 // import Avatar from 'material-ui/Avatar';
@@ -32,7 +32,7 @@ const DrawerMenu = (props) => {
       backgroundColor: grey700,
     },
     list: {
-      color: white,
+      color: grey300,
       fontSize: 12,
     },
   };

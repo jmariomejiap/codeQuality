@@ -74,7 +74,7 @@ export class App extends Component {
               </div>
             }
             <div className={(this.props.location.pathname !== '/') ? null : styles.container}>
-              {this.props.children}
+              {React.cloneElement(this.props.children, { branches: this.props.branches })}
             </div>
             {(this.props.location.pathname !== '/') ? null : <Footer />}
           </div>
@@ -89,12 +89,14 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   location: PropTypes.object,
+  branches: PropTypes.array,
 };
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
     intl: store.intl,
+    branches: store.branches,
   };
 }
 

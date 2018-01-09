@@ -1,4 +1,4 @@
 
 export default function () {
-  return ['master', 'develop', 'feature', 'feature2', 'feature3', 'feature4'];
+  return ['project', 'project2', 'project3', 'project4'];
 }
