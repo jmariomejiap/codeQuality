@@ -1,8 +1,9 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route } from 'react-router';
 import App from './modules/App/App';
 import Dashboard from './dashboard';
+import Settings from './modules/App/components/settingsPage';
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
@@ -25,6 +26,19 @@ if (process.env.NODE_ENV !== 'production') {
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default (
   <Route path="/" component={App}>
+    <Route
+      path="/dashboard"
+      component={Dashboard}
+    />
+    <Route
+      path="/settings"
+      component={Settings}
+    />
+  </Route>
+);
+
+/*
+<Route path="/" component={App}>
     <IndexRoute
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
@@ -45,4 +59,4 @@ export default (
       component={Dashboard}
     />
   </Route>
-);
+*/
