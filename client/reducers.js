@@ -7,8 +7,8 @@ import { combineReducers } from 'redux';
 import app from './modules/App/AppReducer';
 import posts from './modules/Post/PostReducer';
 import intl from './modules/Intl/IntlReducer';
-import branches, { activeBranch } from './modules/App/BranchReducer';
-import projects from './modules/App/ProjectsReducer';
+import branches, { activeBranch } from './modules/App/components/reducers/BranchReducer';
+import projects from './modules/App/components/reducers/ProjectsReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({

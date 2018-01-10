@@ -1,4 +1,4 @@
-import { BRANCH_SELECTED } from './BranchActions';
+import { BRANCH_SELECTED } from '../actions/BranchActions';
 
 
 export const activeBranch = (state = null, action) => {

@@ -15,7 +15,7 @@ import Footer from './components/Footer/Footer';
 // Import Actions
 import { toggleAddPost } from './AppActions';
 import { switchLanguage } from '../../modules/Intl/IntlActions';
-import selectBranch from '../App/BranchActions';
+import selectBranch from './components/actions/BranchActions';
 
 
 const muiTheme = getMuiTheme(
