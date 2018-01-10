@@ -20,70 +20,76 @@ const style = {
   },
 };
 
-class DashboardContainers extends React.Component {
-  createMenuItems() {
-    const branchesList = this.props.branches;
-    return branchesList.map((name) => {
-      return <MenuItem key={name} primaryText={name} />;
-    });
-  }
+const DashboardContainers = (props) => {
+  const activeBranch = props.activeBranch;
 
-  render() {
-    return (
-      <div>
-        <div >
-          <Paper style={style.paperChart} zDepth={2}>
-            <AppBar
-              title="Branches"
-              showMenuIconButton={false}
-              style={{ height: 58, backgroundColor: '#23938c', textAlign: 'left' }}
-              titleStyle={{ fontSize: 18, color: white }}
-              iconElementRight={
-                <IconMenu
-                  targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                  anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                  iconButtonElement={
-                    <IconButton>
-                      <Timeline color={grey400} />
-                    </IconButton>
-                  }
-                >
-                  {this.createMenuItems()}
-                </IconMenu>
-              }
-            />
-            <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >chart place holder</div>
-          </Paper>
-        </div>
-        <div >
-          <Paper style={style.paperChart} zDepth={2}>
-            <AppBar
-              title="Activity"
-              showMenuIconButton={false}
-              style={{ height: 58, backgroundColor: red800, textAlign: 'left' }}
-              titleStyle={{ fontSize: 18, color: white }}
-              iconElementRight={
-                <IconMenu
-                  targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                  anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                  iconButtonElement={
-                    <IconButton>
-                      <Equalizer color={grey400} />
-                    </IconButton>
-                  }
-                />
-              }
-            />
-            <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >maybe an area to display Activity</div>
-          </Paper>
-        </div>
+  const createMenuItems = () => {
+    const branchesList = props.branches;
+    return branchesList.map((name) => {
+      return <MenuItem key={name} primaryText={name} onClick={() => props.escojeBranch(name)} />;
+    });
+  };
+
+  return (
+    <div>
+      <div >
+        <Paper style={style.paperChart} zDepth={2}>
+          <AppBar
+            title="Branches"
+            showMenuIconButton={false}
+            style={{ height: 58, backgroundColor: '#23938c', textAlign: 'left' }}
+            titleStyle={{ fontSize: 18, color: white }}
+            iconElementRight={
+              <IconMenu
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                iconButtonElement={
+                  <IconButton>
+                    <Timeline color={grey400} />
+                  </IconButton>
+                }
+              >
+                {createMenuItems()}
+              </IconMenu>
+            }
+          />
+          <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >
+            <p>chart place holder</p>
+            <p>display branch...... {(!activeBranch) ? null : activeBranch}</p>
+            <p>Im using redux to update selected branch</p>
+          </div>
+        </Paper>
       </div>
-    );
-  }
-}
+      <div >
+        <Paper style={style.paperChart} zDepth={2}>
+          <AppBar
+            title="Activity"
+            showMenuIconButton={false}
+            style={{ height: 58, backgroundColor: red800, textAlign: 'left' }}
+            titleStyle={{ fontSize: 18, color: white }}
+            iconElementRight={
+              <IconMenu
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                iconButtonElement={
+                  <IconButton>
+                    <Equalizer color={grey400} />
+                  </IconButton>
+                }
+              />
+            }
+          />
+          <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >maybe an area to display Activity</div>
+        </Paper>
+      </div>
+    </div>
+  );
+};
 
 DashboardContainers.propTypes = {
   branches: PropTypes.array,
+  escojeBranch: PropTypes.func,
+  activeBranch: PropTypes.string,
 };
 
 export default DashboardContainers;

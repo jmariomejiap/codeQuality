@@ -61,7 +61,11 @@ class Dashboard extends React.Component {
               Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
             </CardText>
           </Card>
-          <DashboardContainers branches={this.props.branches} />
+          <DashboardContainers
+            branches={this.props.branches}
+            escojeBranch={this.props.pickBranch}
+            activeBranch={this.props.activeBranch}
+          />
         </div>
       </div>
     );
@@ -70,6 +74,8 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   branches: PropTypes.array,
+  pickBranch: PropTypes.func,
+  activeBranch: PropTypes.string,
 };
 
 export default Dashboard;

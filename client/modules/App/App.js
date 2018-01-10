@@ -15,6 +15,7 @@ import Footer from './components/Footer/Footer';
 // Import Actions
 import { toggleAddPost } from './AppActions';
 import { switchLanguage } from '../../modules/Intl/IntlActions';
+import selectBranch from '../App/BranchActions';
 
 
 const muiTheme = getMuiTheme(
@@ -42,6 +43,10 @@ export class App extends Component {
   toggleAddPostSection = () => {
     this.props.dispatch(toggleAddPost());
   };
+
+  chooseBranch = (e) => {
+    this.props.dispatch(selectBranch(e));
+  }
 
   render() {
     return (
@@ -74,7 +79,11 @@ export class App extends Component {
               </div>
             }
             <div className={(this.props.location.pathname !== '/') ? null : styles.container}>
-              {React.cloneElement(this.props.children, { branches: this.props.branches })}
+              {
+                (this.props.location.pathname !== '/') ?
+                  React.cloneElement(this.props.children, { branches: this.props.branches, pickBranch: this.chooseBranch, activeBranch: this.props.activeBranch }) :
+                  null
+              }
             </div>
             {(this.props.location.pathname !== '/') ? null : <Footer />}
           </div>
@@ -90,6 +99,7 @@ App.propTypes = {
   intl: PropTypes.object.isRequired,
   location: PropTypes.object,
   branches: PropTypes.array,
+  activeBranch: PropTypes.string,
 };
 
 // Retrieve data from store as props
@@ -97,6 +107,7 @@ function mapStateToProps(store) {
   return {
     intl: store.intl,
     branches: store.branches,
+    activeBranch: store.activeBranch,
   };
 }
 
