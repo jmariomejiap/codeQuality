@@ -3,7 +3,7 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import CreateDialog from './modules/App/components/createProjectDialog';
 import NewHeader from './modules/App/components/newHeader';
 import DrawerMenu from './modules/App/components/drawerMenu';
-import DashboardContainers from './modules/App/components/containers';
+import DashboardContainers from './modules/App/components/boxes';
 
 
 class Dashboard extends React.Component {
