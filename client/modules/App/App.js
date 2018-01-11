@@ -16,6 +16,7 @@ import Footer from './components/Footer/Footer';
 import { toggleAddPost } from './AppActions';
 import { switchLanguage } from '../../modules/Intl/IntlActions';
 import selectBranch from './components/actions/BranchActions';
+import { createProject, controlDrawer, controlDialog } from './components/actions/ProjectActions';
 
 
 const muiTheme = getMuiTheme(
@@ -46,6 +47,19 @@ export class App extends Component {
 
   chooseBranch = (e) => {
     this.props.dispatch(selectBranch(e));
+  }
+
+  handleDrawer = () => {
+    this.props.dispatch(controlDrawer());
+  }
+
+  handleDialog = () => {
+    this.props.dispatch(controlDialog());
+  };
+
+  createNewProject = (name) => {
+    this.props.dispatch(createProject(name));
+    this.handleDialog();
   }
 
   render() {
@@ -81,7 +95,15 @@ export class App extends Component {
             <div className={(this.props.location.pathname !== '/') ? null : styles.container}>
               {
                 (this.props.location.pathname !== '/') ?
-                  React.cloneElement(this.props.children, { branches: this.props.branches, pickBranch: this.chooseBranch, activeBranch: this.props.activeBranch }) :
+                  React.cloneElement(this.props.children, {
+                    branches: this.props.branches,
+                    pickBranch: this.chooseBranch,
+                    activeBranch: this.props.activeBranch,
+                    projects: this.props.projects,
+                    createNewProject: this.createNewProject,
+                    handleDialog: this.handleDialog,
+                    handleDrawer: this.handleDrawer,
+                  }) :
                   null
               }
             </div>
@@ -100,6 +122,7 @@ App.propTypes = {
   location: PropTypes.object,
   branches: PropTypes.array,
   activeBranch: PropTypes.string,
+  projects: PropTypes.object.isRequired,
 };
 
 // Retrieve data from store as props
@@ -108,6 +131,7 @@ function mapStateToProps(store) {
     intl: store.intl,
     branches: store.branches,
     activeBranch: store.activeBranch,
+    projects: store.projects,
   };
 }
 

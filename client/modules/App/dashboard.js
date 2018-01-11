@@ -11,31 +11,16 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       drawerOpen: false,
-      createProjectOpen: false,
     };
-    this.handleDrawer = this.handleDrawer.bind(this);
-    this.handleOpenDialog = this.handleOpenDialog.bind(this);
-    this.handleCloseDialog = this.handleCloseDialog.bind(this);
+    this.handleDrawerState = this.handleDrawerState.bind(this);
   }
 
-  handleDrawer() {
+  handleDrawerState() {
+    this.props.handleDrawer();
     this.setState({
       drawerOpen: !this.state.drawerOpen,
     });
   }
-
-  handleOpenDialog() {
-    this.setState({
-      createProjectOpen: true,
-    });
-  }
-
-  handleCloseDialog() {
-    this.setState({
-      createProjectOpen: false,
-    });
-  }
-
 
   render() {
     const styles = {
@@ -50,9 +35,20 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <NewHeader styles={styles.header} handleDrawer={this.handleDrawer} />
-        <DrawerMenu drawerState={this.state.drawerOpen} handleDialog={this.handleOpenDialog} />
-        <CreateDialog dialogState={this.state.createProjectOpen} controlDialog={this.handleCloseDialog} />
+        <NewHeader
+          styles={styles.header}
+          handleDrawer={this.handleDrawerState}
+        />
+        <DrawerMenu
+          drawerState={this.props.projects.drawerIsOpen}
+          handleDialog={this.props.handleDialog}
+          projects={this.props.projects}
+        />
+        <CreateDialog
+          dialogState={this.props.projects.projectDialogIsOpen}
+          controlDialog={this.props.handleDialog}
+          createNewProject={this.props.createNewProject}
+        />
         <div style={styles.container}>
           <Card>
             <CardTitle title="Dashboard" subtitle="chart below" />
@@ -73,9 +69,13 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  branches: PropTypes.array,
-  pickBranch: PropTypes.func,
   activeBranch: PropTypes.string,
+  branches: PropTypes.array,
+  projects: PropTypes.object.isRequired,
+  pickBranch: PropTypes.func.isRequired,
+  createNewProject: PropTypes.func.isRequired,
+  handleDialog: PropTypes.func.isRequired,
+  handleDrawer: PropTypes.func.isRequired,
 };
 
 export default Dashboard;

@@ -1,4 +1,34 @@
+import { ADD_PROJECT, DRAWER_EVENT, DIALOG_EVENT } from '../actions/ProjectActions';
 
-export default function () {
-  return ['project', 'project2', 'project3', 'project4'];
-}
+const initialState = {
+  data: ['projectFindNemo', 'projectFindDory', 'projectSaveWilly', 'projectArthur'],
+  drawerIsOpen: false,
+  projectDialogIsOpen: false,
+};
+
+const createProjectReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADD_PROJECT :
+      return {
+        ...state,
+        data: [action.newProject, ...state.data],
+      };
+    case DRAWER_EVENT :
+      return {
+        ...state,
+        drawerIsOpen: !state.drawerIsOpen,
+      };
+
+    case DIALOG_EVENT :
+      return {
+        ...state,
+        projectDialogIsOpen: !state.projectDialogIsOpen,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default createProjectReducer;
+

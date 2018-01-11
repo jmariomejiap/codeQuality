@@ -11,8 +11,6 @@ import Menu from 'material-ui/svg-icons/navigation/apps';
 
 
 const DrawerMenu = (props) => {
-  let { drawerState, handleDialog } = props;
-
   const styles = {
     logo: {
       cursor: 'pointer',
@@ -37,6 +35,16 @@ const DrawerMenu = (props) => {
     },
   };
 
+  const { drawerState, handleDialog, projects } = props;
+
+  const listOfProjects = () => {
+    const list = projects.data;
+    return list.map((name) => {
+      return <ListItem key={name} style={styles.list} primaryText={name} />;
+    });
+  };
+
+
   return (
     <div>
       <Drawer
@@ -51,14 +59,8 @@ const DrawerMenu = (props) => {
             primaryText="Projects"
             primaryTogglesNestedList={true} // eslint-disable-line react/jsx-boolean-value
             style={styles.menuItem}
-            nestedItems={[
-              <ListItem style={styles.list} primaryText="project_saveTheWorld" />,
-              <ListItem style={styles.list} primaryText="project_elmo" />,
-              <ListItem style={styles.list} primaryText="project_learningToCode" />,
-              <ListItem style={styles.list} primaryText="project_codeQuality" />,
-            ]}
+            nestedItems={listOfProjects()}
             leftIcon={<Menu color={black} />}
-            /* containerElement={<Link to={menu.link}/>} */
           />
         </List>
         <Divider />
@@ -73,8 +75,9 @@ const DrawerMenu = (props) => {
 };
 
 DrawerMenu.propTypes = {
-  drawerState: PropTypes.bool,
-  handleDialog: PropTypes.func,
+  drawerState: PropTypes.bool.isRequired,
+  handleDialog: PropTypes.func.isRequired,
+  projects: PropTypes.object,
 };
 
 export default DrawerMenu;

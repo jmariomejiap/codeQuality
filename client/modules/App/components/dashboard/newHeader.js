@@ -46,13 +46,13 @@ const Header = (props) => {
           <div style={style.iconsRightContainer}>
             <IconMenu
               color={white}
+              targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
               iconButtonElement={
                 <IconButton>
                   <Settings color={white} />
                 </IconButton>
               }
-              targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
               <MenuItem style={style.labels} primaryText="Settings" containerElement={<Link to="/settings" />} />
             </IconMenu>
