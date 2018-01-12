@@ -16,11 +16,6 @@ if (typeof require.ensure !== 'function') {
   https://github.com/reactjs/react-router/issues/2182 and
   https://github.com/gaearon/react-hot-loader/issues/288 is fixed.
  */
-if (process.env.NODE_ENV !== 'production') {
-  // Require async routes only in development for react-hot-reloader to work.
-  require('./modules/Post/pages/PostListPage/PostListPage');
-  require('./modules/Post/pages/PostDetailPage/PostDetailPage');
-}
 
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
