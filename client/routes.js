@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import App from './modules/App/App';
 import Dashboard from './modules/App/dashboard';
 import Settings from './modules/App/components/settingsPage';
@@ -26,8 +26,7 @@ if (process.env.NODE_ENV !== 'production') {
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default (
   <Route path="/" component={App}>
-    <Route
-      path="/dashboard"
+    <IndexRoute
       component={Dashboard}
     />
     <Route
@@ -36,27 +35,3 @@ export default (
     />
   </Route>
 );
-
-/*
-<Route path="/" component={App}>
-    <IndexRoute
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Post/pages/PostListPage/PostListPage').default);
-        });
-      }}
-    />
-    <Route
-      path="/posts/:slug-:cuid"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Post/pages/PostDetailPage/PostDetailPage').default);
-        });
-      }}
-    />
-    <Route
-      path="/dashboard"
-      component={Dashboard}
-    />
-  </Route>
-*/

@@ -8,29 +8,28 @@ import Menu from 'material-ui/svg-icons/navigation/menu';
 import Settings from 'material-ui/svg-icons/action/settings';
 import { white, grey900 } from 'material-ui/styles/colors';
 
+const style = {
+  appBar: {
+    position: 'fixed',
+    top: 0,
+    overflow: 'hidden',
+    maxHeight: 63,
+    backgroundColor: grey900,
+  },
+  menuButton: {
+    marginLeft: 10,
+  },
+  iconsRightContainer: {
+    marginLeft: 20,
+  },
+  labels: {
+    paddingTop: 15,
+
+  },
+};
 
 const Header = (props) => {
   const { styles, handleDrawer } = props;
-
-  const style = {
-    appBar: {
-      position: 'fixed',
-      top: 0,
-      overflow: 'hidden',
-      maxHeight: 63,
-      backgroundColor: grey900,
-    },
-    menuButton: {
-      marginLeft: 10,
-    },
-    iconsRightContainer: {
-      marginLeft: 20,
-    },
-    labels: {
-      paddingTop: 15,
-
-    },
-  };
 
   return (
     <div>

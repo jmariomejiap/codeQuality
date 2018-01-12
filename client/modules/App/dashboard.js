@@ -6,67 +6,53 @@ import DrawerMenu from './components/dashboard/drawerMenu';
 import DashboardContainers from './components/dashboard/boxes';
 
 
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      drawerOpen: false,
-    };
-    this.handleDrawerState = this.handleDrawerState.bind(this);
-  }
+const Dashboard = (props) => {
+  const { projects, handleDrawer, handleDialog, branches, pickBranch, activeBranch, createNewProject } = props;
+  const { drawerIsOpen, projectDialogIsOpen, data } = projects;
 
-  handleDrawerState() {
-    this.props.handleDrawer();
-    this.setState({
-      drawerOpen: !this.state.drawerOpen,
-    });
-  }
+  const styles = {
+    header: {
+      paddingLeft: drawerIsOpen ? 260 : 0,
+    },
+    container: {
+      margin: '80px 20px 20px 15px',
+      paddingLeft: drawerIsOpen ? 260 : 0,
+    },
+  };
 
-  render() {
-    const styles = {
-      header: {
-        paddingLeft: this.state.drawerOpen ? 260 : 0,
-      },
-      container: {
-        margin: '80px 20px 20px 15px',
-        paddingLeft: this.state.drawerOpen ? 260 : 0,
-      },
-    };
-
-    return (
-      <div>
-        <NewHeader
-          styles={styles.header}
-          handleDrawer={this.handleDrawerState}
+  return (
+    <div>
+      <NewHeader
+        styles={styles.header}
+        handleDrawer={handleDrawer}
+      />
+      <DrawerMenu
+        drawerState={drawerIsOpen}
+        handleDialog={handleDialog}
+        projects={data}
+      />
+      <CreateDialog
+        dialogState={projectDialogIsOpen}
+        controlDialog={handleDialog}
+        createNewProject={createNewProject}
+      />
+      <div style={styles.container}>
+        <Card>
+          <CardTitle title="Dashboard" subtitle="chart below" />
+          <CardText>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+          </CardText>
+        </Card>
+        <DashboardContainers
+          branches={branches}
+          escojeBranch={pickBranch}
+          activeBranch={activeBranch}
         />
-        <DrawerMenu
-          drawerState={this.props.projects.drawerIsOpen}
-          handleDialog={this.props.handleDialog}
-          projects={this.props.projects}
-        />
-        <CreateDialog
-          dialogState={this.props.projects.projectDialogIsOpen}
-          controlDialog={this.props.handleDialog}
-          createNewProject={this.props.createNewProject}
-        />
-        <div style={styles.container}>
-          <Card>
-            <CardTitle title="Dashboard" subtitle="chart below" />
-            <CardText>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            </CardText>
-          </Card>
-          <DashboardContainers
-            branches={this.props.branches}
-            escojeBranch={this.props.pickBranch}
-            activeBranch={this.props.activeBranch}
-          />
-        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 Dashboard.propTypes = {
   activeBranch: PropTypes.string,

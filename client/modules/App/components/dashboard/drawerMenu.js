@@ -1,49 +1,42 @@
 import React, { PropTypes } from 'react';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
-import { spacing, typography } from 'material-ui/styles';
+import { spacing } from 'material-ui/styles';
 import { white, grey900, grey700, black, grey300 } from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
-// import {Link} from 'react-router';
-// import Avatar from 'material-ui/Avatar';
 import Add from 'material-ui/svg-icons/content/add';
 import Menu from 'material-ui/svg-icons/navigation/apps';
 
+const styles = {
+  logo: {
+    fontSize: 20,
+    color: white,
+    lineHeight: `${spacing.desktopKeylineIncrement}px`,
+    backgroundColor: grey900,
+    paddingLeft: 40,
+    height: 63,
+  },
+  menuItem: {
+    color: white,
+    fontSize: 14,
+  },
+  drawer: {
+    backgroundColor: grey700,
+  },
+  list: {
+    color: grey300,
+    fontSize: 12,
+  },
+};
 
 const DrawerMenu = (props) => {
-  const styles = {
-    logo: {
-      cursor: 'pointer',
-      fontSize: 20,
-      color: typography.textFullWhite,
-      lineHeight: `${spacing.desktopKeylineIncrement}px`,
-      fontWeight: typography.fontWeightLight,
-      backgroundColor: grey900,
-      paddingLeft: 40,
-      height: 63,
-    },
-    menuItem: {
-      color: white,
-      fontSize: 14,
-    },
-    drawer: {
-      backgroundColor: grey700,
-    },
-    list: {
-      color: grey300,
-      fontSize: 12,
-    },
-  };
-
   const { drawerState, handleDialog, projects } = props;
 
   const listOfProjects = () => {
-    const list = projects.data;
-    return list.map((name) => {
+    return projects.map((name) => {
       return <ListItem key={name} style={styles.list} primaryText={name} />;
     });
   };
-
 
   return (
     <div>
@@ -51,9 +44,7 @@ const DrawerMenu = (props) => {
         containerStyle={styles.drawer}
         open={drawerState}
       >
-        <div style={styles.logo}>
-          Menu
-        </div>
+        <div style={styles.logo}>Menu</div>
         <List>
           <ListItem
             primaryText="Projects"
@@ -66,7 +57,12 @@ const DrawerMenu = (props) => {
         <Divider />
         <div >
           <List>
-            <ListItem primaryText="Create Project" leftIcon={<Add color={black} />} style={styles.menuItem} onClick={handleDialog} />
+            <ListItem
+              primaryText="Create Project"
+              leftIcon={<Add color={black} />}
+              style={styles.menuItem}
+              onClick={handleDialog}
+            />
           </List>
         </div>
       </Drawer>
@@ -77,7 +73,7 @@ const DrawerMenu = (props) => {
 DrawerMenu.propTypes = {
   drawerState: PropTypes.bool.isRequired,
   handleDialog: PropTypes.func.isRequired,
-  projects: PropTypes.object,
+  projects: PropTypes.aray,
 };
 
 export default DrawerMenu;
