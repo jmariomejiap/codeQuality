@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './modules/App/App';
 import Dashboard from './modules/App/dashboard';
-import Settings from './modules/App/components/settingsPage';
+import Settings from './modules/App/settingsPage';
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {

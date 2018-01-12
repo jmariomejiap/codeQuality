@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import CreateDialog from './components/dashboard/createProjectDialog';
-import NewHeader from './components/dashboard/newHeader';
-import DrawerMenu from './components/dashboard/drawerMenu';
-import DashboardContainers from './components/dashboard/boxes';
+import CreateDialog from './components/dashboardComponents/createProjectDialog';
+import NewHeader from './components/dashboardComponents/newHeader';
+import DrawerMenu from './components/dashboardComponents/drawerMenu';
+import DashboardContainers from './components/dashboardComponents/boxes';
 
 
 const Dashboard = (props) => {
