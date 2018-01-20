@@ -3,7 +3,8 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import CreateDialog from './components/dashboardComponents/createProjectDialog';
 import NewHeader from './components/dashboardComponents/newHeader';
 import DrawerMenu from './components/dashboardComponents/drawerMenu';
-import DashboardContainers from './components/dashboardComponents/boxes';
+import ChartContainer from './components/dashboardComponents/chartContainer';
+import OtherContainers from './components/dashboardComponents/boxes';
 
 
 const Dashboard = (props) => {
@@ -38,24 +39,24 @@ const Dashboard = (props) => {
       />
       <div style={styles.container}>
         <Card>
-          <CardTitle title="Dashboard" subtitle="chart below" />
+          <CardTitle title="Dashboard" subtitle="subtitle" />
           <CardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+            Code Quality is a web service to help you track your code coverage over time, and ensure that all your new code is fully covered.
           </CardText>
         </Card>
-        <DashboardContainers
+        <ChartContainer
           branches={branches}
-          escojeBranch={pickBranch}
+          selectBranch={pickBranch}
           activeBranch={activeBranch}
         />
+        <OtherContainers />
       </div>
     </div>
   );
 };
 
 Dashboard.propTypes = {
-  activeBranch: PropTypes.string,
+  activeBranch: PropTypes.array,
   branches: PropTypes.array,
   projects: PropTypes.object.isRequired,
   pickBranch: PropTypes.func.isRequired,

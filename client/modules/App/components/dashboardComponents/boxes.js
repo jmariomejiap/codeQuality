@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import Timeline from 'material-ui/svg-icons/action/timeline';
 import Equalizer from 'material-ui/svg-icons/av/equalizer';
-import { white, grey400, red800 } from 'material-ui/styles/colors';
+import Group from 'material-ui/svg-icons/social/group';
+import { white, red800, blue800 } from 'material-ui/styles/colors';
+
+import { Doughnut } from 'react-chartjs-2';
+
 
 const style = {
   paperChart: {
@@ -20,43 +21,48 @@ const style = {
   },
 };
 
-const DashboardContainers = (props) => {
-  const activeBranch = props.activeBranch;
 
-  const createMenuItems = () => {
-    const branchesList = props.branches;
-    return branchesList.map((name) => {
-      return <MenuItem key={name} primaryText={name} onClick={() => props.escojeBranch(name)} />;
-    });
-  };
+const dataTeam = {
+  labels: ['Neo', 'Morpheus', 'Trinity', 'Smith', 'Oracle'],
+  datasets: [{
+    backgroundColor: [
+      '#2ecc71', // light green
+      '#3498db', // light blue
+      '#f1c40f', // yellow
+      '#e74c3c', // red
+      '#34495e', // dark grey
+    ],
+    data: [28, 19, 12, 17, 23],
+  }],
+};
 
+const DashboardContainers = () => {
   return (
     <div>
       <div >
         <Paper style={style.paperChart} zDepth={2}>
           <AppBar
-            title="Branches"
+            title="Team"
             showMenuIconButton={false}
-            style={{ height: 58, backgroundColor: '#23938c', textAlign: 'left' }}
+            style={{ height: 58, backgroundColor: red800, textAlign: 'left' }}
             titleStyle={{ fontSize: 18, color: white }}
             iconElementRight={
-              <IconMenu
-                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                iconButtonElement={
-                  <IconButton>
-                    <Timeline color={grey400} />
-                  </IconButton>
-                }
-              >
-                {createMenuItems()}
-              </IconMenu>
+              <IconButton>
+                <Group color={white} />
+              </IconButton>
             }
           />
           <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >
-            <p>chart place holder</p>
-            <p>display branch...... {(!activeBranch) ? null : activeBranch}</p>
-            <p>Im using redux to update selected branch</p>
+            <p style={{ marginBottom: 20 }}>maybe a Doughnut to display test coverage by team member</p>
+            <Doughnut
+              style={{ marginTop: 10 }}
+              data={dataTeam}
+              width={100}
+              height={50}
+              options={{
+                maintainAspectRatio: false,
+              }}
+            />
           </div>
         </Paper>
       </div>
@@ -65,21 +71,17 @@ const DashboardContainers = (props) => {
           <AppBar
             title="Activity"
             showMenuIconButton={false}
-            style={{ height: 58, backgroundColor: red800, textAlign: 'left' }}
+            style={{ height: 58, backgroundColor: blue800, textAlign: 'left' }}
             titleStyle={{ fontSize: 18, color: white }}
             iconElementRight={
-              <IconMenu
-                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                iconButtonElement={
-                  <IconButton>
-                    <Equalizer color={grey400} />
-                  </IconButton>
-                }
-              />
+              <IconButton>
+                <Equalizer color={white} />
+              </IconButton>
             }
           />
-          <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >maybe an area to display Activity</div>
+          <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >
+            maybe an area to display Activity
+          </div>
         </Paper>
       </div>
     </div>

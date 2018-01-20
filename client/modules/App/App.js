@@ -100,15 +100,15 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.object,
   branches: PropTypes.array,
-  activeBranch: PropTypes.string,
+  activeBranch: PropTypes.array,
   projects: PropTypes.object.isRequired,
 };
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
-    branches: store.branches,
-    activeBranch: store.activeBranch,
+    branches: store.branches.branches,
+    activeBranch: store.branches.activeBranch,
     projects: store.projects,
   };
 }
