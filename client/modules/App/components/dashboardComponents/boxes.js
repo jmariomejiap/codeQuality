@@ -44,7 +44,7 @@ const DashboardContainers = () => {
           <AppBar
             title="Team"
             showMenuIconButton={false}
-            style={{ height: 58, backgroundColor: red800, textAlign: 'left' }}
+            style={{ height: 58, backgroundColor: red800, textAlign: 'left', zIndex: 100 }}
             titleStyle={{ fontSize: 18, color: white }}
             iconElementRight={
               <IconButton>
@@ -71,7 +71,7 @@ const DashboardContainers = () => {
           <AppBar
             title="Activity"
             showMenuIconButton={false}
-            style={{ height: 58, backgroundColor: blue800, textAlign: 'left' }}
+            style={{ height: 58, backgroundColor: blue800, textAlign: 'left', zIndex: 100 }}
             titleStyle={{ fontSize: 18, color: white }}
             iconElementRight={
               <IconButton>

@@ -58,7 +58,7 @@ const DashboardContainers = (props) => {
           <AppBar
             title="Branches"
             showMenuIconButton={false}
-            style={{ height: 58, backgroundColor: '#23938c', textAlign: 'left' }}
+            style={{ height: 58, backgroundColor: '#23938c', textAlign: 'left', zIndex: 100 }}
             titleStyle={{ fontSize: 18, color: white }}
             iconElementRight={
               <IconMenu

@@ -10,7 +10,7 @@ import { white, grey900 } from 'material-ui/styles/colors';
 
 const style = {
   appBar: {
-    position: 'fixed',
+    position: 'fixed !important',
     top: 0,
     overflow: 'hidden',
     maxHeight: 63,
