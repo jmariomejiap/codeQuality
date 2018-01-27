@@ -1,7 +1,7 @@
 import { ADD_PROJECT, DRAWER_EVENT, DIALOG_EVENT } from '../actions/ProjectActions';
 
 const initialState = {
-  data: ['projectFindNemo', 'projectFindDory', 'projectSaveWilly', 'projectArthur'],
+  data: ['projectMatrix', 'projectFindNemo', 'projectFindDory', 'projectSaveWilly'],
   drawerIsOpen: false,
   projectDialogIsOpen: false,
 };
@@ -31,4 +31,3 @@ const createProjectReducer = (state = initialState, action) => {
 };
 
 export default createProjectReducer;
-

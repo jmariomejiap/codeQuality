@@ -22,26 +22,9 @@ const style = {
   },
 };
 
-const sampleData = {
-  labels: ['01/12/2018', '01/22/2018', '02/02/2018', '02/05/2018', '02/08/2018', '02/11/2018', '02/15/2018'],
-  datasets: [{
-    label: 'master',
-    data: [50, 69, 63, 77, 76, 80, 97],
-    backgroundColor: 'rgba(195, 60, 84, 0.69)',
-  }, {
-    label: 'develop',
-    data: [62, 69, 75, 75, 82, 83, 100],
-    backgroundColor: 'rgba(4, 90,200, 0.72)',
-  }, {
-    label: 'feature1',
-    data: [72, 79, 85, 85, 92, 93, 99],
-    backgroundColor: 'rgba(173,225,51,0.66)',
-  }],
-};
 
-
-const DashboardContainers = (props) => {
-  const activeBranch = props.activeBranch;
+const LineChart = (props) => {
+  const { activeBranch, sampleData } = props;
 
   const createMenuItems = () => {
     const branchesList = props.branches;
@@ -81,9 +64,7 @@ const DashboardContainers = (props) => {
               redraw={true} // eslint-disable-line
               width={100}
               height={50}
-              options={{
-                maintainAspectRatio: false,
-              }}
+              options={{ maintainAspectRatio: false }}
             />
           </div>
         </Paper>
@@ -92,10 +73,10 @@ const DashboardContainers = (props) => {
   );
 };
 
-DashboardContainers.propTypes = {
+LineChart.propTypes = {
   branches: PropTypes.array,
   selectBranch: PropTypes.func,
   activeBranch: PropTypes.array,
 };
 
-export default DashboardContainers;
+export default LineChart;

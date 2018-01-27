@@ -1,14 +1,27 @@
 import React, { PropTypes } from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import CreateDialog from './components/dashboardComponents/createProjectDialog';
-import NewHeader from './components/dashboardComponents/newHeader';
+import Header from './components/dashboardComponents/header';
 import DrawerMenu from './components/dashboardComponents/drawerMenu';
-import ChartContainer from './components/dashboardComponents/chartContainer';
-import OtherContainers from './components/dashboardComponents/boxes';
+import LineChart from './components/dashboardComponents/lineChart';
+import BarChart from './components/dashboardComponents/barChart';
+import DoughnutChart from './components/dashboardComponents/doughnutChart';
 
 
 const Dashboard = (props) => {
-  const { projects, handleDrawer, handleDialog, branches, pickBranch, activeBranch, createNewProject } = props;
+  const {
+    projects,
+    handleDrawer,
+    handleDialog,
+    branches,
+    pickBranch,
+    activeBranch,
+    createNewProject,
+    doughnutGraph,
+    barGraph,
+    sampleGraph,
+  } = props;
+
   const { drawerIsOpen, projectDialogIsOpen, data } = projects;
 
   const styles = {
@@ -23,7 +36,7 @@ const Dashboard = (props) => {
 
   return (
     <div>
-      <NewHeader
+      <Header
         styles={styles.header}
         handleDrawer={handleDrawer}
       />
@@ -44,20 +57,26 @@ const Dashboard = (props) => {
             Code Quality is a web service to help you track your code coverage over time, and ensure that all your new code is fully covered.
           </CardText>
         </Card>
-        <ChartContainer
+        <LineChart
           branches={branches}
           selectBranch={pickBranch}
           activeBranch={activeBranch}
+          sampleData={sampleGraph}
         />
-        <OtherContainers />
+        <DoughnutChart doughnutGraph={doughnutGraph} />
+        <BarChart barGraph={barGraph} />
       </div>
     </div>
   );
 };
 
+
 Dashboard.propTypes = {
   activeBranch: PropTypes.array,
   branches: PropTypes.array,
+  doughnutGraph: PropTypes.object,
+  barGraph: PropTypes.object,
+  sampleGraph: PropTypes.object,
   projects: PropTypes.object.isRequired,
   pickBranch: PropTypes.func.isRequired,
   createNewProject: PropTypes.func.isRequired,

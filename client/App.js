@@ -25,18 +25,3 @@ export default function App(props) {
 App.propTypes = {
   store: React.PropTypes.object.isRequired,
 };
-
-
-/*
-export default function App(props) {
-  return (
-    <Provider store={props.store}>
-      <IntlWrapper>
-        <Router history={browserHistory}>
-          {routes}
-        </Router>
-      </IntlWrapper>
-    </Provider>
-  );
-}
-*/

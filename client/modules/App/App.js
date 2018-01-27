@@ -12,7 +12,7 @@ import DevTools from './components/DevTools';
 import selectBranch from './components/actions/BranchActions';
 import { createProject, controlDrawer, controlDialog } from './components/actions/ProjectActions';
 
-
+// material-ui variables.
 const muiTheme = getMuiTheme(
   {
     palette: {},
@@ -81,6 +81,9 @@ export class App extends Component {
                   branches: this.props.branches,
                   pickBranch: this.chooseBranch,
                   activeBranch: this.props.activeBranch,
+                  doughnutGraph: this.props.doughnutGraph,
+                  barGraph: this.props.barGraph,
+                  sampleGraph: this.props.sampleGraph,
                   projects: this.props.projects,
                   createNewProject: this.createNewProject,
                   handleDialog: this.handleDialog,
@@ -101,15 +104,21 @@ App.propTypes = {
   location: PropTypes.object,
   branches: PropTypes.array,
   activeBranch: PropTypes.array,
+  doughnutGraph: PropTypes.object,
+  barGraph: PropTypes.object,
+  sampleGraph: PropTypes.object,
   projects: PropTypes.object.isRequired,
 };
 
-// Retrieve data from store as props
+// Retrieve data from store and pass them over as props
 function mapStateToProps(store) {
   return {
     branches: store.branches.branches,
     activeBranch: store.branches.activeBranch,
     projects: store.projects,
+    doughnutGraph: store.branches.doughnutGraph,
+    barGraph: store.branches.barGraph,
+    sampleGraph: store.branches.sampleGraph,
   };
 }
 
