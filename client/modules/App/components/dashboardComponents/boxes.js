@@ -6,7 +6,7 @@ import Equalizer from 'material-ui/svg-icons/av/equalizer';
 import Group from 'material-ui/svg-icons/social/group';
 import { white, red800, blue800 } from 'material-ui/styles/colors';
 
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Bar } from 'react-chartjs-2';
 
 
 const style = {
@@ -21,10 +21,41 @@ const style = {
   },
 };
 
+const dataGraphBar = {
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octorber', 'November', 'December'],
+    datasets: [{
+      backgroundColor: [
+        '#2ecc71', // light green
+        '#3498db', // light blue
+        '#f1c40f', // yellow
+        '#e74c3c', // red
+        '#34495e', // dark grey
+        '#303F9F',
+        '#2ecc71', // light green
+        '#3498db', // light blue
+        '#f1c40f', // yellow
+        '#e74c3c', // red
+        '#34495e', // dark grey
+        '#303F9F',
+      ],
+      data: [28, 19, 12, 17, 23, 13, 15, 12, 30, 40, 22, 29],
+    }],
+  },
+  options: {
+    legend: { display: false },
+    maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: 'Project ____ activity in "2017"',
+    },
+  },
+};
 
 const dataTeam = {
   labels: ['Neo', 'Morpheus', 'Trinity', 'Smith', 'Oracle'],
   datasets: [{
+    label: 'Population (millions)',
     backgroundColor: [
       '#2ecc71', // light green
       '#3498db', // light blue
@@ -59,6 +90,7 @@ const DashboardContainers = () => {
               data={dataTeam}
               width={100}
               height={50}
+              redraw={true} // eslint-disable-line
               options={{
                 maintainAspectRatio: false,
               }}
@@ -80,7 +112,13 @@ const DashboardContainers = () => {
             }
           />
           <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >
-            maybe an area to display Activity
+            <Bar
+              data={dataGraphBar.data}
+              width={100}
+              height={50}
+              options={dataGraphBar.options}
+              redraw={true} // eslint-disable-line
+            />
           </div>
         </Paper>
       </div>
