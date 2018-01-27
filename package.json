@@ -114,7 +114,7 @@
     "webpack-manifest-plugin": "1.0.1"
   },
   "engines": {
-    "node": ">=4"
+    "node": "8.9.1"
   },
   "ava": {
     "files": [
