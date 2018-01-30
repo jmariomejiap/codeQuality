@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
 import CreateDialog from './components/dashboardComponents/createProjectDialog';
 import Header from './components/dashboardComponents/header';
 import DrawerMenu from './components/dashboardComponents/drawerMenu';
 import LineChart from './components/dashboardComponents/lineChart';
 import BarChart from './components/dashboardComponents/barChart';
 import DoughnutChart from './components/dashboardComponents/doughnutChart';
+import Divider from 'material-ui/Divider/Divider';
+import { grey900, white } from 'material-ui/styles/colors';
 
 
 const Dashboard = (props) => {
@@ -29,13 +30,13 @@ const Dashboard = (props) => {
       paddingLeft: drawerIsOpen ? 260 : 0,
     },
     container: {
-      margin: '80px 20px 20px 15px',
+      margin: '60px 0px 10px 0px',
       paddingLeft: drawerIsOpen ? 260 : 0,
     },
   };
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <Header
         styles={styles.header}
         handleDrawer={handleDrawer}
@@ -51,12 +52,6 @@ const Dashboard = (props) => {
         createNewProject={createNewProject}
       />
       <div style={styles.container}>
-        <Card>
-          <CardTitle title="Dashboard" subtitle="subtitle" />
-          <CardText>
-            Code Quality is a web service to help you track your code coverage over time, and ensure that all your new code is fully covered.
-          </CardText>
-        </Card>
         <LineChart
           branches={branches}
           selectBranch={pickBranch}
@@ -64,7 +59,11 @@ const Dashboard = (props) => {
           sampleData={sampleGraph}
         />
         <DoughnutChart doughnutGraph={doughnutGraph} />
+        <Divider />
         <BarChart barGraph={barGraph} />
+      </div>
+      <div style={{ backgroundColor: grey900, height: 70, textAlign: 'center' }}>
+        <p style={{ paddingTop: 20, color: white }}>Code Quality 2018.</p>
       </div>
     </div>
   );

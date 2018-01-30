@@ -1,53 +1,29 @@
 import React, { PropTypes } from 'react';
-import AppBar from 'material-ui/AppBar';
-import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import Equalizer from 'material-ui/svg-icons/av/equalizer';
-import { white, blue800 } from 'material-ui/styles/colors';
+import Divider from 'material-ui/Divider/Divider';
 
 import { Bar } from 'react-chartjs-2';
-
-
-const style = {
-  paperChart: {
-    height: 350,
-    width: '70%',
-    backgroundColor: white,
-    marginTop: 100,
-    marginBottom: 100,
-    marginLeft: 200,
-    display: 'inline-block',
-  },
-};
+import { red900 } from 'material-ui/styles/colors';
 
 
 const BarChart = (props) => {
   const { barGraph } = props;
 
   return (
-    <div >
-      <Paper style={style.paperChart} zDepth={2}>
-        <AppBar
-          title="Activity"
-          showMenuIconButton={false}
-          style={{ height: 58, backgroundColor: blue800, textAlign: 'left', zIndex: 100 }}
-          titleStyle={{ fontSize: 18, color: white }}
-          iconElementRight={
-            <IconButton>
-              <Equalizer color={white} />
-            </IconButton>
-          }
+    <div style={{ height: '680px', marginTop: 50 }}>
+      <div style={{ textAlign: 'right', paddingRight: 50 }} >
+        <h3>Activity</h3>
+        <Divider
+          style={{ backgroundColor: red900, marginLeft: 500 }}
+          inset={true} // eslint-disable-line
         />
-        <div style={{ backgroundColor: white, height: '100%', padding: 50 }} >
-          <Bar
-            data={barGraph.data}
-            width={100}
-            height={50}
-            options={barGraph.options}
-            redraw={true} // eslint-disable-line
-          />
-        </div>
-      </Paper>
+      </div>
+      <div style={{ height: '50%', width: '70%', marginTop: 150, marginLeft: 250 }} >
+        <Bar
+          data={barGraph.data}
+          options={barGraph.options}
+          redraw={true} // eslint-disable-line
+        />
+      </div>
     </div>
   );
 };
