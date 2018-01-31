@@ -1,5 +1,5 @@
 const parseDatatoChart = (data) => {
-  const colors = ['rgba(4, 90,200, 0.72)', 'rgba(195, 60, 84, 0.69)', 'rgba(173,225,51,0.66)', 'rgba(273,225,51,0.66)'];
+  const colors = ['rgba(4, 90,200, 0.42)', 'rgba(195, 60, 84, 0.69)', 'rgba(173,225,51,0.66)', 'rgba(273,225,51,0.66)'];
   const result = { labels: [], datasets: [] };
 
   data.map((commitObject, index) => { // eslint-disable-line
@@ -18,7 +18,7 @@ const parseDatatoChart = (data) => {
       const set = {
         label: commitObject.branch,
         data: [porcentage],
-        backgroundColor: colors[index],
+        // backgroundColor: colors[index],
       };
       result.datasets.push(set);
       return null;
@@ -28,7 +28,8 @@ const parseDatatoChart = (data) => {
       if (dataSetObject.label === commitObject.branch) {
         result.datasets[i].label = commitObject.branch;
         result.datasets[i].data.push(porcentage);
-        result.datasets[i].backgroundColor = colors[i];
+        result.datasets[i].borderColor = colors[i];
+        result.datasets[i].fill = 'false';
       }
     });
   });
