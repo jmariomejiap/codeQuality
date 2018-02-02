@@ -5,7 +5,6 @@ import DrawerMenu from './components/dashboardComponents/drawerMenu';
 import LineChart from './components/dashboardComponents/lineChart';
 import BarChart from './components/dashboardComponents/barChart';
 import DoughnutChart from './components/dashboardComponents/doughnutChart';
-import Divider from 'material-ui/Divider/Divider';
 import { grey900, white } from 'material-ui/styles/colors';
 
 
@@ -31,7 +30,7 @@ const Dashboard = (props) => {
     },
     container: {
       margin: '60px 0px 10px 0px',
-      paddingLeft: drawerIsOpen ? 260 : 0,
+      paddingLeft: drawerIsOpen ? 0 : 0, // 260
     },
   };
 
@@ -59,7 +58,6 @@ const Dashboard = (props) => {
           sampleData={sampleGraph}
         />
         <DoughnutChart doughnutGraph={doughnutGraph} />
-        <Divider />
         <BarChart barGraph={barGraph} />
       </div>
       <div style={{ backgroundColor: grey900, height: 70, textAlign: 'center' }}>

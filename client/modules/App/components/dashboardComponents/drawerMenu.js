@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import { spacing } from 'material-ui/styles';
-import { white, grey900, grey700, black, grey300 } from 'material-ui/styles/colors';
+import { white, transparent } from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
 import Add from 'material-ui/svg-icons/content/add';
 import Menu from 'material-ui/svg-icons/navigation/apps';
@@ -12,7 +12,7 @@ const styles = {
     fontSize: 20,
     color: white,
     lineHeight: `${spacing.desktopKeylineIncrement}px`,
-    backgroundColor: grey900,
+    backgroundColor: transparent,
     paddingLeft: 40,
     height: 63,
   },
@@ -21,10 +21,10 @@ const styles = {
     fontSize: 14,
   },
   drawer: {
-    backgroundColor: grey700,
+    backgroundColor: '#c14f4f',
   },
   list: {
-    color: grey300,
+    color: white,
     fontSize: 12,
   },
 };
@@ -41,6 +41,7 @@ const DrawerMenu = (props) => {
   return (
     <div>
       <Drawer
+        width="15%"
         containerStyle={styles.drawer}
         open={drawerState}
       >
@@ -51,7 +52,7 @@ const DrawerMenu = (props) => {
             primaryTogglesNestedList={true} // eslint-disable-line react/jsx-boolean-value
             style={styles.menuItem}
             nestedItems={listOfProjects()}
-            leftIcon={<Menu color={black} />}
+            leftIcon={<Menu color={white} />}
           />
         </List>
         <Divider />
@@ -59,7 +60,7 @@ const DrawerMenu = (props) => {
           <List>
             <ListItem
               primaryText="Create Project"
-              leftIcon={<Add color={black} />}
+              leftIcon={<Add color={white} />}
               style={styles.menuItem}
               onClick={handleDialog}
             />

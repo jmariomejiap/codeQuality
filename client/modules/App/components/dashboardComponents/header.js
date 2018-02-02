@@ -6,7 +6,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import Settings from 'material-ui/svg-icons/action/settings';
-import { white, grey900 } from 'material-ui/styles/colors';
+import { grey900, transparent } from 'material-ui/styles/colors';
 
 const style = {
   appBar: {
@@ -14,13 +14,14 @@ const style = {
     top: 0,
     overflow: 'hidden',
     maxHeight: 63,
-    backgroundColor: grey900,
+    border: transparent,
+    backgroundColor: transparent,
   },
   menuButton: {
     marginLeft: 10,
   },
   iconsRightContainer: {
-    marginLeft: 20,
+    marginRight: 20,
   },
   labels: {
     paddingTop: 15,
@@ -35,21 +36,22 @@ const Header = (props) => {
     <div>
       <AppBar
         title="Code Quality"
+        titleStyle={{ color: '#394f59', fontFamily: 'Bangers', fontSize: 30 }}
         style={{ ...styles, ...style.appBar }}
         iconElementLeft={
           <IconButton style={style.menuButton} onClick={handleDrawer}>
-            <Menu color={white} />
+            <Menu color={grey900} />
           </IconButton>
         }
         iconElementRight={
           <div style={style.iconsRightContainer}>
             <IconMenu
-              color={white}
+              color={grey900}
               targetOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
               iconButtonElement={
                 <IconButton>
-                  <Settings color={white} />
+                  <Settings color={grey900} />
                 </IconButton>
               }
             >
