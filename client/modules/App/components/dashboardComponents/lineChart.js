@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import parseDatatoChart from '../../../../util/parseDataToChart';
 import MenuItem from 'material-ui/MenuItem';
-import Paper from 'material-ui';
+import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import Menu from 'material-ui/Menu';
 import Popover from 'material-ui/Popover';
