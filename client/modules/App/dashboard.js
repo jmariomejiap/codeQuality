@@ -30,7 +30,7 @@ const Dashboard = (props) => {
     },
     container: {
       margin: '60px 0px 10px 0px',
-      paddingLeft: drawerIsOpen ? 0 : 0, // 260
+      paddingLeft: drawerIsOpen ? 0 : 0,
     },
   };
 
