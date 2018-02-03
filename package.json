@@ -118,7 +118,8 @@
   },
   "ava": {
     "files": [
-      "server/**/tests*.js"
+      "server/**/tests*.js",
+      "client/**/tests*.js"
     ],
     "source": [
       "client/**/*.js",
