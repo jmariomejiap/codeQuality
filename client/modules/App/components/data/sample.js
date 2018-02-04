@@ -3,7 +3,7 @@ export const lineGraphSample = {
   datasets: [{
     label: 'master',
     data: [50, 69, 63, 77, 76, 80, 97],
-    backgroundColor: 'rgb(248, 233, 229)', // 'rgba(4, 90,200, 0.52)',
+    backgroundColor: '#00e4e4', // 'rgb(248, 233, 229)', // 'rgba(4, 90,200, 0.52)',
     // fill: false,
   }],
 };

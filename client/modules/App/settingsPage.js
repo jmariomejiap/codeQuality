@@ -7,6 +7,7 @@ const styles = {
   container: {
     paddingLeft: '40%',
     paddingTop: 300,
+    height: '100vh',
   },
   button: {
     marginTop: 40,

@@ -1,9 +1,10 @@
-import { ADD_PROJECT, DRAWER_EVENT, DIALOG_EVENT } from '../actions/ProjectActions';
+import { ADD_PROJECT, DRAWER_EVENT, DIALOG_EVENT, TOKEN_DIALOG_EVENT } from '../actions/ProjectActions';
 
 const initialState = {
   data: ['projectMatrix', 'projectFindNemo', 'projectFindDory', 'projectSaveWilly'],
   drawerIsOpen: false,
   projectDialogIsOpen: false,
+  tokenDialogIsOpen: true,
 };
 
 const createProjectReducer = (state = initialState, action) => {
@@ -23,6 +24,12 @@ const createProjectReducer = (state = initialState, action) => {
       return {
         ...state,
         projectDialogIsOpen: !state.projectDialogIsOpen,
+      };
+
+    case TOKEN_DIALOG_EVENT :
+      return {
+        ...state,
+        tokenDialogIsOpen: !state.tokenDialogIsOpen,
       };
 
     default:

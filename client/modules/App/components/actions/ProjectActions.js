@@ -2,6 +2,7 @@
 export const ADD_PROJECT = 'ADD_PROJECT';
 export const DRAWER_EVENT = 'DRAWER_EVENT';
 export const DIALOG_EVENT = 'DIALOG_EVENT';
+export const TOKEN_DIALOG_EVENT = 'TOKEN_DIALOG_EVENT';
 
 export function createProject(name) {
   return {
@@ -19,5 +20,11 @@ export function controlDrawer() {
 export function controlDialog() {
   return {
     type: DIALOG_EVENT,
+  };
+}
+
+export function controlTokenDialog() {
+  return {
+    type: TOKEN_DIALOG_EVENT,
   };
 }

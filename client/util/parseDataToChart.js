@@ -1,5 +1,5 @@
 const parseDatatoChart = (data) => {
-  const colors = ['#ddc0be', 'rgba(4, 90,200, 0.42)', 'rgba(195, 60, 84, 0.69)', 'rgba(173,225,51,0.66)', 'rgba(273,225,51,0.66)'];
+  const colors = ['#0c888e', 'rgba(4, 90,200, 0.42)', 'rgba(195, 60, 84, 0.69)', 'rgba(173,225,51,0.66)', 'rgba(273,225,51,0.66)'];
   const result = { labels: [], datasets: [] };
 
   data.map((commitObject, index) => { // eslint-disable-line

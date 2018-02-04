@@ -10,7 +10,7 @@ import DevTools from './components/DevTools';
 
 // Import Actions
 import selectBranch from './components/actions/BranchActions';
-import { createProject, controlDrawer, controlDialog } from './components/actions/ProjectActions';
+import { createProject, controlDrawer, controlDialog, controlTokenDialog } from './components/actions/ProjectActions';
 
 // material-ui variables.
 const muiTheme = getMuiTheme(
@@ -47,6 +47,10 @@ export class App extends Component {
     this.props.dispatch(controlDialog());
   };
 
+  handleTokenDialog = () => {
+    this.props.dispatch(controlTokenDialog());
+  }
+
   createNewProject = (name) => {
     this.props.dispatch(createProject(name));
     this.handleDialog();
@@ -54,10 +58,10 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ backgroundColor: '#FFFFFF', height: '100vh' }}>
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
         <MuiThemeProvider muiTheme={muiTheme}>
-          <div>
+          <div >
             <div>
               <Helmet
                 title="Code Quality"
@@ -75,7 +79,7 @@ export class App extends Component {
                 ]}
               />
             </div>
-            <div>
+            <div >
               {
                 React.cloneElement(this.props.children, {
                   branches: this.props.branches,
@@ -87,6 +91,7 @@ export class App extends Component {
                   projects: this.props.projects,
                   createNewProject: this.createNewProject,
                   handleDialog: this.handleDialog,
+                  handleTokenDialog: this.handleTokenDialog,
                   handleDrawer: this.handleDrawer,
                 })
               }
