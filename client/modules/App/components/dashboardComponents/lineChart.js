@@ -65,13 +65,13 @@ const options = {
 };
 
 const LineChart = (props) => {
-  const { activeBranch, sampleData } = props;
+  const { activeBranchData, sampleData } = props;
   return (
     <div style={{ height: '60vh', width: '100%', paddingLeft: 20, position: 'relative' }} >
       <div style={{ fontSize: 70, position: 'absolute', right: 40, bottom: 200, fontFamily: 'Londrina Outline', color: 'white' }}>{'89%'}</div>
       <div style={{ fontSize: 30, position: 'absolute', left: '40%', bottom: 20, fontFamily: 'Acme', color: 'white' }}>{'3 Weeks'}</div>
       <Line
-        data={(activeBranch.length === 0) ? sampleData : parseDatatoChart(activeBranch)}
+        data={(activeBranchData.length === 0) ? sampleData : parseDatatoChart(activeBranchData)}
         redraw={true} // eslint-disable-line
         width={200}
         height={500}
@@ -82,7 +82,7 @@ const LineChart = (props) => {
 };
 
 LineChart.propTypes = {
-  activeBranch: PropTypes.array,
+  activeBranchData: PropTypes.array,
   sampleData: PropTypes.object,
 };
 

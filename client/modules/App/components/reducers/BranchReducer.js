@@ -1,14 +1,14 @@
 import data from '../data/index.json';
-import { lineGraphSample, dataGraphBar, dataTeam } from '../data/sample';
-import { BRANCH_SELECTED } from '../actions/BranchActions';
+import { lineGraphSample } from '../data/sample';
+import { BRANCH_SELECTED, BRANCH_DIALOG_EVENT } from '../actions/BranchActions';
 
 const initialState = {
   branches: ['master', 'develop', 'feature1', 'feature2', 'feature3', 'feature4'],
   commitHistory: data,
-  doughnutGraph: dataTeam,
-  barGraph: dataGraphBar,
   sampleGraph: lineGraphSample,
-  activeBranch: [],
+  activeBranchData: [],
+  branchDialogIsOpen: false,
+  currentBranch: 'master',
 };
 
 // helper function.
@@ -23,20 +23,16 @@ const filterData = (state, branchName) => {
 const branchReducer = (state = initialState, action) => {
   switch (action.type) {
     case BRANCH_SELECTED:
-      if (BRANCH_SELECTED === 'all') {
-        return state;
-      }
-
-      if (BRANCH_SELECTED === 'feature4') {
-        return {
-          ...state,
-          activeBranch: filterData(state, action.payload),
-        };
-      }
-
       return {
         ...state,
-        activeBranch: filterData(state, action.payload),
+        currentBranch: action.payload,
+        activeBranchData: filterData(state, action.payload),
+      };
+
+    case BRANCH_DIALOG_EVENT :
+      return {
+        ...state,
+        branchDialogIsOpen: !state.branchDialogIsOpen,
       };
 
     default:

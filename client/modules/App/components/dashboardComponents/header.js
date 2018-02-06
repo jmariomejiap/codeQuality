@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
 import Menu from 'material-ui/svg-icons/navigation/menu';
-import { grey900, transparent } from 'material-ui/styles/colors';
+import { transparent } from 'material-ui/styles/colors';
 
 import FlatButton from 'material-ui/FlatButton';
 import CallSplit from 'material-ui/svg-icons/communication/call-split';
@@ -34,76 +32,8 @@ const style = {
 };
 
 
-class RightElements extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedBranch: 'Master',
-      popOverOpen: false,
-    };
-  }
-
-  handleClick = (event) => {
-    // This prevents ghost click.
-    event.preventDefault();
-
-    this.setState({
-      popOverOpen: !this.state.popOverOpen,
-      anchorEl: event.currentTarget,
-    });
-  };
-
-  handleRequestClose() {
-    this.setState({
-      popOverOpen: false,
-    });
-  }
-
-  handleSelectedBranch(name) {
-    this.setState({ selectedBranch: name });
-    this.props.selectBranch(name);
-  }
-
-  createMenuItems() {
-    const branchesList = this.props.branches;
-    return branchesList.map((name) => {
-      return <MenuItem key={name} primaryText={name} onClick={() => this.handleSelectedBranch(name)} />;
-    });
-  }
-
-  render() {
-    return (
-      <Toolbar style={{ backgroundColor: transparent }}>
-        <ToolbarGroup>
-          <ToolbarTitle text={'Project1'} style={{ color: '#394f59', fontFamily: 'Acme', fontSize: 19 }} />
-        </ToolbarGroup>
-        <ToolbarSeparator />
-        <ToolbarGroup>
-          <IconMenu
-            color={grey900}
-            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-            iconButtonElement={
-              <FlatButton
-                label={`Branch ${this.state.selectedBranch}`}
-                labelStyle={{ fontFamily: 'Acme', color: '#394f59', fontSize: 19, textTransform: 'none' }}
-                icon={<CallSplit color={'#394f59'} />}
-                hoverColor={transparent}
-                labelPosition="after"
-                style={{ marginTop: 0 }}
-              />
-            }
-          >
-            {this.createMenuItems()}
-          </IconMenu>
-        </ToolbarGroup>
-      </Toolbar>
-    );
-  }
-}
-
 const Header = (props) => {
-  const { styles, handleDrawer, branches, selectBranch, activeBranch } = props;
+  const { styles, handleDrawer, handleBranchDialog, currentBranch } = props;
 
   return (
     <div>
@@ -117,11 +47,23 @@ const Header = (props) => {
           </IconButton>
         }
         iconElementRight={
-          <RightElements
-            branches={branches}
-            selectBranch={selectBranch}
-            activeBranch={activeBranch}
-          />
+          <Toolbar style={{ backgroundColor: transparent }}>
+            <ToolbarGroup>
+              <ToolbarTitle text={'Project1'} style={{ color: '#394f59', fontFamily: 'Acme', fontSize: 19 }} />
+            </ToolbarGroup>
+            <ToolbarSeparator />
+            <ToolbarGroup>
+              <FlatButton
+                label={`Branch ${currentBranch}`}
+                labelStyle={{ fontFamily: 'Acme', color: '#394f59', fontSize: 19, textTransform: 'none' }}
+                icon={<CallSplit color={'#394f59'} />}
+                hoverColor={transparent}
+                labelPosition="after"
+                style={{ marginTop: 0 }}
+                onClick={handleBranchDialog}
+              />
+            </ToolbarGroup>
+          </Toolbar>
         }
       />
     </div>
@@ -131,15 +73,8 @@ const Header = (props) => {
 Header.propTypes = {
   styles: PropTypes.object,
   handleDrawer: PropTypes.func,
-  branches: PropTypes.array,
-  selectBranch: PropTypes.func,
-  activeBranch: PropTypes.array,
-};
-
-RightElements.propTypes = {
-  branches: PropTypes.array,
-  selectBranch: PropTypes.func,
-  activeBranch: PropTypes.array,
+  handleBranchDialog: PropTypes.func,
+  currentBranch: PropTypes.string,
 };
 
 export default Header;

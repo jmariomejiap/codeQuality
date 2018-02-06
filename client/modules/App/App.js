@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 
 // Import Actions
-import selectBranch from './components/actions/BranchActions';
+import { selectBranch, controlBranchDialog } from './components/actions/BranchActions';
 import { createProject, controlDrawer, controlDialog, controlTokenDialog } from './components/actions/ProjectActions';
 
 // material-ui variables.
@@ -51,6 +51,10 @@ export class App extends Component {
     this.props.dispatch(controlTokenDialog());
   }
 
+  handleBranchDialog = () => {
+    this.props.dispatch(controlBranchDialog());
+  }
+
   createNewProject = (name) => {
     this.props.dispatch(createProject(name));
     this.handleDialog();
@@ -83,16 +87,17 @@ export class App extends Component {
               {
                 React.cloneElement(this.props.children, {
                   branches: this.props.branches,
+                  currentBranch: this.props.currentBranch,
                   pickBranch: this.chooseBranch,
-                  activeBranch: this.props.activeBranch,
-                  doughnutGraph: this.props.doughnutGraph,
-                  barGraph: this.props.barGraph,
+                  activeBranchData: this.props.activeBranchData,
                   sampleGraph: this.props.sampleGraph,
                   projects: this.props.projects,
                   createNewProject: this.createNewProject,
                   handleDialog: this.handleDialog,
                   handleTokenDialog: this.handleTokenDialog,
                   handleDrawer: this.handleDrawer,
+                  branchDialogIsOpen: this.props.branchDialogIsOpen,
+                  handleBranchDialog: this.handleBranchDialog,
                 })
               }
             </div>
@@ -108,9 +113,9 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.object,
   branches: PropTypes.array,
-  activeBranch: PropTypes.array,
-  doughnutGraph: PropTypes.object,
-  barGraph: PropTypes.object,
+  currentBranch: PropTypes.string,
+  branchDialogIsOpen: PropTypes.bool,
+  activeBranchData: PropTypes.array,
   sampleGraph: PropTypes.object,
   projects: PropTypes.object.isRequired,
 };
@@ -119,10 +124,10 @@ App.propTypes = {
 function mapStateToProps(store) {
   return {
     branches: store.branches.branches,
-    activeBranch: store.branches.activeBranch,
+    activeBranchData: store.branches.activeBranchData,
+    currentBranch: store.branches.currentBranch,
+    branchDialogIsOpen: store.branches.branchDialogIsOpen,
     projects: store.projects,
-    doughnutGraph: store.branches.doughnutGraph,
-    barGraph: store.branches.barGraph,
     sampleGraph: store.branches.sampleGraph,
   };
 }

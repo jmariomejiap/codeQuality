@@ -23,7 +23,7 @@ const styles = {
     color: '#394f59',
   },
   drawer: {
-    backgroundColor: transparent, // '#c14f4f',
+    backgroundColor: transparent,
   },
   list: {
     fontSize: 12,
@@ -34,7 +34,7 @@ const styles = {
 
 
 const DrawerMenu = (props) => {
-  const { drawerState, handleDialog, projects, handleDrawer } = props;
+  const { drawerState, handleDrawer, handleDialog, projects } = props;
 
   const listOfProjects = () => {
     return projects.map((name) => {
