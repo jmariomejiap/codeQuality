@@ -1,11 +1,9 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Menu from 'material-ui/svg-icons/navigation/menu';
-import Settings from 'material-ui/svg-icons/action/settings';
 import { grey900, transparent } from 'material-ui/styles/colors';
 
 import FlatButton from 'material-ui/FlatButton';
@@ -99,21 +97,6 @@ class RightElements extends React.Component {
             {this.createMenuItems()}
           </IconMenu>
         </ToolbarGroup>
-        <ToolbarSeparator />
-        <ToolbarGroup>
-          <IconMenu
-            color={'#394f59'}
-            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-            iconButtonElement={
-              <IconButton>
-                <Settings color={'#394f59'} />
-              </IconButton>
-            }
-          >
-            <MenuItem style={style.labels} primaryText="Settings" containerElement={<Link to="/settings" />} />
-          </IconMenu>
-        </ToolbarGroup>
       </Toolbar>
     );
   }
@@ -138,7 +121,6 @@ const Header = (props) => {
             branches={branches}
             selectBranch={selectBranch}
             activeBranch={activeBranch}
-
           />
         }
       />

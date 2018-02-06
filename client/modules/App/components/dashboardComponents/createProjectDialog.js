@@ -44,11 +44,11 @@ class CreateDialog extends React.Component {
     return (
       <Dialog
         title="Create Project"
+        titleStyle={{ fontFamily: 'Acme' }}
         modal={false}
         actions={actions}
         open={this.props.dialogState}
       >
-        Here is where a project will be created.
         <br />
         <TextField
           name="newName"

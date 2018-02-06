@@ -16,13 +16,14 @@ const TokenDialog = (props) => {
 
   return (
     <Dialog
-      title="Create Project"
+      title="Success!"
+      titleStyle={{ fontFamily: 'Acme' }}
       modal={false}
       actions={actions}
       open={dialogState}
     >
-      <h3>Project created</h3>
       <h5>Your project key is:</h5>
+      <br />
       <p>xxxx-xxxx-xxxx-xxxx</p>
     </Dialog>
   );

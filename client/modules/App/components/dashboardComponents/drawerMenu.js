@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import { spacing } from 'material-ui/styles';
-import { transparent, grey700, grey800 } from 'material-ui/styles/colors';
+import { transparent } from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
 import Add from 'material-ui/svg-icons/content/add';
 import Menu from 'material-ui/svg-icons/navigation/apps';
@@ -19,18 +19,22 @@ const styles = {
   },
   menuItem: {
     fontSize: 14,
+    fontFamily: 'Acme',
+    color: '#394f59',
   },
   drawer: {
     backgroundColor: transparent, // '#c14f4f',
   },
   list: {
     fontSize: 12,
+    fontFamily: 'Acme',
+    color: '#394f59',
   },
 };
 
 
 const DrawerMenu = (props) => {
-  const { drawerState, handleDialog, projects } = props;
+  const { drawerState, handleDialog, projects, handleDrawer } = props;
 
   const listOfProjects = () => {
     return projects.map((name) => {
@@ -42,8 +46,11 @@ const DrawerMenu = (props) => {
     <div>
       <Drawer
         width="15%"
+        docked={false}
         containerStyle={styles.drawer}
         open={drawerState}
+        onRequestChange={handleDrawer}
+        overlayStyle={{ backgroundColor: transparent }}
       >
         <div style={styles.logo}>Menu</div>
         <List>
@@ -52,7 +59,7 @@ const DrawerMenu = (props) => {
             primaryTogglesNestedList={true} // eslint-disable-line react/jsx-boolean-value
             style={styles.menuItem}
             nestedItems={listOfProjects()}
-            leftIcon={<Menu color={grey800} />}
+            leftIcon={<Menu color={'#394f59'} />}
           />
         </List>
         <Divider />
@@ -60,7 +67,7 @@ const DrawerMenu = (props) => {
           <List>
             <ListItem
               primaryText="Create Project"
-              leftIcon={<Add color={grey700} />}
+              leftIcon={<Add color={'#394f59'} />}
               style={styles.menuItem}
               onClick={handleDialog}
             />
@@ -74,6 +81,7 @@ const DrawerMenu = (props) => {
 DrawerMenu.propTypes = {
   drawerState: PropTypes.bool.isRequired,
   handleDialog: PropTypes.func.isRequired,
+  handleDrawer: PropTypes.func.isRequired,
   projects: PropTypes.aray,
 };
 
