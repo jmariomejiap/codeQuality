@@ -72,7 +72,7 @@ const Header = (props) => {
             <ToolbarSeparator style={{ marginLeft: 15 }} />
             <ToolbarGroup style={{ width: '60%', paddingRight: 0, marginRight: 0 }} >
               <AutoComplete
-                hintText="Search for Branch..."
+                hintText="Select a Branch..."
                 dataSource={createMenuItems(branches)}
                 filter={AutoComplete.fuzzyFilter}
                 openOnFocus={true} // eslint-disable-line
