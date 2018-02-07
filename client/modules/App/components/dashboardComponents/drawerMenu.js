@@ -45,7 +45,7 @@ const DrawerMenu = (props) => {
   return (
     <div>
       <Drawer
-        width="15%"
+        width="13%"
         docked={false}
         containerStyle={styles.drawer}
         open={drawerState}

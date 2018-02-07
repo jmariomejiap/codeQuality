@@ -22,7 +22,7 @@ const Dashboard = (props) => {
 
   const styles = {
     header: {
-      paddingLeft: drawerIsOpen ? '16%' : 0,
+      paddingLeft: drawerIsOpen ? '14%' : 0,
     },
     container: {
       position: 'fixed',
