@@ -2,70 +2,77 @@ import React, { PropTypes } from 'react';
 import { Line } from 'react-chartjs-2';
 import parseDatatoChart from '../../../../util/parseDataToChart';
 
-const options = {
-  legend: {
-    display: false,
-  },
-  elements: {
-    line: {
-      lineTension: 1,
-    },
-  },
-  lineTension: 1,
-  tooltips: {
-    callbacks: {
-      labelTextColor: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-        return 'white';
-      },
-      // title: (tooltipItem, chart) => {
-        // return 'Custome Title';
-      // },
-      afterLabel: () => {
-        return 'afterLabel';
-      },
-      afterBody: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-        return 'afterBody';
-      },
-      beforeFooter: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-        return 'beforeFooter';
-      },
-      footer: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-        return ['Custom footer', 'another Custom footer: '];
-      },
-      afterFooter: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-        return 'afterFooter';
-      },
-    },
-  },
-  maintainAspectRatio: false,
-  scales: {
-    yAxes: [
-      {
-        gridLines: {
-          color: '#aaa',
-          borderDash: [0, 1],
-        },
-        ticks: {
-          display: false,
-          color: '#aaa',
-        },
-        display: false,
-      },
-    ],
-    xAxes: [
-      {
-        gridLines: {
-          color: '#aaa',
-          borderDash: [0, 3],
-        },
-        display: false,
-      },
-    ],
-  },
-};
 
 const LineChart = (props) => {
   const { activeBranchData, sampleData } = props;
+
+  const options = {
+    legend: {
+      display: false,
+    },
+    elements: {
+      line: {
+        lineTension: 1,
+      },
+    },
+    lineTension: 1,
+    tooltips: {
+      callbacks: {
+        labelTextColor: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
+          return 'white';
+        },
+        // title: (tooltipItem, chart) => {
+          // return 'Custome Title';
+        // },
+        // afterLabel: () => {
+          // return 'commitBy: Juan Mejia';
+        // },
+        afterBody: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
+          return 'commitBy: Juan Mejia';
+            // date: 6 February 2018
+            // commit Message: 'this is a hard coded message'
+        },
+        beforeFooter: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
+          // console.log('this is tooltipItem = ', tooltipItem);
+          return 'Committ Message: "this is a hard coded message"';
+        },
+        /*
+        footer: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
+          return ['Custom footer', 'another Custom footer: '];
+        },
+        afterFooter: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
+          return 'afterFooter';
+        },
+        */
+      },
+    },
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [
+        {
+          gridLines: {
+            color: '#aaa',
+            borderDash: [0, 1],
+          },
+          ticks: {
+            display: false,
+            color: '#aaa',
+          },
+          display: false,
+        },
+      ],
+      xAxes: [
+        {
+          gridLines: {
+            color: '#aaa',
+            borderDash: [0, 3],
+          },
+          display: false,
+        },
+      ],
+    },
+  };
+
   return (
     <div style={{ height: '60vh', width: '100%', paddingLeft: 20, position: 'relative' }} >
       <div style={{ fontSize: 70, position: 'absolute', right: 40, bottom: 200, fontFamily: 'Londrina Outline', color: 'white' }}>{'89%'}</div>
