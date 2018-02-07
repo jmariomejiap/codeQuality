@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 
 // Import Actions
-import { selectBranch, controlBranchDialog } from './components/actions/BranchActions';
+import { branchSelector } from './components/actions/BranchActions';
 import { createProject, controlDrawer, controlDialog, controlTokenDialog } from './components/actions/ProjectActions';
 
 // material-ui variables.
@@ -36,7 +36,7 @@ export class App extends Component {
   }
 
   chooseBranch = (e) => {
-    this.props.dispatch(selectBranch(e));
+    this.props.dispatch(branchSelector(e));
   }
 
   handleDrawer = () => {
@@ -49,10 +49,6 @@ export class App extends Component {
 
   handleTokenDialog = () => {
     this.props.dispatch(controlTokenDialog());
-  }
-
-  handleBranchDialog = () => {
-    this.props.dispatch(controlBranchDialog());
   }
 
   createNewProject = (name) => {
@@ -87,8 +83,7 @@ export class App extends Component {
               {
                 React.cloneElement(this.props.children, {
                   branches: this.props.branches,
-                  currentBranch: this.props.currentBranch,
-                  pickBranch: this.chooseBranch,
+                  selectBranch: this.chooseBranch,
                   activeBranchData: this.props.activeBranchData,
                   sampleGraph: this.props.sampleGraph,
                   projects: this.props.projects,
@@ -96,8 +91,6 @@ export class App extends Component {
                   handleDialog: this.handleDialog,
                   handleTokenDialog: this.handleTokenDialog,
                   handleDrawer: this.handleDrawer,
-                  branchDialogIsOpen: this.props.branchDialogIsOpen,
-                  handleBranchDialog: this.handleBranchDialog,
                 })
               }
             </div>
@@ -113,8 +106,6 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.object,
   branches: PropTypes.array,
-  currentBranch: PropTypes.string,
-  branchDialogIsOpen: PropTypes.bool,
   activeBranchData: PropTypes.array,
   sampleGraph: PropTypes.object,
   projects: PropTypes.object.isRequired,
@@ -125,8 +116,6 @@ function mapStateToProps(store) {
   return {
     branches: store.branches.branches,
     activeBranchData: store.branches.activeBranchData,
-    currentBranch: store.branches.currentBranch,
-    branchDialogIsOpen: store.branches.branchDialogIsOpen,
     projects: store.projects,
     sampleGraph: store.branches.sampleGraph,
   };

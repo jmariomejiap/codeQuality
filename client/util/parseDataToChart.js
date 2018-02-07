@@ -1,5 +1,5 @@
 const parseDatatoChart = (data) => {
-  const result = { labels: [], datasets: [{ label: '', lineTension: 0, data: [], backgroundColor: 'rgba(0, 98, 196, 0.70)' }] };
+  const result = { labels: [], datasets: [{ label: '', lineTension: 0, data: [], backgroundColor: 'rgba(0, 172, 57, 0.70)' }] };
 
   // array of objects. each object is a json-coverage commit.
   data.map((commitObject, index) => { // eslint-disable-line
@@ -16,4 +16,4 @@ const parseDatatoChart = (data) => {
 
 export default parseDatatoChart;
 
-// backgroundColor: '#0c888e'
+// 'rgba(0, 98, 196, 0.70)' blue

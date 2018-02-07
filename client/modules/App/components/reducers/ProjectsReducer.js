@@ -4,7 +4,7 @@ const initialState = {
   data: ['projectMatrix', 'projectFindNemo', 'projectFindDory', 'projectSaveWilly'],
   drawerIsOpen: false,
   projectDialogIsOpen: false,
-  tokenDialogIsOpen: true,
+  tokenDialogIsOpen: false,
 };
 
 const createProjectReducer = (state = initialState, action) => {

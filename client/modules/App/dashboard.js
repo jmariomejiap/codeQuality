@@ -4,7 +4,6 @@ import TokenDialog from './components/dashboardComponents/tokenDialog';
 import Header from './components/dashboardComponents/header';
 import DrawerMenu from './components/dashboardComponents/drawerMenu';
 import LineChart from './components/dashboardComponents/lineChart';
-import BranchDialog from './components/dashboardComponents/branchDialog';
 
 const Dashboard = (props) => {
   const {
@@ -13,10 +12,7 @@ const Dashboard = (props) => {
     handleDialog,
     handleTokenDialog,
     branches,
-    currentBranch,
-    branchDialogIsOpen,
-    handleBranchDialog,
-    pickBranch,
+    selectBranch,
     activeBranchData,
     createNewProject,
     sampleGraph,
@@ -41,8 +37,8 @@ const Dashboard = (props) => {
       <Header
         styles={styles.header}
         handleDrawer={handleDrawer}
-        handleBranchDialog={handleBranchDialog}
-        currentBranch={currentBranch}
+        branches={branches}
+        selectBranch={selectBranch}
       />
       <DrawerMenu
         drawerState={drawerIsOpen}
@@ -59,12 +55,6 @@ const Dashboard = (props) => {
         dialogState={tokenDialogIsOpen}
         controlDialog={handleTokenDialog}
       />
-      <BranchDialog
-        branches={branches}
-        selectBranch={pickBranch}
-        dialogState={branchDialogIsOpen}
-        handleBranchDialog={handleBranchDialog}
-      />
       <div style={styles.container}>
         <LineChart
           activeBranchData={activeBranchData}
@@ -79,12 +69,9 @@ const Dashboard = (props) => {
 Dashboard.propTypes = {
   activeBranchData: PropTypes.array,
   branches: PropTypes.array,
-  currentBranch: PropTypes.string,
-  branchDialogIsOpen: PropTypes.bool,
-  handleBranchDialog: PropTypes.func,
   sampleGraph: PropTypes.object,
   projects: PropTypes.object.isRequired,
-  pickBranch: PropTypes.func.isRequired,
+  selectBranch: PropTypes.func.isRequired,
   createNewProject: PropTypes.func.isRequired,
   handleDialog: PropTypes.func.isRequired,
   handleTokenDialog: PropTypes.func,

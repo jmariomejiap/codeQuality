@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
+import AutoComplete from 'material-ui/AutoComplete';
+import MenuItem from 'material-ui/MenuItem';
 import { transparent } from 'material-ui/styles/colors';
-
-import FlatButton from 'material-ui/FlatButton';
-import CallSplit from 'material-ui/svg-icons/communication/call-split';
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import Search from 'material-ui/svg-icons/action/search';
 
 
 const style = {
@@ -32,8 +32,26 @@ const style = {
 };
 
 
+// Main Component
 const Header = (props) => {
-  const { styles, handleDrawer, handleBranchDialog, currentBranch } = props;
+  const { styles, handleDrawer, branches, selectBranch } = props;
+
+  // helper Function
+  const createMenuItems = (branchesList) => {
+    return branchesList.map((name) => {
+      return {
+        text: `Branch ${name}`,
+        value: (
+          <MenuItem
+            style={{ fontFamily: 'Acme', color: '#394f59' }}
+            key={name}
+            primaryText={name}
+            onClick={() => selectBranch(name)}
+          />
+        ),
+      };
+    });
+  };
 
   return (
     <div>
@@ -49,20 +67,24 @@ const Header = (props) => {
         iconElementRight={
           <Toolbar style={{ backgroundColor: transparent }}>
             <ToolbarGroup>
-              <ToolbarTitle text={'Project1'} style={{ color: '#394f59', fontFamily: 'Acme', fontSize: 19 }} />
+              <ToolbarTitle text={'Project1'} style={{ color: '#394f59', fontFamily: 'Acme', fontSize: 19, paddingRight: 0 }} />
             </ToolbarGroup>
-            <ToolbarSeparator />
-            <ToolbarGroup>
-              <FlatButton
-                label={`Branch ${currentBranch}`}
-                labelStyle={{ fontFamily: 'Acme', color: '#394f59', fontSize: 19, textTransform: 'none' }}
-                icon={<CallSplit color={'#394f59'} />}
-                hoverColor={transparent}
-                labelPosition="after"
-                style={{ marginTop: 0 }}
-                onClick={handleBranchDialog}
+            <ToolbarSeparator style={{ marginLeft: 15 }} />
+            <ToolbarGroup style={{ width: '50%', paddingRight: 0, marginRight: 0 }} >
+              <AutoComplete
+                hintText="Search for Branch..."
+                dataSource={createMenuItems(branches)}
+                filter={AutoComplete.fuzzyFilter}
+                openOnFocus={true} // eslint-disable-line
+                fullWidth={true} // eslint-disable-line
+                style={{ paddingLeft: 10, marginBottom: 0 }}
+                listStyle={{ maxHeight: 315, overflow: 'auto', color: '#394f59' }}
+                hintStyle={{ color: '#394f59' }}
+                textFieldStyle={{ fontFamily: 'Acme', fontSize: 18, color: '#394f59' }}
+                inputStyle={{ color: '#394f59' }}
               />
             </ToolbarGroup>
+            <Search color={'#394f59'} style={{ marginTop: 16, height: 22, width: 22 }} />
           </Toolbar>
         }
       />
@@ -73,8 +95,8 @@ const Header = (props) => {
 Header.propTypes = {
   styles: PropTypes.object,
   handleDrawer: PropTypes.func,
-  handleBranchDialog: PropTypes.func,
-  currentBranch: PropTypes.string,
+  branches: PropTypes.array,
+  selectBranch: PropTypes.func,
 };
 
 export default Header;
