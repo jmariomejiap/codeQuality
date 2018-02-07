@@ -70,7 +70,7 @@ const Header = (props) => {
               <ToolbarTitle text={'Project1'} style={{ color: '#394f59', fontFamily: 'Acme', fontSize: 19, paddingRight: 0 }} />
             </ToolbarGroup>
             <ToolbarSeparator style={{ marginLeft: 15 }} />
-            <ToolbarGroup style={{ width: '50%', paddingRight: 0, marginRight: 0 }} >
+            <ToolbarGroup style={{ width: '60%', paddingRight: 0, marginRight: 0 }} >
               <AutoComplete
                 hintText="Search for Branch..."
                 dataSource={createMenuItems(branches)}
