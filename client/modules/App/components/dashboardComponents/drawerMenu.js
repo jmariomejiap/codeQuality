@@ -11,7 +11,7 @@ const styles = {
   logo: {
     fontSize: 20,
     color: '#394f59',
-    fontFamily: 'Acme',
+    fontFamily: 'Roboto Condensed',
     lineHeight: `${spacing.desktopKeylineIncrement}px`,
     backgroundColor: transparent,
     paddingLeft: 40,
@@ -19,7 +19,7 @@ const styles = {
   },
   menuItem: {
     fontSize: 14,
-    fontFamily: 'Acme',
+    fontFamily: 'Roboto Condensed',
     color: '#394f59',
   },
   drawer: {
@@ -27,14 +27,14 @@ const styles = {
   },
   list: {
     fontSize: 12,
-    fontFamily: 'Acme',
+    fontFamily: 'Roboto Condensed',
     color: '#394f59',
   },
 };
 
 
 const DrawerMenu = (props) => {
-  const { drawerState, handleDrawer, handleDialog, projects } = props;
+  const { drawerState, handleDialog, projects } = props;
 
   const listOfProjects = () => {
     return projects.map((name) => {
@@ -46,10 +46,8 @@ const DrawerMenu = (props) => {
     <div>
       <Drawer
         width="13%"
-        docked={false}
         containerStyle={styles.drawer}
         open={drawerState}
-        onRequestChange={handleDrawer}
         overlayStyle={{ backgroundColor: transparent }}
       >
         <div style={styles.logo}>Menu</div>
@@ -81,7 +79,6 @@ const DrawerMenu = (props) => {
 DrawerMenu.propTypes = {
   drawerState: PropTypes.bool.isRequired,
   handleDialog: PropTypes.func.isRequired,
-  handleDrawer: PropTypes.func.isRequired,
   projects: PropTypes.aray,
 };
 

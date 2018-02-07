@@ -43,7 +43,7 @@ const Header = (props) => {
         text: `Branch ${name}`,
         value: (
           <MenuItem
-            style={{ fontFamily: 'Acme', color: '#394f59' }}
+            style={{ fontFamily: 'Roboto Condensed', color: '#394f59' }}
             key={name}
             primaryText={name}
             onClick={() => selectBranch(name)}
@@ -67,7 +67,7 @@ const Header = (props) => {
         iconElementRight={
           <Toolbar style={{ backgroundColor: transparent }}>
             <ToolbarGroup>
-              <ToolbarTitle text={'Project1'} style={{ color: '#394f59', fontFamily: 'Acme', fontSize: 19, paddingRight: 0 }} />
+              <ToolbarTitle text={'Project1'} style={{ color: '#394f59', fontFamily: 'Roboto Condensed', fontSize: 19, paddingRight: 0 }} />
             </ToolbarGroup>
             <ToolbarSeparator style={{ marginLeft: 15 }} />
             <ToolbarGroup style={{ width: '60%', paddingRight: 0, marginRight: 0 }} >
@@ -80,7 +80,7 @@ const Header = (props) => {
                 style={{ paddingLeft: 10, marginBottom: 0 }}
                 listStyle={{ maxHeight: 315, overflow: 'auto', color: '#394f59' }}
                 hintStyle={{ color: '#394f59' }}
-                textFieldStyle={{ fontFamily: 'Acme', fontSize: 18, color: '#394f59' }}
+                textFieldStyle={{ fontFamily: 'Roboto Condensed', fontSize: 19, color: '#394f59' }}
                 inputStyle={{ color: '#394f59' }}
               />
             </ToolbarGroup>

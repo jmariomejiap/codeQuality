@@ -41,7 +41,6 @@ const Dashboard = (props) => {
       />
       <DrawerMenu
         drawerState={drawerIsOpen}
-        handleDrawer={handleDrawer}
         handleDialog={handleDialog}
         projects={data}
       />
