@@ -4,6 +4,7 @@ import TokenDialog from './components/dashboardComponents/tokenDialog';
 import Header from './components/dashboardComponents/header';
 import DrawerMenu from './components/dashboardComponents/drawerMenu';
 import LineChart from './components/dashboardComponents/lineChart';
+import EmptyProjectPage from './EmptyProject';
 
 const Dashboard = (props) => {
   const {
@@ -53,12 +54,15 @@ const Dashboard = (props) => {
         dialogState={tokenDialogIsOpen}
         controlDialog={handleTokenDialog}
       />
-      <div style={styles.container}>
-        <LineChart
-          activeBranchData={activeBranchData}
-          sampleData={sampleGraph}
-        />
-      </div>
+      {(data.length === 0) ?
+        <EmptyProjectPage /> :
+        <div style={styles.container}>
+          <LineChart
+            activeBranchData={activeBranchData}
+            sampleData={sampleGraph}
+          />
+        </div>
+      }
     </div>
   );
 };

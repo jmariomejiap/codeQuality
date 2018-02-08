@@ -79,7 +79,7 @@ export class App extends Component {
                 ]}
               />
             </div>
-            <div >
+            <div>
               {
                 React.cloneElement(this.props.children, {
                   branches: this.props.branches,
