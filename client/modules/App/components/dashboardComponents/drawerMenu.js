@@ -14,7 +14,7 @@ const styles = {
     fontFamily: 'Roboto Condensed',
     lineHeight: `${spacing.desktopKeylineIncrement}px`,
     backgroundColor: transparent,
-    paddingLeft: 40,
+    paddingLeft: 20,
     height: 63,
   },
   menuItem: {
@@ -24,6 +24,7 @@ const styles = {
   },
   drawer: {
     backgroundColor: transparent,
+    marginTop: 63,
   },
   list: {
     fontSize: 12,

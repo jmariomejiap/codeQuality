@@ -34,7 +34,7 @@ const style = {
 
 // Main Component
 const Header = (props) => {
-  const { styles, handleDrawer, branches, selectBranch } = props;
+  const { handleDrawer, branches, selectBranch } = props;
 
   // helper Function
   const createMenuItems = (branchesList) => {
@@ -58,7 +58,7 @@ const Header = (props) => {
       <AppBar
         title="Code Quality"
         titleStyle={{ color: '#394f59', fontFamily: 'Roboto Condensed', fontWeight: 700, fontSize: 30 }}
-        style={{ ...styles, ...style.appBar }}
+        style={style.appBar}
         iconElementLeft={
           <IconButton style={style.menuButton} onClick={handleDrawer}>
             <Menu color={'#394f59'} />

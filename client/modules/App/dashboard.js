@@ -22,9 +22,6 @@ const Dashboard = (props) => {
   const { drawerIsOpen, projectDialogIsOpen, tokenDialogIsOpen, data } = projects;
 
   const styles = {
-    header: {
-      paddingLeft: drawerIsOpen ? '14%' : 0,
-    },
     container: {
       position: 'fixed',
       bottom: 0,
@@ -35,7 +32,6 @@ const Dashboard = (props) => {
   return (
     <div style={{ height: '100vh' }} >
       <Header
-        styles={styles.header}
         handleDrawer={handleDrawer}
         branches={branches}
         selectBranch={selectBranch}
