@@ -24,9 +24,6 @@ const styles = {
     fontWeight: 700,
     fontSize: 30,
   },
-  menuButton: {
-    marginLeft: 10,
-  },
   menuItemsStyle: {
     color: '#394f59',
     fontFamily: 'Roboto Condensed',
@@ -96,7 +93,7 @@ const Header = (props) => {
         titleStyle={styles.appBarTitle}
         style={styles.appBar}
         iconElementLeft={
-          <IconButton style={styles.menuButton} onClick={handleDrawer}>
+          <IconButton onClick={handleDrawer}>
             <Menu color={'#394f59'} />
           </IconButton>
         }
