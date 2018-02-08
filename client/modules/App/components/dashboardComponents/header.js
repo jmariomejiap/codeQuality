@@ -57,7 +57,7 @@ const Header = (props) => {
     <div>
       <AppBar
         title="Code Quality"
-        titleStyle={{ color: '#394f59', fontFamily: 'Bangers', fontSize: 30 }}
+        titleStyle={{ color: '#394f59', fontFamily: 'Roboto Condensed', fontWeight: 700, fontSize: 30 }}
         style={{ ...styles, ...style.appBar }}
         iconElementLeft={
           <IconButton style={style.menuButton} onClick={handleDrawer}>

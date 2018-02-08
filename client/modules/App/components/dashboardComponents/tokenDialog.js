@@ -17,7 +17,7 @@ const TokenDialog = (props) => {
   return (
     <Dialog
       title="Success!"
-      titleStyle={{ fontFamily: 'Acme' }}
+      titleStyle={{ fontFamily: 'Roboto Condensed' }}
       modal={false}
       actions={actions}
       open={dialogState}

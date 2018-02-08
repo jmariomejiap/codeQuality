@@ -44,7 +44,7 @@ class CreateDialog extends React.Component {
     return (
       <Dialog
         title="Create Project"
-        titleStyle={{ fontFamily: 'Acme' }}
+        titleStyle={{ fontFamily: 'Roboto Condensed' }}
         modal={false}
         actions={actions}
         open={this.props.dialogState}

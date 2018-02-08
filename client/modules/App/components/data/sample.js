@@ -4,7 +4,7 @@ export const lineGraphSample = {
     label: 'master',
     data: [50, 69, 63, 77, 76, 80, 97],
     // backgroundColor: '#00e4e4', // 'rgb(248, 233, 229)', // 'rgba(4, 90,200, 0.52)',
-    backgroundColor: 'rgba(0, 98, 196, 0.70)',
+    backgroundColor: 'rgba(0, 172, 57, 0.70)',
     lineTension: 0,
   }],
 };

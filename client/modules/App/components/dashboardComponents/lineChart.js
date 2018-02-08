@@ -75,8 +75,8 @@ const LineChart = (props) => {
 
   return (
     <div style={{ height: '60vh', width: '100%', position: 'relative' }} >
-      <div style={{ fontSize: 70, position: 'absolute', right: 40, bottom: 200, fontFamily: 'Londrina Outline', color: 'white' }}>{'89%'}</div>
-      <div style={{ fontSize: 30, position: 'absolute', left: '40%', bottom: 20, fontFamily: 'Acme', color: 'white' }}>{'3 Weeks'}</div>
+      <div style={{ fontSize: 65, position: 'absolute', right: 40, bottom: 200, fontFamily: 'Roboto Condensed', fontWeight: 700, color: '#394f59' }}>{'89%'}</div>
+      <div style={{ fontSize: 30, position: 'absolute', left: '40%', bottom: 20, fontFamily: 'Roboto Condensed', fontWeight: 700, color: '#394f59' }}>{'3 Weeks'}</div>
       <Line
         data={(activeBranchData.length === 0) ? sampleData : parseDatatoChart(activeBranchData)}
         redraw={true} // eslint-disable-line
