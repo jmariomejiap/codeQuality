@@ -6,31 +6,37 @@ import DrawerMenu from './components/dashboardComponents/drawerMenu';
 import LineChart from './components/dashboardComponents/lineChart';
 import EmptyProjectPage from './EmptyProject';
 
+// component styles
+const styles = {
+  chartStyle: {
+    position: 'fixed',
+    bottom: 0,
+    width: '100%',
+  },
+  dashboardStyle: {
+    height: '100vh',
+  },
+};
+
+
 const Dashboard = (props) => {
   const {
+    // store props
     projects,
-    handleDrawer,
-    handleDialog,
-    handleTokenDialog,
-    branches,
-    selectBranch,
-    activeBranchData,
+    branchesData,
+    // functions
     createNewProject,
-    sampleGraph,
+    handleDrawer,
+    handleProjectDialog,
+    handleTokenDialog,
+    selectBranch,
   } = props;
 
   const { drawerIsOpen, projectDialogIsOpen, tokenDialogIsOpen, data } = projects;
-
-  const styles = {
-    container: {
-      position: 'fixed',
-      bottom: 0,
-      width: '100%',
-    },
-  };
+  const { activeBranchData, sampleGraph, branches } = branchesData;
 
   return (
-    <div style={{ height: '100vh' }} >
+    <div style={styles.dashboardStyle} >
       <Header
         handleDrawer={handleDrawer}
         branches={branches}
@@ -38,12 +44,12 @@ const Dashboard = (props) => {
       />
       <DrawerMenu
         drawerState={drawerIsOpen}
-        handleDialog={handleDialog}
+        handleDialog={handleProjectDialog}
         projects={data}
       />
       <CreateDialog
         dialogState={projectDialogIsOpen}
-        controlDialog={handleDialog}
+        controlDialog={handleProjectDialog}
         createNewProject={createNewProject}
       />
       <TokenDialog
@@ -52,7 +58,7 @@ const Dashboard = (props) => {
       />
       {(data.length === 0) ?
         <EmptyProjectPage /> :
-        <div style={styles.container}>
+        <div style={styles.chartStyle}>
           <LineChart
             activeBranchData={activeBranchData}
             sampleData={sampleGraph}
@@ -65,15 +71,13 @@ const Dashboard = (props) => {
 
 
 Dashboard.propTypes = {
-  activeBranchData: PropTypes.array,
-  branches: PropTypes.array,
-  sampleGraph: PropTypes.object,
   projects: PropTypes.object.isRequired,
-  selectBranch: PropTypes.func.isRequired,
+  branchesData: PropTypes.object,
   createNewProject: PropTypes.func.isRequired,
-  handleDialog: PropTypes.func.isRequired,
-  handleTokenDialog: PropTypes.func,
   handleDrawer: PropTypes.func.isRequired,
+  handleProjectDialog: PropTypes.func.isRequired,
+  handleTokenDialog: PropTypes.func,
+  selectBranch: PropTypes.func.isRequired,
 };
 
 export default Dashboard;

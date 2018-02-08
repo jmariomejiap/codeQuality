@@ -1,4 +1,4 @@
-import { ADD_PROJECT, DRAWER_EVENT, DIALOG_EVENT, TOKEN_DIALOG_EVENT } from '../actions/ProjectActions';
+import { ADD_PROJECT, DRAWER_EVENT, PROJECT_DIALOG_EVENT, TOKEN_DIALOG_EVENT } from '../actions/ProjectActions';
 
 const initialState = {
   data: ['projectMatrix', 'projectFindNemo', 'projectFindDory', 'projectSaveWilly'],
@@ -20,7 +20,7 @@ const createProjectReducer = (state = initialState, action) => {
         drawerIsOpen: !state.drawerIsOpen,
       };
 
-    case DIALOG_EVENT :
+    case PROJECT_DIALOG_EVENT :
       return {
         ...state,
         projectDialogIsOpen: !state.projectDialogIsOpen,

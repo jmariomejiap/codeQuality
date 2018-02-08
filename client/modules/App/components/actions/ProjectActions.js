@@ -1,7 +1,7 @@
 // Export Constant
 export const ADD_PROJECT = 'ADD_PROJECT';
 export const DRAWER_EVENT = 'DRAWER_EVENT';
-export const DIALOG_EVENT = 'DIALOG_EVENT';
+export const PROJECT_DIALOG_EVENT = 'PROJECT_DIALOG_EVENT';
 export const TOKEN_DIALOG_EVENT = 'TOKEN_DIALOG_EVENT';
 
 export function createProject(name) {
@@ -17,9 +17,9 @@ export function controlDrawer() {
   };
 }
 
-export function controlDialog() {
+export function controlProjectDialog() {
   return {
-    type: DIALOG_EVENT,
+    type: PROJECT_DIALOG_EVENT,
   };
 }
 

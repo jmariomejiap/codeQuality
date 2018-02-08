@@ -1,13 +1,12 @@
 import data from '../data/index.json';
 import { lineGraphSample } from '../data/sample';
-import { BRANCH_SELECTED, BRANCH_DIALOG_EVENT } from '../actions/BranchActions';
+import { BRANCH_SELECTED } from '../actions/BranchActions';
 
 const initialState = {
   branches: ['master', 'develop', 'feature1', 'feature2', 'feature3', 'feature4'],
   commitHistory: data,
   sampleGraph: lineGraphSample,
   activeBranchData: [],
-  branchDialogIsOpen: false,
   currentBranch: 'master',
 };
 
@@ -27,12 +26,6 @@ const branchReducer = (state = initialState, action) => {
         ...state,
         currentBranch: action.payload,
         activeBranchData: filterData(state, action.payload),
-      };
-
-    case BRANCH_DIALOG_EVENT :
-      return {
-        ...state,
-        branchDialogIsOpen: !state.branchDialogIsOpen,
       };
 
     default:

@@ -10,7 +10,7 @@ import DevTools from './components/DevTools';
 
 // Import Actions
 import { branchSelector } from './components/actions/BranchActions';
-import { createProject, controlDrawer, controlDialog, controlTokenDialog } from './components/actions/ProjectActions';
+import { createProject, controlDrawer, controlProjectDialog, controlTokenDialog } from './components/actions/ProjectActions';
 
 // material-ui variables.
 const muiTheme = getMuiTheme(
@@ -43,8 +43,8 @@ export class App extends Component {
     this.props.dispatch(controlDrawer());
   }
 
-  handleDialog = () => {
-    this.props.dispatch(controlDialog());
+  handleProjectDialog = () => {
+    this.props.dispatch(controlProjectDialog());
   };
 
   handleTokenDialog = () => {
@@ -53,7 +53,7 @@ export class App extends Component {
 
   createNewProject = (name) => {
     this.props.dispatch(createProject(name));
-    this.handleDialog();
+    this.handleProjectDialog();
   }
 
   render() {
@@ -82,15 +82,15 @@ export class App extends Component {
             <div>
               {
                 React.cloneElement(this.props.children, {
-                  branches: this.props.branches,
-                  selectBranch: this.chooseBranch,
-                  activeBranchData: this.props.activeBranchData,
-                  sampleGraph: this.props.sampleGraph,
+                  // store props
                   projects: this.props.projects,
+                  branchesData: this.props.branches,
+                  // functions
                   createNewProject: this.createNewProject,
-                  handleDialog: this.handleDialog,
-                  handleTokenDialog: this.handleTokenDialog,
                   handleDrawer: this.handleDrawer,
+                  handleProjectDialog: this.handleProjectDialog,
+                  handleTokenDialog: this.handleTokenDialog,
+                  selectBranch: this.chooseBranch,
                 })
               }
             </div>
@@ -105,19 +105,15 @@ App.propTypes = {
   children: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.object,
-  branches: PropTypes.array,
-  activeBranchData: PropTypes.array,
-  sampleGraph: PropTypes.object,
+  branches: PropTypes.object,
   projects: PropTypes.object.isRequired,
 };
 
 // Retrieve data from store and pass them over as props
 function mapStateToProps(store) {
   return {
-    branches: store.branches.branches,
-    activeBranchData: store.branches.activeBranchData,
+    branches: store.branches,
     projects: store.projects,
-    sampleGraph: store.branches.sampleGraph,
   };
 }
 

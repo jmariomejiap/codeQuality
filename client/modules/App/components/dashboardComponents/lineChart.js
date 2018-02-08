@@ -2,6 +2,32 @@ import React, { PropTypes } from 'react';
 import { Line } from 'react-chartjs-2';
 import parseDatatoChart from '../../../../util/parseDataToChart';
 
+const styles = {
+  outsideDiv: {
+    height: '60vh',
+    width: '100%',
+    position: 'relative',
+  },
+  porcentage: {
+    fontSize: 65,
+    position: 'absolute',
+    right: 40,
+    bottom: 200,
+    fontFamily: 'Roboto Condensed',
+    fontWeight: 700,
+    color: '#394f59',
+  },
+  weeksTerm: {
+    fontSize: 30,
+    position: 'absolute',
+    left: '40%',
+    bottom: 20,
+    fontFamily: 'Roboto Condensed',
+    fontWeight: 700,
+    color: '#394f59',
+  },
+};
+
 
 const LineChart = (props) => {
   const { activeBranchData, sampleData } = props;
@@ -74,9 +100,9 @@ const LineChart = (props) => {
   };
 
   return (
-    <div style={{ height: '60vh', width: '100%', position: 'relative' }} >
-      <div style={{ fontSize: 65, position: 'absolute', right: 40, bottom: 200, fontFamily: 'Roboto Condensed', fontWeight: 700, color: '#394f59' }}>{'89%'}</div>
-      <div style={{ fontSize: 30, position: 'absolute', left: '40%', bottom: 20, fontFamily: 'Roboto Condensed', fontWeight: 700, color: '#394f59' }}>{'3 Weeks'}</div>
+    <div style={styles.outsideDiv} >
+      <div style={styles.porcentage}>{'89%'}</div>
+      <div style={styles.weeksTerm}>{'3 Weeks'}</div>
       <Line
         data={(activeBranchData.length === 0) ? sampleData : parseDatatoChart(activeBranchData)}
         redraw={true} // eslint-disable-line

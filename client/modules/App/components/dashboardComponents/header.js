@@ -9,7 +9,7 @@ import { transparent } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
 
 
-const style = {
+const styles = {
   appBar: {
     position: 'fixed !important',
     top: 0,
@@ -18,16 +18,52 @@ const style = {
     border: transparent,
     backgroundColor: transparent,
   },
+  appBarTitle: {
+    color: '#394f59',
+    fontFamily: 'Roboto Condensed',
+    fontWeight: 700,
+    fontSize: 30,
+  },
   menuButton: {
     marginLeft: 10,
   },
-  iconsRightContainer: {
-    marginRight: 20,
-    position: 'absolute',
+  menuItemsStyle: {
+    color: '#394f59',
+    fontFamily: 'Roboto Condensed',
+    paddingTop: 12,
   },
-  labels: {
-    paddingTop: 15,
-
+  toolbarTitle: {
+    color: '#394f59',
+    fontFamily: 'Roboto Condensed',
+    fontSize: 19,
+    paddingRight: 0,
+  },
+  addingColor: {
+    color: '#394f59',
+  },
+  autocompleteToolGroup: {
+    width: '60%',
+    paddingRight: 0,
+    marginRight: 0,
+  },
+  autocompleteStyle: {
+    paddingLeft: 10,
+    marginBottom: 0,
+  },
+  dropdownMenu: {
+    maxHeight: 315,
+    overflow: 'auto',
+    color: '#394f59',
+  },
+  searchBranchTitle: {
+    fontFamily: 'Roboto Condensed',
+    fontSize: 19,
+    color: '#394f59',
+  },
+  searchIcon: {
+    marginTop: 16,
+    height: 22,
+    width: 22,
   },
 };
 
@@ -43,7 +79,7 @@ const Header = (props) => {
         text: `Branch ${name}`,
         value: (
           <MenuItem
-            style={{ fontFamily: 'Roboto Condensed', color: '#394f59' }}
+            style={styles.menuItemsStyle}
             key={name}
             primaryText={name}
             onClick={() => selectBranch(name)}
@@ -57,34 +93,34 @@ const Header = (props) => {
     <div>
       <AppBar
         title="Code Quality"
-        titleStyle={{ color: '#394f59', fontFamily: 'Roboto Condensed', fontWeight: 700, fontSize: 30 }}
-        style={style.appBar}
+        titleStyle={styles.appBarTitle}
+        style={styles.appBar}
         iconElementLeft={
-          <IconButton style={style.menuButton} onClick={handleDrawer}>
+          <IconButton style={styles.menuButton} onClick={handleDrawer}>
             <Menu color={'#394f59'} />
           </IconButton>
         }
         iconElementRight={
           <Toolbar style={{ backgroundColor: transparent }}>
             <ToolbarGroup>
-              <ToolbarTitle text={'Project1'} style={{ color: '#394f59', fontFamily: 'Roboto Condensed', fontSize: 19, paddingRight: 0 }} />
+              <ToolbarTitle text={'Project1'} style={styles.toolbarTitle} />
             </ToolbarGroup>
             <ToolbarSeparator style={{ marginLeft: 15 }} />
-            <ToolbarGroup style={{ width: '60%', paddingRight: 0, marginRight: 0 }} >
+            <ToolbarGroup style={styles.autocompleteToolGroup} >
               <AutoComplete
                 hintText="Select a Branch..."
                 dataSource={createMenuItems(branches)}
                 filter={AutoComplete.fuzzyFilter}
                 openOnFocus={true} // eslint-disable-line
                 fullWidth={true} // eslint-disable-line
-                style={{ paddingLeft: 10, marginBottom: 0 }}
-                listStyle={{ maxHeight: 315, overflow: 'auto', color: '#394f59' }}
-                hintStyle={{ color: '#394f59' }}
-                textFieldStyle={{ fontFamily: 'Roboto Condensed', fontSize: 19, color: '#394f59' }}
-                inputStyle={{ color: '#394f59' }}
+                style={styles.autocompleteStyle}
+                listStyle={styles.dropdownMenu}
+                hintStyle={styles.addingColor}
+                textFieldStyle={styles.searchBranchTitle}
+                inputStyle={styles.addingColor}
               />
             </ToolbarGroup>
-            <Search color={'#394f59'} style={{ marginTop: 16, height: 22, width: 22 }} />
+            <Search color={'#394f59'} style={styles.searchIcon} />
           </Toolbar>
         }
       />
@@ -93,9 +129,8 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  styles: PropTypes.object,
-  handleDrawer: PropTypes.func,
   branches: PropTypes.array,
+  handleDrawer: PropTypes.func,
   selectBranch: PropTypes.func,
 };
 

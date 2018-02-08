@@ -3,6 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 
+
 class CreateDialog extends React.Component {
   constructor(props) {
     super(props);
@@ -27,11 +28,13 @@ class CreateDialog extends React.Component {
   }
 
   render() {
+    const { controlDialog, dialogState } = this.props;
+
     const actions = [
       <FlatButton
         label="Cancel"
         primary="true"
-        onClick={this.props.controlDialog}
+        onClick={controlDialog}
       />,
       <FlatButton
         label="Submit"
@@ -47,7 +50,7 @@ class CreateDialog extends React.Component {
         titleStyle={{ fontFamily: 'Roboto Condensed' }}
         modal={false}
         actions={actions}
-        open={this.props.dialogState}
+        open={dialogState}
       >
         <br />
         <TextField
