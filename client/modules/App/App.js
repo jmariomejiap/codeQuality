@@ -36,16 +36,7 @@ export class App extends Component {
     this.props.dispatch(fetchProjects());
   }
 
-  chooseBranch = (e) => {
-    this.props.dispatch(fetchBranchCommits(this.props.projects.activeProject.projectId, e));
-  }
-
-  chooseProject = (name) => {
-    this.props.dispatch(selectProject(name));
-    // there is a problem when fetching for branches... projectId is not available
-    this.props.dispatch(fetchBranches(this.props.projects.activeProject.projectId));
-  }
-
+  // functions to handle dialogs
   handleDrawer = () => {
     this.props.dispatch(controlDrawer());
   }
@@ -58,10 +49,26 @@ export class App extends Component {
     this.props.dispatch(controlTokenDialog());
   }
 
+  // functions connect to api
   createNewProject = (name) => {
     this.props.dispatch(createProjectApi(name));
     this.handleProjectDialog();
   }
+
+  chooseProject = (name) => {
+    this.props.dispatch(selectProject(name));
+    this.findBranches(name);
+  }
+
+  chooseBranch = (e) => {
+    this.props.dispatch(fetchBranchCommits(this.props.projects.activeProject.projectId, e));
+  }
+
+  findBranches = (projectName) => {
+    const project = this.props.projects.projectsData.filter((obj) => projectName === obj.name);
+    this.props.dispatch(fetchBranches(project[0]._id));
+  }
+
 
   render() {
     return (
