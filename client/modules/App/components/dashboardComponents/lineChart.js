@@ -30,7 +30,7 @@ const styles = {
 
 
 const LineChart = (props) => {
-  const { activeBranchData, sampleData } = props;
+  const activeBranchData = props.activeBranchData;
 
   const options = {
     legend: {
@@ -104,7 +104,8 @@ const LineChart = (props) => {
       <div style={styles.porcentage}>{'89%'}</div>
       <div style={styles.weeksTerm}>{'3 Weeks'}</div>
       <Line
-        data={(activeBranchData.length === 0) ? sampleData : parseDatatoChart(activeBranchData)}
+        // data={(activeBranchData.length === 0) ? sampleData : parseDatatoChart(activeBranchData)}
+        data={(activeBranchData.length === 0) ? null : parseDatatoChart(activeBranchData)}
         redraw={true} // eslint-disable-line
         width={200}
         height={500}

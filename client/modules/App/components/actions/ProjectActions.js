@@ -56,8 +56,6 @@ export function updateProjectList(listProjects, fullResponse) {
 export function fetchProjects() {
   return (dispatch) => {
     return callApi('v1/project').then(res => {
-      // [{'project1 and data'}, ...]
-      console.log('this is the res from fetchProjects = ', res);
       const listProjects = res.projects.map((projectObject) => projectObject.name);
       dispatch(updateProjectList(listProjects, res.projects));
     });

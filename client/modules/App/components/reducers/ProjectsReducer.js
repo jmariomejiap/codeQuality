@@ -1,17 +1,24 @@
 import _ from 'lodash';
-import { RECEIVED_TOKEN, FETCHED_PROJECTS, DRAWER_EVENT, PROJECT_DIALOG_EVENT, TOKEN_DIALOG_EVENT, PROJECT_SELECTED } from '../actions/ProjectActions';
+import {
+  RECEIVED_TOKEN,
+  FETCHED_PROJECTS,
+  DRAWER_EVENT,
+  PROJECT_DIALOG_EVENT,
+  TOKEN_DIALOG_EVENT,
+  PROJECT_SELECTED,
+} from '../actions/ProjectActions';
+
 
 const initialState = {
-  // data: ['projectMatrix', 'projectFindNemo', 'projectFindDory', 'projectSaveWilly'],
   projectsName: [],
   projectsData: [],
-  projectsAvailable: {},
   drawerIsOpen: false,
   projectDialogIsOpen: false,
   tokenDialogIsOpen: false,
   tokenData: [],
   activeProject: { name: '', token: '', projectId: '' },
 };
+
 
 const createProjectReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -23,7 +30,6 @@ const createProjectReducer = (state = initialState, action) => {
       };
 
     case RECEIVED_TOKEN :
-      console.log('inside RECEIVED_TOKEN reducer: action = ', action.tokenMessage);
       return {
         ...state,
         tokenData: [action.tokenMessage],
@@ -34,7 +40,7 @@ const createProjectReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        activeProject: { name: selectedProject[0].name, token: selectedProject[0].token, projectId: selectedProject[0]._id }
+        activeProject: { name: selectedProject[0].name, token: selectedProject[0].token, projectId: selectedProject[0]._id },
       };
 
     case DRAWER_EVENT :

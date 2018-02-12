@@ -34,17 +34,15 @@ export class App extends Component {
   componentDidMount() {
     this.setState({isMounted: true}); // eslint-disable-line
     this.props.dispatch(fetchProjects());
-    // this.props.dispatch(fetchBranches(this.props.projects.activeProject.projectId)); // this.props.projects.activeProject.projectId
   }
 
   chooseBranch = (e) => {
-    // this.props.dispatch(branchSelector(e));
     this.props.dispatch(fetchBranchCommits(this.props.projects.activeProject.projectId, e));
   }
 
   chooseProject = (name) => {
-    console.log('this is the projectID name = ', this.props.projects.activeProject.projectId);
     this.props.dispatch(selectProject(name));
+    // there is a problem when fetching for branches... projectId is not available
     this.props.dispatch(fetchBranches(this.props.projects.activeProject.projectId));
   }
 
@@ -61,7 +59,6 @@ export class App extends Component {
   }
 
   createNewProject = (name) => {
-    // this.props.dispatch(createProject(name));
     this.props.dispatch(createProjectApi(name));
     this.handleProjectDialog();
   }
