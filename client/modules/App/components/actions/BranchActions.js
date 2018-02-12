@@ -40,6 +40,7 @@ export function fetchBranches(projectId) { // eslint-disable-line
         return;
       }
       dispatch(updateBranchList([]));
+      dispatch(updateSelectedBranch(undefined, []));
     });
   };
 }
