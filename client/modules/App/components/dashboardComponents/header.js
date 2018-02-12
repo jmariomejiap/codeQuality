@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import AutoComplete from 'material-ui/AutoComplete';
@@ -104,18 +105,27 @@ const Header = (props) => {
             </ToolbarGroup>
             <ToolbarSeparator style={{ marginLeft: 15 }} />
             <ToolbarGroup style={styles.autocompleteToolGroup} >
-              <AutoComplete
-                hintText="Select a Branch..."
-                dataSource={createMenuItems(branches)}
-                filter={AutoComplete.fuzzyFilter}
-                openOnFocus={true} // eslint-disable-line
-                fullWidth={true} // eslint-disable-line
-                style={styles.autocompleteStyle}
-                listStyle={styles.dropdownMenu}
-                hintStyle={styles.addingColor}
-                textFieldStyle={styles.searchBranchTitle}
-                inputStyle={styles.addingColor}
-              />
+              {
+                (branches.length === 0) ?
+                  <TextField
+                    hintText="Select a Branch..."
+                    fullWidth={true} // eslint-disable-line
+                    hintStyle={styles.searchBranchTitle}
+                    style={styles.autocompleteStyle}
+                  /> :
+                  <AutoComplete
+                    hintText="Select a Branch..."
+                    dataSource={createMenuItems(branches)}
+                    filter={AutoComplete.fuzzyFilter}
+                    openOnFocus={true} // eslint-disable-line
+                    fullWidth={true} // eslint-disable-line
+                    style={styles.autocompleteStyle}
+                    listStyle={styles.dropdownMenu}
+                    hintStyle={styles.addingColor}
+                    textFieldStyle={styles.searchBranchTitle}
+                    inputStyle={styles.addingColor}
+                  />
+              }
             </ToolbarGroup>
             <Search color={'#394f59'} style={styles.searchIcon} />
           </Toolbar>
