@@ -35,11 +35,11 @@ const styles = {
 
 
 const DrawerMenu = (props) => {
-  const { drawerState, handleDialog, projects } = props;
+  const { drawerState, handleDialog, projectsData, selectProject } = props;
 
   const listOfProjects = () => {
-    return projects.map((name) => {
-      return <ListItem key={name} style={styles.list} primaryText={name} />;
+    return projectsData.map((name) => {
+      return <ListItem key={name} style={styles.list} primaryText={name} onClick={() => selectProject(name)} />;
     });
   };
 
@@ -80,7 +80,9 @@ const DrawerMenu = (props) => {
 DrawerMenu.propTypes = {
   drawerState: PropTypes.bool.isRequired,
   handleDialog: PropTypes.func.isRequired,
-  projects: PropTypes.aray,
+  projectsData: PropTypes.aray,
+  selectProject: PropTypes.func.isRequired,
+
 };
 
 export default DrawerMenu;

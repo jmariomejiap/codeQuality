@@ -67,7 +67,7 @@ const styles = {
 
 // Main Component
 const Header = (props) => {
-  const { handleDrawer, branches, selectBranch } = props;
+  const { handleDrawer, branches, selectBranch, activeProject } = props;
 
   // helper Function
   const createMenuItems = (branchesList) => {
@@ -100,7 +100,7 @@ const Header = (props) => {
         iconElementRight={
           <Toolbar style={{ backgroundColor: transparent }}>
             <ToolbarGroup>
-              <ToolbarTitle text={'Project1'} style={styles.toolbarTitle} />
+              <ToolbarTitle text={activeProject.name} style={styles.toolbarTitle} />
             </ToolbarGroup>
             <ToolbarSeparator style={{ marginLeft: 15 }} />
             <ToolbarGroup style={styles.autocompleteToolGroup} >
@@ -129,6 +129,7 @@ Header.propTypes = {
   branches: PropTypes.array,
   handleDrawer: PropTypes.func,
   selectBranch: PropTypes.func,
+  activeProject: PropTypes.object,
 };
 
 export default Header;

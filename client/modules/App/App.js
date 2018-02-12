@@ -9,8 +9,8 @@ import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 
 // Import Actions
-import { branchSelector } from './components/actions/BranchActions';
-import { createProject, controlDrawer, controlProjectDialog, controlTokenDialog } from './components/actions/ProjectActions';
+import { fetchBranches, fetchBranchCommits } from './components/actions/BranchActions';
+import { createProjectApi, fetchProjects, controlDrawer, controlProjectDialog, controlTokenDialog, selectProject } from './components/actions/ProjectActions';
 
 // material-ui variables.
 const muiTheme = getMuiTheme(
@@ -33,10 +33,19 @@ export class App extends Component {
 
   componentDidMount() {
     this.setState({isMounted: true}); // eslint-disable-line
+    this.props.dispatch(fetchProjects());
+    // this.props.dispatch(fetchBranches(this.props.projects.activeProject.projectId)); // this.props.projects.activeProject.projectId
   }
 
   chooseBranch = (e) => {
-    this.props.dispatch(branchSelector(e));
+    // this.props.dispatch(branchSelector(e));
+    this.props.dispatch(fetchBranchCommits(this.props.projects.activeProject.projectId, e));
+  }
+
+  chooseProject = (name) => {
+    console.log('this is the projectID name = ', this.props.projects.activeProject.projectId);
+    this.props.dispatch(selectProject(name));
+    this.props.dispatch(fetchBranches(this.props.projects.activeProject.projectId));
   }
 
   handleDrawer = () => {
@@ -52,7 +61,8 @@ export class App extends Component {
   }
 
   createNewProject = (name) => {
-    this.props.dispatch(createProject(name));
+    // this.props.dispatch(createProject(name));
+    this.props.dispatch(createProjectApi(name));
     this.handleProjectDialog();
   }
 
@@ -91,6 +101,7 @@ export class App extends Component {
                   handleProjectDialog: this.handleProjectDialog,
                   handleTokenDialog: this.handleTokenDialog,
                   selectBranch: this.chooseBranch,
+                  selectProject: this.chooseProject,
                 })
               }
             </div>

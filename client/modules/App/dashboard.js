@@ -30,9 +30,10 @@ const Dashboard = (props) => {
     handleProjectDialog,
     handleTokenDialog,
     selectBranch,
+    selectProject,
   } = props;
 
-  const { drawerIsOpen, projectDialogIsOpen, tokenDialogIsOpen, data } = projects;
+  const { drawerIsOpen, projectDialogIsOpen, tokenDialogIsOpen, projectsName, tokenData, activeProject } = projects;
   const { activeBranchData, sampleGraph, branches } = branchesData;
 
   return (
@@ -41,11 +42,13 @@ const Dashboard = (props) => {
         handleDrawer={handleDrawer}
         branches={branches}
         selectBranch={selectBranch}
+        activeProject={activeProject}
       />
       <DrawerMenu
         drawerState={drawerIsOpen}
         handleDialog={handleProjectDialog}
-        projects={data}
+        projectsData={projectsName}
+        selectProject={selectProject}
       />
       <CreateDialog
         dialogState={projectDialogIsOpen}
@@ -53,10 +56,11 @@ const Dashboard = (props) => {
         createNewProject={createNewProject}
       />
       <TokenDialog
+        tokenData={tokenData}
         dialogState={tokenDialogIsOpen}
         controlDialog={handleTokenDialog}
       />
-      {(data.length === 0) ?
+      {(projectsName.length === 0) ?
         <EmptyProjectPage /> :
         <div style={styles.chartStyle}>
           <LineChart
@@ -78,6 +82,7 @@ Dashboard.propTypes = {
   handleProjectDialog: PropTypes.func.isRequired,
   handleTokenDialog: PropTypes.func,
   selectBranch: PropTypes.func.isRequired,
+  selectProject: PropTypes.func.isRequired,
 };
 
 export default Dashboard;

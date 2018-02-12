@@ -3,7 +3,7 @@ import Project from './models/project';
 import Branches from './models/branches';
 import ProjectCommits from './models/commits';
 import uuidv1 from 'uuid/v1';
-import { commitExample } from './util/commitExample';
+import commitDummyGenerator from './util/commitDummyData';
 
 
 
@@ -41,30 +41,22 @@ export default function () {
     await Branches.create(dummyBranches);
 
     const dummyCommit = [
-      {
-        projectId: projectDoc._id,
-        branch: 'develop',
-        commitDate: new Date(),
-        testCoveragePorcentage: commitExample,
-        author: 'mySelf',
-        gitCommitHash: 'adefe45a',
-      },
-      {
-        projectId: projectDoc._id,
-        branch: 'develop',
-        commitDate: new Date(),
-        testCoveragePorcentage: commitExample,
-        author: 'mySelf',
-        gitCommitHash: 'adefe45a',
-      },
-      {
-        projectId: projectDoc._id,
-        branch: 'develop',
-        commitDate: new Date(),
-        testCoveragePorcentage: commitExample,
-        author: 'mySelf',
-        gitCommitHash: 'adefe45a',
-      },
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-25T18:10:08.408+0000', 65),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-26T18:10:08.408+0000', 75),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-27T18:10:08.408+0000', 85),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-28T18:10:08.408+0000', 65),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-30T18:10:08.408+0000', 81),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-25T18:10:08.408+0000', 55),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-26T18:10:08.408+0000', 65),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-27T18:10:08.408+0000', 55),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-28T18:10:08.408+0000', 85),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-29T18:10:08.408+0000', 95),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-30T18:10:08.408+0000', 91),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-25T18:10:08.408+0000', 65),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-26T18:10:08.408+0000', 55),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-27T18:10:08.408+0000', 85),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-28T18:10:08.408+0000', 65),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-30T18:10:08.408+0000', 81),
     ];
 
     await ProjectCommits.create(dummyCommit);

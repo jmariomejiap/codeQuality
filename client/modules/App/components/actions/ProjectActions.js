@@ -1,8 +1,19 @@
+import callApi from '../../../../util/apiCaller';
+
 // Export Constant
 export const ADD_PROJECT = 'ADD_PROJECT';
 export const DRAWER_EVENT = 'DRAWER_EVENT';
 export const PROJECT_DIALOG_EVENT = 'PROJECT_DIALOG_EVENT';
 export const TOKEN_DIALOG_EVENT = 'TOKEN_DIALOG_EVENT';
+export const RECEIVED_TOKEN = 'RECEIVED_TOKEN';
+export const FETCHED_PROJECTS = 'FETCHED_PROJECTS';
+export const PROJECT_SELECTED = 'PROJECT_SELECTED';
+
+export function controlTokenDialog() {
+  return {
+    type: TOKEN_DIALOG_EVENT,
+  };
+}
 
 export function createProject(name) {
   return {
@@ -10,6 +21,7 @@ export function createProject(name) {
     newProject: name,
   };
 }
+
 
 export function controlDrawer() {
   return {
@@ -23,8 +35,50 @@ export function controlProjectDialog() {
   };
 }
 
-export function controlTokenDialog() {
+
+export function selectProject(name) {
   return {
-    type: TOKEN_DIALOG_EVENT,
+    type: PROJECT_SELECTED,
+    name,
+  };
+}
+
+
+export function updateProjectList(listProjects, fullResponse) {
+  return {
+    type: FETCHED_PROJECTS,
+    listProjects,
+    fullResponse,
+  };
+}
+
+
+export function fetchProjects() {
+  return (dispatch) => {
+    return callApi('v1/project').then(res => {
+      // [{'project1 and data'}, ...]
+      console.log('this is the res from fetchProjects = ', res);
+      const listProjects = res.projects.map((projectObject) => projectObject.name);
+      dispatch(updateProjectList(listProjects, res.projects));
+    });
+  };
+}
+
+
+export function receivedToken(tokenMessage) {
+  return {
+    type: RECEIVED_TOKEN,
+    tokenMessage,
+  };
+}
+
+export function createProjectApi(name) {
+  const body = { projectName: name };
+  return (dispatch) => {
+    return callApi('v1/project', 'post', body).then(res => {
+      dispatch(receivedToken(res));
+      dispatch(controlTokenDialog());
+      dispatch(fetchProjects());
+    });
   };
 }

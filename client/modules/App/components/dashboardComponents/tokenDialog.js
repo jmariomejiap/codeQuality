@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 
 const TokenDialog = (props) => {
-  const { controlDialog, dialogState } = props;
+  const { controlDialog, dialogState, tokenData } = props;
 
   const actions = [
     <FlatButton
@@ -24,7 +24,7 @@ const TokenDialog = (props) => {
     >
       <h5>Your project key is:</h5>
       <br />
-      <p>xxxx-xxxx-xxxx-xxxx</p>
+      <p>{(tokenData.length === 0) ? null : tokenData[0].saved.token}</p>
     </Dialog>
   );
 };
@@ -32,6 +32,7 @@ const TokenDialog = (props) => {
 TokenDialog.propTypes = {
   dialogState: PropTypes.bool,
   controlDialog: PropTypes.func,
+  tokenData: PropTypes.array,
 };
 
 export default TokenDialog;

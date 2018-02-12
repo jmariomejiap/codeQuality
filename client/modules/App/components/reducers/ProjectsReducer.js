@@ -1,19 +1,42 @@
-import { ADD_PROJECT, DRAWER_EVENT, PROJECT_DIALOG_EVENT, TOKEN_DIALOG_EVENT } from '../actions/ProjectActions';
+import _ from 'lodash';
+import { RECEIVED_TOKEN, FETCHED_PROJECTS, DRAWER_EVENT, PROJECT_DIALOG_EVENT, TOKEN_DIALOG_EVENT, PROJECT_SELECTED } from '../actions/ProjectActions';
 
 const initialState = {
-  data: ['projectMatrix', 'projectFindNemo', 'projectFindDory', 'projectSaveWilly'],
+  // data: ['projectMatrix', 'projectFindNemo', 'projectFindDory', 'projectSaveWilly'],
+  projectsName: [],
+  projectsData: [],
+  projectsAvailable: {},
   drawerIsOpen: false,
   projectDialogIsOpen: false,
   tokenDialogIsOpen: false,
+  tokenData: [],
+  activeProject: { name: '', token: '', projectId: '' },
 };
 
 const createProjectReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_PROJECT :
+    case FETCHED_PROJECTS :
       return {
         ...state,
-        data: [action.newProject, ...state.data],
+        projectsName: _.union(state.projectsName, action.listProjects),
+        projectsData: _.unionWith(state.projectsData, action.fullResponse, _.isEqual),
       };
+
+    case RECEIVED_TOKEN :
+      console.log('inside RECEIVED_TOKEN reducer: action = ', action.tokenMessage);
+      return {
+        ...state,
+        tokenData: [action.tokenMessage],
+      };
+
+    case PROJECT_SELECTED : // eslint-disable-line
+      const selectedProject = state.projectsData.filter((obj) => obj.name === action.name);
+
+      return {
+        ...state,
+        activeProject: { name: selectedProject[0].name, token: selectedProject[0].token, projectId: selectedProject[0]._id }
+      };
+
     case DRAWER_EVENT :
       return {
         ...state,
