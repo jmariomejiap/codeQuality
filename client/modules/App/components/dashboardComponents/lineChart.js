@@ -28,7 +28,15 @@ const styles = {
   },
 };
 
+// helper function
+const findScore = (arrayCommits) => {
+  const lastCommit = arrayCommits[arrayCommits.length - 1];
+  const score = lastCommit.testCoveragePorcentage.total.lines.pct;
+  return score;
+};
 
+
+// main component
 const LineChart = (props) => {
   const activeBranchData = props.activeBranchData;
 
@@ -101,10 +109,9 @@ const LineChart = (props) => {
 
   return (
     <div style={styles.outsideDiv} >
-      <div style={styles.porcentage}>{'89%'}</div>
+      <div style={styles.porcentage}>{(activeBranchData.length === 0) ? null : `${findScore(activeBranchData)}%`}</div>
       <div style={styles.weeksTerm}>{'3 Weeks'}</div>
       <Line
-        // data={(activeBranchData.length === 0) ? sampleData : parseDatatoChart(activeBranchData)}
         data={(activeBranchData.length === 0) ? null : parseDatatoChart(activeBranchData)}
         redraw={true} // eslint-disable-line
         width={200}
@@ -117,7 +124,6 @@ const LineChart = (props) => {
 
 LineChart.propTypes = {
   activeBranchData: PropTypes.array,
-  sampleData: PropTypes.object,
 };
 
 export default LineChart;

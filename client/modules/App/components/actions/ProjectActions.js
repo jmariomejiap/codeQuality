@@ -9,21 +9,13 @@ export const RECEIVED_TOKEN = 'RECEIVED_TOKEN';
 export const FETCHED_PROJECTS = 'FETCHED_PROJECTS';
 export const PROJECT_SELECTED = 'PROJECT_SELECTED';
 export const UPDATE_NEXT_ACTION = 'UPDATE_NEXT_ACTION';
-
+export const PROJECT_DURATION = 'PROJECT_DURATION';
 
 export function controlTokenDialog() {
   return {
     type: TOKEN_DIALOG_EVENT,
   };
 }
-
-export function createProject(name) {
-  return {
-    type: ADD_PROJECT,
-    newProject: name,
-  };
-}
-
 
 export function controlDrawer() {
   return {
@@ -38,6 +30,13 @@ export function controlProjectDialog() {
 }
 
 
+export function createProject(name) {
+  return {
+    type: ADD_PROJECT,
+    newProject: name,
+  };
+}
+
 export function selectProject(name) {
   return {
     type: PROJECT_SELECTED,
@@ -45,6 +44,12 @@ export function selectProject(name) {
   };
 }
 
+export function findProjectDuration(name) {
+  return {
+    type: PROJECT_DURATION,
+    name,
+  };
+}
 
 export function updateProjectList(listProjects, fullResponse) {
   return {
@@ -53,7 +58,6 @@ export function updateProjectList(listProjects, fullResponse) {
     fullResponse,
   };
 }
-
 
 export function fetchProjects() {
   return (dispatch) => {

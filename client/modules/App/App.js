@@ -17,6 +17,7 @@ import {
   controlTokenDialog,
   selectProject,
   // updateNextAction,
+  // findProjectDuration,
 } from './components/actions/ProjectActions';
 
 import { fetchBranches, fetchBranchCommits } from './components/actions/BranchActions';
@@ -84,6 +85,7 @@ export class App extends Component {
     this.props.dispatch(selectProject(name));
     // this.props.dispatch(updateNextAction('FETCH_BRANCHES'));
     this.findBranches(name);
+    this.getProjectDuration(name);
   }
 
   chooseBranch = (e) => {
@@ -95,7 +97,13 @@ export class App extends Component {
     this.props.dispatch(fetchBranches(project[0]._id));
   }
 
+  /*
+  getProjectDuration = (projectName) => {
+    const project = this.props.projects.projectsData.filter((obj) => projectName === obj.name);
 
+    // this.props.dispatch(findProjectDuration(name));
+  }
+*/
   render() {
     return (
       <div style={{ backgroundColor: '#FFFFFF', height: '100vh' }}>
