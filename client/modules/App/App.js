@@ -9,8 +9,18 @@ import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 
 // Import Actions
+import {
+  createProjectApi,
+  fetchProjects,
+  controlDrawer,
+  controlProjectDialog,
+  controlTokenDialog,
+  selectProject,
+  // updateNextAction,
+} from './components/actions/ProjectActions';
+
 import { fetchBranches, fetchBranchCommits } from './components/actions/BranchActions';
-import { createProjectApi, fetchProjects, controlDrawer, controlProjectDialog, controlTokenDialog, selectProject } from './components/actions/ProjectActions';
+
 
 // material-ui variables.
 const muiTheme = getMuiTheme(
@@ -36,6 +46,21 @@ export class App extends Component {
     this.props.dispatch(fetchProjects());
   }
 
+  componentDidUpdate(prevProps, prevState) { // eslint-disable-line
+    /*
+    console.log('prevProps =', prevProps.projects);
+    console.log('prevState = ', prevState);
+    const nextAction = prevProps.projects.nextAction;
+    const projectId = prevProps.projects.activeProject.projectId;
+    console.log('nextAction = ', nextAction);
+    console.log('and projectId = ', projectId);
+    if (nextAction === 'FETCH_BRANCHES') {
+      this.props.dispatch(fetchBranches(projectId));
+      this.props.dispatch(updateNextAction('DONE'));
+    }
+    */
+  }
+
   // functions to handle dialogs
   handleDrawer = () => {
     this.props.dispatch(controlDrawer());
@@ -57,6 +82,7 @@ export class App extends Component {
 
   chooseProject = (name) => {
     this.props.dispatch(selectProject(name));
+    // this.props.dispatch(updateNextAction('FETCH_BRANCHES'));
     this.findBranches(name);
   }
 

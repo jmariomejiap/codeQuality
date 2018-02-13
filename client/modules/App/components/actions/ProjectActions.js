@@ -8,6 +8,8 @@ export const TOKEN_DIALOG_EVENT = 'TOKEN_DIALOG_EVENT';
 export const RECEIVED_TOKEN = 'RECEIVED_TOKEN';
 export const FETCHED_PROJECTS = 'FETCHED_PROJECTS';
 export const PROJECT_SELECTED = 'PROJECT_SELECTED';
+export const UPDATE_NEXT_ACTION = 'UPDATE_NEXT_ACTION';
+
 
 export function controlTokenDialog() {
   return {
@@ -78,5 +80,12 @@ export function createProjectApi(name) {
       dispatch(controlTokenDialog());
       dispatch(fetchProjects());
     });
+  };
+}
+
+export function updateNextAction(name) {
+  return {
+    type: UPDATE_NEXT_ACTION,
+    name,
   };
 }
