@@ -7,6 +7,7 @@ import {
   TOKEN_DIALOG_EVENT,
   PROJECT_SELECTED,
   UPDATE_NEXT_ACTION,
+  PROJECT_DURATION,
 } from '../actions/ProjectActions';
 
 
@@ -19,6 +20,7 @@ const initialState = {
   tokenData: [],
   activeProject: { name: '', token: '', projectId: '' },
   nextAction: '',
+  durationWeeks: -1,
 };
 
 
@@ -31,19 +33,27 @@ const createProjectReducer = (state = initialState, action) => {
         projectsData: _.unionWith(state.projectsData, action.fullResponse, _.isEqual),
       };
 
+
     case RECEIVED_TOKEN :
       return {
         ...state,
         tokenData: [action.tokenMessage],
       };
 
+
     case PROJECT_SELECTED : // eslint-disable-line
       const selectedProject = state.projectsData.filter((obj) => obj.name === action.name);
-
       return {
         ...state,
         activeProject: { name: selectedProject[0].name, token: selectedProject[0].token, projectId: selectedProject[0]._id },
         nextAction: 'FETCH_BRANCHES',
+      };
+
+
+    case PROJECT_DURATION :
+      return {
+        ...state,
+        durationWeeks: action.duration,
       };
 
 
@@ -53,17 +63,20 @@ const createProjectReducer = (state = initialState, action) => {
         nextAction: action.name,
       };
 
+
     case DRAWER_EVENT :
       return {
         ...state,
         drawerIsOpen: !state.drawerIsOpen,
       };
 
+
     case PROJECT_DIALOG_EVENT :
       return {
         ...state,
         projectDialogIsOpen: !state.projectDialogIsOpen,
       };
+
 
     case TOKEN_DIALOG_EVENT :
       return {

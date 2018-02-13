@@ -38,7 +38,7 @@ const findScore = (arrayCommits) => {
 
 // main component
 const LineChart = (props) => {
-  const activeBranchData = props.activeBranchData;
+  const { activeBranchData, durationWeeks } = props;
 
   const options = {
     legend: {
@@ -110,7 +110,7 @@ const LineChart = (props) => {
   return (
     <div style={styles.outsideDiv} >
       <div style={styles.porcentage}>{(activeBranchData.length === 0) ? null : `${findScore(activeBranchData)}%`}</div>
-      <div style={styles.weeksTerm}>{'3 Weeks'}</div>
+      <div style={styles.weeksTerm}>{(durationWeeks === -1) ? null : `${durationWeeks} Weeks`}</div>
       <Line
         data={(activeBranchData.length === 0) ? null : parseDatatoChart(activeBranchData)}
         redraw={true} // eslint-disable-line
@@ -124,6 +124,7 @@ const LineChart = (props) => {
 
 LineChart.propTypes = {
   activeBranchData: PropTypes.array,
+  durationWeeks: PropTypes.number,
 };
 
 export default LineChart;

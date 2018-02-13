@@ -44,10 +44,10 @@ export function selectProject(name) {
   };
 }
 
-export function findProjectDuration(name) {
+export function findProjectDuration(duration) {
   return {
     type: PROJECT_DURATION,
-    name,
+    duration,
   };
 }
 
