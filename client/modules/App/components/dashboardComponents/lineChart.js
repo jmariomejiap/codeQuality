@@ -34,6 +34,13 @@ const findScore = (arrayCommits) => {
   const score = lastCommit.testCoveragePorcentage.total.lines.pct;
   return score;
 };
+// helper function
+const findTooltipData = (arrayCommits, positionTooltip) => {
+  const currentCommitObject = arrayCommits[positionTooltip];
+  return {
+    author: currentCommitObject.author,
+  };
+};
 
 
 // main component
@@ -62,7 +69,8 @@ const LineChart = (props) => {
           // return 'commitBy: Juan Mejia';
         // },
         afterBody: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-          return 'commitBy: Juan Mejia';
+          const result = findTooltipData(activeBranchData, tooltipItem[0].index);
+          return `commitBy: ${result.author}`;
             // date: 6 February 2018
             // commit Message: 'this is a hard coded message'
         },
