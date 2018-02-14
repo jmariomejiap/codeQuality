@@ -39,6 +39,7 @@ const findTooltipData = (arrayCommits, positionTooltip) => {
   const currentCommitObject = arrayCommits[positionTooltip];
   return {
     author: currentCommitObject.author,
+    message: currentCommitObject.message,
   };
 };
 
@@ -76,7 +77,8 @@ const LineChart = (props) => {
         },
         beforeFooter: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
           // console.log('this is tooltipItem = ', tooltipItem);
-          return 'Committ Message: "this is a hard coded message"';
+          const result = findTooltipData(activeBranchData, tooltipItem[0].index);
+          return `Message: ${result.message}`;
         },
         /*
         footer: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
