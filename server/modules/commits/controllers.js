@@ -9,9 +9,10 @@ const validateParams = (req, res, next) => {
   const author = req.body.author;
   const branch = req.body.branch;
   const commitHash = req.body.commitHash;
-  const message = req.body.message; // added
+  const message = req.body.message;
+  const date = req.body.date;
 
-  if (!token || !commitJson || !author || !branch || !commitHash || !message) {
+  if (!token || !commitJson || !author || !branch || !commitHash || !message || !date) {
     return res.status(404).json({ result: 'error', error: 'missing_params' });
   }
 
@@ -77,11 +78,11 @@ const createRecord = async (req, res, next) => {
   const commit = {
     projectId: req.projectDoc._id,
     branch: req.body.branch,
-    commitDate: new Date(), // date should come from CLI
+    commitDate: req.body.date,
     testCoveragePorcentage: req.coverage,
     author: req.body.author,
     gitCommitHash: req.body.commitHash,
-    message: req.body.message, // added
+    message: req.body.message,
   };
 
   try {
