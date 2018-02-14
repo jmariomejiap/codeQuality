@@ -68,7 +68,7 @@ test('should fail if token or commitJson are missing, or any of the required par
 test('should fail if token doesnt belong to any project', async (t) => {
   const res = await internals.reqAgent
     .post('/api/v1/commit')
-    .send({ token: internals.tokenExample, branch: 'develop', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h' });
+    .send({ token: internals.tokenExample, branch: 'develop', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h', message: 'dummy commit message' });
 
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
@@ -81,7 +81,7 @@ test('should create a new branch if not available', async (t) => {
 
   await internals.reqAgent
     .post('/api/v1/commit')
-    .send({ token: projectDoc[0].token, branch: 'featureBranch2', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h' });
+    .send({ token: projectDoc[0].token, branch: 'featureBranch2', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h', message: 'dummy commit message' });
 
   const newBranchesDoc = await Branches.find({});
 
@@ -94,7 +94,7 @@ test('should Not Create a new branch if already exists', async (t) => {
 
   await internals.reqAgent
     .post('/api/v1/commit')
-    .send({ projectId: projectDoc[0]._id, branch: 'develop', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h' });
+    .send({ projectId: projectDoc[0]._id, branch: 'develop', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h', message: 'dummy commit message' });
 
   const newBranchesDoc = await Branches.find({});
 
@@ -107,7 +107,7 @@ test('should fail if commit JSON is incomplete', async (t) => {
 
   const res = await internals.reqAgent
     .post('/api/v1/commit')
-    .send({ token: projectDoc[0].token, branch: 'develop', commitJson: internals.invalidCommitJson, author: 'jm', commitHash: 'ad345234h' });
+    .send({ token: projectDoc[0].token, branch: 'develop', commitJson: internals.invalidCommitJson, author: 'jm', commitHash: 'ad345234h', message: 'dummy commit message' });
 
   t.is(res.status, 404);
   t.is(res.body.result, 'error');
@@ -120,7 +120,7 @@ test('should create a new commit record', async (t) => {
 
   const res = await internals.reqAgent
     .post('/api/v1/commit')
-    .send({ token: projectDoc[0].token, branch: 'develop', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h' });
+    .send({ token: projectDoc[0].token, branch: 'develop', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h', message: 'dummy commit message' });
 
   const newBranchesDoc = await Branches.find({});
   const projectCommitDoc = await ProjectCommits.find({});
@@ -136,7 +136,7 @@ test('should update projects date', async (t) => {
 
   const res = await internals.reqAgent
     .post('/api/v1/commit')
-    .send({ token: projectDocStart[0].token, branch: 'develop', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h' });
+    .send({ token: projectDocStart[0].token, branch: 'develop', commitJson: internals.commitExJson, author: 'jm', commitHash: 'ad345234h', message: 'dummy commit message' });
 
   t.is(res.status, 200);
 });

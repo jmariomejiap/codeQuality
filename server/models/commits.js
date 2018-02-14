@@ -9,6 +9,7 @@ const projectCommits = new Schema({
   testCoveragePorcentage: { type: Object, require: true },
   author: { type: String, require: true },
   gitCommitHash: { type: String, require: true },
+  message: { type: String, require: true },
 });
 
 export default mongoose.model('ProjectCommits', projectCommits);

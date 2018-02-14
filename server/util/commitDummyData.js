@@ -41,6 +41,7 @@ const commitDummyGenerator = (projectId, branchName, date, commitTotal, author =
     },
     author,
     gitCommitHash: 'dummyHash',
+    message: 'dummy commit message',
   };
 };
 
