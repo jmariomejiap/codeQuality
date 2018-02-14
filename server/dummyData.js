@@ -41,22 +41,22 @@ export default function () {
     await Branches.create(dummyBranches);
 
     const dummyCommit = [
-      commitDummyGenerator(projectDoc._id, 'master', '2017-12-25T18:10:08.408+0000', 65),
-      commitDummyGenerator(projectDoc._id, 'master', '2017-12-26T18:10:08.408+0000', 75),
-      commitDummyGenerator(projectDoc._id, 'master', '2017-12-27T18:10:08.408+0000', 85),
-      commitDummyGenerator(projectDoc._id, 'master', '2017-12-28T18:10:08.408+0000', 65),
-      commitDummyGenerator(projectDoc._id, 'master', '2017-12-30T18:10:08.408+0000', 81),
-      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-25T18:10:08.408+0000', 55),
-      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-26T18:10:08.408+0000', 65),
-      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-27T18:10:08.408+0000', 55),
-      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-28T18:10:08.408+0000', 85),
-      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-29T18:10:08.408+0000', 95),
-      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-30T18:10:08.408+0000', 91),
-      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-25T18:10:08.408+0000', 65),
-      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-26T18:10:08.408+0000', 55),
-      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-27T18:10:08.408+0000', 85),
-      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-28T18:10:08.408+0000', 65),
-      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-30T18:10:08.408+0000', 81),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-25T18:10:08.408+0000', 65, undefined),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-26T18:10:08.408+0000', 75, undefined, 'cool!!!'),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-27T18:10:08.408+0000', 85, 'seniorDev', 'everything works'),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-28T18:10:08.408+0000', 65, undefined),
+      commitDummyGenerator(projectDoc._id, 'master', '2017-12-30T18:10:08.408+0000', 81, 'seniorDev'),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-25T18:10:08.408+0000', 55, 'juniorDev', 'first try'),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-26T18:10:08.408+0000', 65, undefined),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-27T18:10:08.408+0000', 55, 'seniorDev', 'super cool!!'),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-28T18:10:08.408+0000', 85, undefined),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-29T18:10:08.408+0000', 95, undefined, 'improving code'),
+      commitDummyGenerator(projectDoc._id, 'develop', '2017-12-30T18:10:08.408+0000', 91, undefined),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-25T18:10:08.408+0000', 65, undefined),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-26T18:10:08.408+0000', 55, undefined, 'bug fixed!!'),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-27T18:10:08.408+0000', 85, 'seniorDev', 'improving tests'),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-28T18:10:08.408+0000', 65, 'juniorDev', 'making things worse'),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-30T18:10:08.408+0000', 81, undefined),
     ];
 
     await ProjectCommits.create(dummyCommit);

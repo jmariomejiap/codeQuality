@@ -1,5 +1,5 @@
 
-const commitDummyGenerator = (projectId, branchName, date, commitTotal, author = 'dummyAuthor') => {
+const commitDummyGenerator = (projectId, branchName, date, commitTotal, author = 'dummyAuthor', message = 'dummy') => {
   return {
     projectId,
     branch: branchName,
@@ -41,7 +41,7 @@ const commitDummyGenerator = (projectId, branchName, date, commitTotal, author =
     },
     author,
     gitCommitHash: 'dummyHash',
-    message: 'dummy commit message',
+    message: `commit message: ${message}`,
   };
 };
 
