@@ -5,7 +5,7 @@ const parseDatatoChart = (data) => {
   data.map((commitObject, index) => { // eslint-disable-line
     const splitDate = commitObject.commitDate.slice(0, -1).split('T');
     const date = splitDate[0];
-    const porcentage = commitObject.testCoveragePorcentage.total.lines.pct;
+    const porcentage = commitObject.testCoveragePorcentage.lines.pct;
 
     result.labels.push(date);
     result.datasets[0].label = commitObject.branch;

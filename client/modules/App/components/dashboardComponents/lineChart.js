@@ -31,7 +31,7 @@ const styles = {
 // helper function
 const findScore = (arrayCommits) => {
   const lastCommit = arrayCommits[arrayCommits.length - 1];
-  const score = lastCommit.testCoveragePorcentage.total.lines.pct;
+  const score = lastCommit.testCoveragePorcentage.lines.pct;
   return score;
 };
 // helper function
