@@ -22,7 +22,6 @@ const validateParams = (req, res, next) => {
 
 const parseJson = (req, res, next) => {
   const coverage = req.body.commitJson;
-  console.log('commitJson = ', coverage.total); // eslint-disable-line
   const { lines, statements, functions, branches } = coverage.total;
 
   if (!lines || !statements || !functions || !branches) {
