@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -18,7 +17,6 @@ import {
   controlTokenDialog,
   selectProject,
   // updateNextAction,
-  findProjectDuration,
 } from './components/actions/ProjectActions';
 
 import { fetchBranches, fetchBranchCommits } from './components/actions/BranchActions';
@@ -82,22 +80,10 @@ export class App extends Component {
     this.handleProjectDialog();
   }
 
-  getProjectDuration = (projectName) => {
-    const project = this.props.projects.projectsData.filter((obj) => projectName === obj.name);
-    const dateCreated = project[0].dateCreated;
-    // const dateUpdated = project[0].dateUpdated;
-    const created = moment(dateCreated);
-    const today = moment(new Date());
-    const result = today.diff(created, 'weeks');
-
-    this.props.dispatch(findProjectDuration(result));
-  }
-
   chooseProject = (name) => {
     this.props.dispatch(selectProject(name));
     // this.props.dispatch(updateNextAction('FETCH_BRANCHES'));
     this.findBranches(name);
-    this.getProjectDuration(name);
   }
 
   chooseBranch = (e) => {

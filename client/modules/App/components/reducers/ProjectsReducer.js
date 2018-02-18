@@ -7,7 +7,6 @@ import {
   TOKEN_DIALOG_EVENT,
   PROJECT_SELECTED,
   UPDATE_NEXT_ACTION,
-  PROJECT_DURATION,
 } from '../actions/ProjectActions';
 
 
@@ -20,7 +19,6 @@ const initialState = {
   tokenData: [],
   activeProject: { name: '', token: '', projectId: '' },
   nextAction: '',
-  durationWeeks: -1,
 };
 
 
@@ -47,13 +45,6 @@ const createProjectReducer = (state = initialState, action) => {
         ...state,
         activeProject: { name: selectedProject[0].name, token: selectedProject[0].token, projectId: selectedProject[0]._id },
         nextAction: 'FETCH_BRANCHES',
-      };
-
-
-    case PROJECT_DURATION :
-      return {
-        ...state,
-        durationWeeks: action.duration,
       };
 
 

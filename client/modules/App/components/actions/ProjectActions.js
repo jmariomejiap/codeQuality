@@ -9,7 +9,6 @@ export const RECEIVED_TOKEN = 'RECEIVED_TOKEN';
 export const FETCHED_PROJECTS = 'FETCHED_PROJECTS';
 export const PROJECT_SELECTED = 'PROJECT_SELECTED';
 export const UPDATE_NEXT_ACTION = 'UPDATE_NEXT_ACTION';
-export const PROJECT_DURATION = 'PROJECT_DURATION';
 
 export function controlTokenDialog() {
   return {
@@ -41,13 +40,6 @@ export function selectProject(name) {
   return {
     type: PROJECT_SELECTED,
     name,
-  };
-}
-
-export function findProjectDuration(duration) {
-  return {
-    type: PROJECT_DURATION,
-    duration,
   };
 }
 

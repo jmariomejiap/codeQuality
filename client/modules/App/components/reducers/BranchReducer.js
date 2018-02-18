@@ -1,10 +1,11 @@
 // import _ from 'lodash';
-import { BRANCH_SELECTED, FETCHED_BRANCHES } from '../actions/BranchActions';
+import { BRANCH_SELECTED, FETCHED_BRANCHES, BRANCH_DURATION } from '../actions/BranchActions';
 
 const initialState = {
   branches: [],
   activeBranchData: [],
   currentBranch: '',
+  branchDuration: -1,
 };
 
 
@@ -21,6 +22,12 @@ const branchReducer = (state = initialState, action) => {
       return {
         ...state,
         branches: action.listBranches,
+      };
+
+    case BRANCH_DURATION:
+      return {
+        ...state,
+        branchDuration: action.duration,
       };
 
     default:

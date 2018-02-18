@@ -55,6 +55,9 @@ export default function () {
       commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-27T18:10:08.408+0000', 85, 'seniorDev', 'improving tests'),
       commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-28T18:10:08.408+0000', 65, 'juniorDev', 'making things worse'),
       commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-30T18:10:08.408+0000', 81, undefined),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2017-12-28T18:10:08.408+0000', 65, 'juniorDev', 'making things worse'),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2018-01-03T18:10:08.408+0000', 75, 'juniorDev', 'some improvements'),
+      commitDummyGenerator(projectDoc._id, 'featureBranch1', '2018-02-08T18:10:08.408+0000', 78, 'juniorDev', 'more improvements, yeah!!'),
     ];
 
     await ProjectCommits.create(dummyCommit);
