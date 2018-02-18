@@ -51,7 +51,10 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
   }
 
   // feed some dummy data in DB.
-  dummyData();
+  /* istanbul ignore if */
+  if (process.env.NODE_ENV === 'development') {
+    dummyData();
+  }
 });
 
 // Apply body Parser and server public assets and routes
