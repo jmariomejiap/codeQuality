@@ -101,6 +101,9 @@ const LineChart = (props) => {
           ticks: {
             display: false,
             color: '#aaa',
+            // min: 0,
+            // max: 100,
+            // beginAtZero: true,
           },
           display: false,
         },
