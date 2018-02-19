@@ -9,7 +9,7 @@ export default function () {
   const codeQualityDummy = async () => {
     const projectsCount = await Project.count();
 
-    if (projectsCount > 0) {
+    if (projectsCount > 1) {
       return;
     }
 
