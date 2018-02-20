@@ -19,6 +19,7 @@ test.beforeEach(async () => {
       token: uuidv1(),
       dateCreated: new Date(),
       dateUpdated: new Date(),
+      activeBranch: 'master',
       isActive: true,
     },
     {
@@ -26,6 +27,7 @@ test.beforeEach(async () => {
       token: uuidv1(),
       dateCreated: new Date(),
       dateUpdated: new Date(),
+      activeBranch: 'none',
       isActive: true,
     },
   ];

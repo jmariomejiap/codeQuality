@@ -64,7 +64,9 @@ const saveProject = async (req, res) => {
     token: uuidv1(),
     dateCreated: new Date(),
     dateUpdated: new Date(),
+    activeBranch: 'none',
     isActive: true,
+
   };
 
   let newProjectDoc;
