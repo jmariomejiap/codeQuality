@@ -105,7 +105,7 @@ const updateProject = async (req, res) => {
   const projectId = req.projectDoc._id;
 
   try {
-    await Project.update({ projectId }, { $set: { dateUpdated: new Date(), activeBranch: req.body.branch } });
+    await Project.findOneAndUpdate(projectId, { dateUpdated: new Date(), activeBranch: req.body.branch }, { upsert: false });
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
