@@ -18,6 +18,7 @@ export default function () {
       token: uuidv1(),
       dateCreated: new Date(),
       dateUpdated: new Date(),
+      activeBranch: 'featureBranch1',
       isActive: true,
     });
 

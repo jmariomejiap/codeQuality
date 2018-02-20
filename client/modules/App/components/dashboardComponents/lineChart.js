@@ -31,7 +31,7 @@ const styles = {
 // helper function
 const findScore = (arrayCommits) => {
   const lastCommit = arrayCommits[arrayCommits.length - 1];
-  const score = lastCommit.testCoveragePorcentage.lines.pct;
+  const score = lastCommit.statementsCoveragePorcentage;
   return score;
 };
 // helper function
@@ -101,9 +101,6 @@ const LineChart = (props) => {
           ticks: {
             display: false,
             color: '#aaa',
-            // min: 0,
-            // max: 100,
-            // beginAtZero: true,
           },
           display: false,
         },

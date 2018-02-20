@@ -4,12 +4,16 @@ const commitDummyGenerator = (projectId, branchName, date, commitTotal, author =
     projectId,
     branch: branchName,
     commitDate: date,
-    testCoveragePorcentage: {
+    statementsCoveragePorcentage: commitTotal,
+    functionsCoveragePorcentage: 80,
+    branchesCoveragePorcentage: 80,
+    linesCoveragePorcentage: 80,
+    fullTestCoverage: {
       lines: {
         total: 480,
         covered: 345,
         skipped: 0,
-        pct: commitTotal,
+        pct: 80,
       },
       statements: {
         total: 775,

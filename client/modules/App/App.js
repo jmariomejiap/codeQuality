@@ -93,6 +93,7 @@ export class App extends Component {
   findBranches = (projectName) => {
     const project = this.props.projects.projectsData.filter((obj) => projectName === obj.name);
     this.props.dispatch(fetchBranches(project[0]._id));
+    this.props.dispatch(fetchBranchCommits(project[0]._id, project[0].activeBranch));
   }
 
 

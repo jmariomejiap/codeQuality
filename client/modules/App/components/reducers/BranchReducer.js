@@ -21,6 +21,7 @@ const branchReducer = (state = initialState, action) => {
     case FETCHED_BRANCHES:
       return {
         ...state,
+        currentBranch: '',
         branches: action.listBranches,
       };
 

@@ -74,11 +74,17 @@ const findBranch = async (req, res, next) => {
 
 /* istanbul ignore next */
 const createRecord = async (req, res, next) => {
+  const { lines, statements, functions, branches } = req.coverage;
+
   const commit = {
     projectId: req.projectDoc._id,
     branch: req.body.branch,
     commitDate: req.body.date,
-    testCoveragePorcentage: req.coverage,
+    statementsCoveragePorcentage: statements.pct,
+    functionsCoveragePorcentage: functions.pct,
+    branchesCoveragePorcentage: branches.pct,
+    linesCoveragePorcentage: lines.pct,
+    fullTestCoverage: req.coverage,
     author: req.body.author,
     gitCommitHash: req.body.commitHash,
     message: req.body.message,
@@ -99,11 +105,10 @@ const updateProject = async (req, res) => {
   const projectId = req.projectDoc._id;
 
   try {
-    await Project.update({ projectId }, { $set: { dateUpdated: new Date() } });
+    await Project.update({ projectId }, { $set: { dateUpdated: new Date(), activeBranch: req.body.branch } });
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
-
   return res.status(200).json({ result: 'ok', error: '' });
 };
 
