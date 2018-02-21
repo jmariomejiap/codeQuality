@@ -7,7 +7,6 @@ const project = new Schema({
   token: { type: String, require: true },
   dateCreated: { type: Date, require: true },
   dateUpdated: { type: Date, require: true },
-  activeBranch: { type: String, required: true },
   isActive: { type: Boolean, require: true },
 });
 

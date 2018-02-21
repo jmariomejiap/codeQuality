@@ -39,7 +39,7 @@ const findCommits = async (req, res, next) => {
 const sendHistory = (req, res) => {
   const limit = req.limit;
   const arrayCommits = req.commitsDoc.sort((commitA, commitB) => {
-    return commitA.commitDate - commitB.commitDate;
+    return new Date(commitA.commitDate) - new Date(commitB.commitDate);
   });
 
   const commitsHistory = arrayCommits.slice(0, limit);

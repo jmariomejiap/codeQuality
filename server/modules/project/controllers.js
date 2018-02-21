@@ -64,7 +64,6 @@ const saveProject = async (req, res) => {
     token: uuidv1(),
     dateCreated: new Date(),
     dateUpdated: new Date(),
-    activeBranch: 'none',
     isActive: true,
 
   };
@@ -93,8 +92,11 @@ const getAllprojects = async (req, res) => {
     console.error(error); // eslint-disable-line no-console
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
+  const sortedProjects = projectDoc.sort((projectA, projectB) => {
+    return new Date(projectB.dateUpdated) - new Date(projectA.dateUpdated);
+  });
 
-  return res.status(200).json({ result: 'ok', projects: projectDoc });
+  return res.status(200).json({ result: 'ok', projects: sortedProjects });
 };
 
 
