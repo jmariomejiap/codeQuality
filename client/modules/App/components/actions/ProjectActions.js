@@ -9,6 +9,8 @@ export const RECEIVED_TOKEN = 'RECEIVED_TOKEN';
 export const FETCHED_PROJECTS = 'FETCHED_PROJECTS';
 export const PROJECT_SELECTED = 'PROJECT_SELECTED';
 export const UPDATE_NEXT_ACTION = 'UPDATE_NEXT_ACTION';
+export const CREATE_PROJECT_INPUT = 'CREATE_PROJECT_INPUT';
+export const CLEAR_PROJECT_INPUT = 'CLEAR_PROJECT_INPUT';
 
 
 export function controlTokenDialog() {
@@ -92,6 +94,21 @@ export function receivedToken(tokenMessage) {
   return {
     type: RECEIVED_TOKEN,
     tokenMessage,
+  };
+}
+
+
+export function updateCreateProjectInput(value) {
+  return {
+    type: CREATE_PROJECT_INPUT,
+    value,
+  };
+}
+
+
+export function clearCreateProjectInput() {
+  return {
+    type: CLEAR_PROJECT_INPUT,
   };
 }
 

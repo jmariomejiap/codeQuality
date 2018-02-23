@@ -31,6 +31,7 @@ const Dashboard = (props) => {
     handleTokenDialog,
     selectBranch,
     selectProject,
+    handleCreateProjectInput,
   } = props;
 
   const { drawerIsOpen, projectDialogIsOpen, tokenDialogIsOpen, projectsName, tokenData, activeProject } = projects;
@@ -54,6 +55,7 @@ const Dashboard = (props) => {
         dialogState={projectDialogIsOpen}
         controlDialog={handleProjectDialog}
         createNewProject={createNewProject}
+        handleCreateProjectInput={handleCreateProjectInput}
       />
       <TokenDialog
         tokenData={tokenData}
@@ -82,6 +84,7 @@ Dashboard.propTypes = {
   handleDrawer: PropTypes.func.isRequired,
   handleProjectDialog: PropTypes.func.isRequired,
   handleTokenDialog: PropTypes.func,
+  handleCreateProjectInput: PropTypes.func,
   selectBranch: PropTypes.func.isRequired,
   selectProject: PropTypes.func.isRequired,
 };

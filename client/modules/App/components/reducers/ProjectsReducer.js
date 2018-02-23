@@ -7,6 +7,8 @@ import {
   TOKEN_DIALOG_EVENT,
   PROJECT_SELECTED,
   UPDATE_NEXT_ACTION,
+  CREATE_PROJECT_INPUT,
+  CLEAR_PROJECT_INPUT,
 } from '../actions/ProjectActions';
 
 
@@ -18,6 +20,7 @@ const initialState = {
   tokenDialogIsOpen: false,
   tokenData: [],
   activeProject: { name: '', token: '', projectId: '' },
+  projectInputValue: '',
 };
 
 
@@ -59,6 +62,19 @@ const createProjectReducer = (state = initialState, action) => {
         drawerIsOpen: !state.drawerIsOpen,
       };
 
+
+    case CREATE_PROJECT_INPUT :
+      return {
+        ...state,
+        projectInputValue: action.value,
+      };
+
+
+    case CLEAR_PROJECT_INPUT :
+      return {
+        ...state,
+        projectInputValue: '',
+      };
 
     case PROJECT_DIALOG_EVENT :
       return {

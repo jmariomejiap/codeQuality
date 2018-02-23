@@ -16,6 +16,8 @@ import {
   controlProjectDialog,
   controlTokenDialog,
   selectProject,
+  updateCreateProjectInput,
+  clearCreateProjectInput,
 } from './components/actions/ProjectActions';
 
 import {
@@ -93,11 +95,16 @@ export class App extends Component {
     this.props.dispatch(controlTokenDialog());
   }
 
+  handleCreateProjectInput = (value) => {
+    this.props.dispatch(updateCreateProjectInput(value));
+  }
 
   // functions connect to api
-  createNewProject = (name) => {
-    this.props.dispatch(createProjectApi(name));
+  createNewProject = () => {
+    const newProjectName = this.props.projects.projectInputValue;
+    this.props.dispatch(createProjectApi(newProjectName));
     this.handleProjectDialog();
+    this.props.dispatch(clearCreateProjectInput());
   }
 
   chooseProject = (name) => {
@@ -150,6 +157,7 @@ export class App extends Component {
                   createNewProject: this.createNewProject,
                   handleDrawer: this.handleDrawer,
                   handleProjectDialog: this.handleProjectDialog,
+                  handleCreateProjectInput: this.handleCreateProjectInput,
                   handleTokenDialog: this.handleTokenDialog,
                   selectBranch: this.chooseBranch,
                   selectProject: this.chooseProject,
