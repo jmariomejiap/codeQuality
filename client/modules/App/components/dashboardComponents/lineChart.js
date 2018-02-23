@@ -46,7 +46,7 @@ const findTooltipData = (arrayCommits, positionTooltip) => {
 
 // main component
 const LineChart = (props) => {
-  const { activeBranchData, durationWeeks } = props;
+  const { activeBranchData, branchDurationDays, branchDurationWeeks } = props;
 
   const options = {
     legend: {
@@ -120,21 +120,26 @@ const LineChart = (props) => {
   return (
     <div style={styles.outsideDiv} >
       <div style={styles.porcentage}>{(activeBranchData.length === 0) ? null : `${findScore(activeBranchData)}%`}</div>
-      <div style={styles.weeksTerm}>{(durationWeeks === -1) ? null : `${durationWeeks} Weeks`}</div>
-      <Line
-        data={(activeBranchData.length === 0) ? null : parseDatatoChart(activeBranchData)}
-        redraw={true} // eslint-disable-line
-        width={200}
-        height={500}
-        options={options}
-      />
+      <div style={styles.weeksTerm}>{(branchDurationWeeks === -1) ? null : `${branchDurationWeeks} Weeks`}</div>
+      <div style={styles.weeksTerm}>{(branchDurationDays === -1) ? null : `${branchDurationDays} Days`}</div>
+
+      {(activeBranchData.length === 0) ? null :
+        <Line
+          data={parseDatatoChart(activeBranchData)}
+          redraw={true} // eslint-disable-line
+          width={200}
+          height={500}
+          options={options}
+        />
+      }
     </div>
   );
 };
 
 LineChart.propTypes = {
   activeBranchData: PropTypes.array,
-  durationWeeks: PropTypes.number,
+  branchDurationDays: PropTypes.number,
+  branchDurationWeeks: PropTypes.number,
 };
 
 export default LineChart;

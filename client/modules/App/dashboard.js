@@ -34,7 +34,7 @@ const Dashboard = (props) => {
   } = props;
 
   const { drawerIsOpen, projectDialogIsOpen, tokenDialogIsOpen, projectsName, tokenData, activeProject } = projects;
-  const { activeBranchData, branches, branchDuration } = branchesData;
+  const { activeBranchData, branches, branchDurationWeeks, branchDurationDays } = branchesData;
 
   return (
     <div style={styles.dashboardStyle} >
@@ -65,7 +65,8 @@ const Dashboard = (props) => {
         <div style={styles.chartStyle}>
           <LineChart
             activeBranchData={activeBranchData}
-            durationWeeks={branchDuration}
+            branchDurationDays={branchDurationDays}
+            branchDurationWeeks={branchDurationWeeks}
           />
         </div>
       }

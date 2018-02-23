@@ -17,7 +17,7 @@ const initialState = {
   projectDialogIsOpen: false,
   tokenDialogIsOpen: false,
   tokenData: [],
-  activeProject: { name: '', token: '', projectId: '', lastActiveBranch: '' },
+  activeProject: { name: '', token: '', projectId: '' },
 };
 
 
@@ -42,7 +42,7 @@ const createProjectReducer = (state = initialState, action) => {
       const selectedProject = state.projectsData.filter((obj) => obj.name === action.name);
       return {
         ...state,
-        activeProject: { name: selectedProject[0].name, token: selectedProject[0].token, projectId: selectedProject[0]._id, lastActiveBranch: selectedProject[0].activeBranch },
+        activeProject: { name: selectedProject[0].name, token: selectedProject[0].token, projectId: selectedProject[0]._id },
       };
 
 

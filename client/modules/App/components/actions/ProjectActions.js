@@ -10,17 +10,20 @@ export const FETCHED_PROJECTS = 'FETCHED_PROJECTS';
 export const PROJECT_SELECTED = 'PROJECT_SELECTED';
 export const UPDATE_NEXT_ACTION = 'UPDATE_NEXT_ACTION';
 
+
 export function controlTokenDialog() {
   return {
     type: TOKEN_DIALOG_EVENT,
   };
 }
 
+
 export function controlDrawer() {
   return {
     type: DRAWER_EVENT,
   };
 }
+
 
 export function controlProjectDialog() {
   return {
@@ -36,12 +39,14 @@ export function createProject(name) {
   };
 }
 
+
 export function selectProject(name) {
   return {
     type: PROJECT_SELECTED,
     name,
   };
 }
+
 
 export function updateProjectList(listProjects, fullResponse) {
   return {
@@ -51,12 +56,34 @@ export function updateProjectList(listProjects, fullResponse) {
   };
 }
 
+
+export function getBranchesApi(projectId) {
+  return callApi(`v1/branches?projectId=${projectId}`)
+    .then(res => {
+      return res.branches;
+    });
+}
+
+
+export function getCommitsApi(projectId, branchName) {
+  return callApi(`v1/commitsHistory?projectId=${projectId}&branch=${branchName}`)
+    .then(res => {
+      return res.commitsHistory;
+    });
+}
+
+
 export function fetchProjects() {
   return (dispatch) => {
-    return callApi('v1/project').then(res => {
-      const listProjects = res.projects.map((projectObject) => projectObject.name);
-      dispatch(updateProjectList(listProjects, res.projects));
-    });
+    return callApi('v1/project')
+      .then(res => {
+        const listProjects = res.projects;
+        const listProjectNames = listProjects.map((projectObject) => projectObject.name);
+        const nameLastActiveProject = listProjectNames[0];
+
+        dispatch(updateProjectList(listProjectNames, listProjects));
+        dispatch(selectProject(nameLastActiveProject));
+      });
   };
 }
 
@@ -68,6 +95,7 @@ export function receivedToken(tokenMessage) {
   };
 }
 
+
 export function createProjectApi(name) {
   const body = { projectName: name };
   return (dispatch) => {
@@ -78,6 +106,7 @@ export function createProjectApi(name) {
     });
   };
 }
+
 
 export function updateNextAction(name) {
   return {

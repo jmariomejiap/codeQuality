@@ -16,10 +16,14 @@ import {
   controlProjectDialog,
   controlTokenDialog,
   selectProject,
-  // updateNextAction,
 } from './components/actions/ProjectActions';
 
-import { fetchBranches, fetchBranchCommits } from './components/actions/BranchActions';
+import {
+  fetchBranches,
+  fetchBranchCommits,
+  setNextAction,
+  resetBranchDuration,
+} from './components/actions/BranchActions';
 
 
 // material-ui variables.
@@ -43,22 +47,37 @@ export class App extends Component {
 
   componentDidMount() {
     this.setState({isMounted: true}); // eslint-disable-line
-    this.props.dispatch(fetchProjects());
+    const nextAction = this.props.branches.nextAction;
+    if (nextAction === 'loading') {
+      this.props.dispatch(fetchProjects())
+        .then(() => this.props.dispatch(setNextAction('fetchBranches')));
+    }
   }
 
-  componentDidUpdate(prevProps, prevState) { // eslint-disable-line
-    /*
-    console.log('prevProps =', prevProps.projects);
-    console.log('prevState = ', prevState);
-    const nextAction = prevProps.projects.nextAction;
-    const projectId = prevProps.projects.activeProject.projectId;
-    console.log('nextAction = ', nextAction);
-    console.log('and projectId = ', projectId);
-    if (nextAction === 'FETCH_BRANCHES') {
-      this.props.dispatch(fetchBranches(projectId));
-      this.props.dispatch(updateNextAction('DONE'));
+
+  componentWillReceiveProps(nextProps) {
+    const { nextAction } = nextProps.branches;
+    const projectId = nextProps.projects.activeProject.projectId;
+    const listBranches = nextProps.branches.branches;
+
+    if (nextAction === 'fetchBranches') {
+      this.props.dispatch(fetchBranches(projectId))
+        .then(() => this.props.dispatch(setNextAction('fetchCommits')));
     }
-    */
+
+    if (nextAction === 'fetchCommits') {
+      if (listBranches.length === 0) {
+        this.props.dispatch(setNextAction('Project has No branches'));
+        return;
+      }
+      if (listBranches.includes('master')) {
+        this.props.dispatch(fetchBranchCommits(projectId, 'master'))
+          .then(() => this.props.dispatch(setNextAction('complete')));
+        return;
+      }
+      this.props.dispatch(fetchBranchCommits(projectId, listBranches[0]))
+          .then(() => this.props.dispatch(setNextAction('completeNoMaster')));
+    }
   }
 
   // functions to handle dialogs
@@ -74,6 +93,7 @@ export class App extends Component {
     this.props.dispatch(controlTokenDialog());
   }
 
+
   // functions connect to api
   createNewProject = (name) => {
     this.props.dispatch(createProjectApi(name));
@@ -82,7 +102,7 @@ export class App extends Component {
 
   chooseProject = (name) => {
     this.props.dispatch(selectProject(name));
-    // this.props.dispatch(updateNextAction('FETCH_BRANCHES'));
+    this.props.dispatch(resetBranchDuration());
     this.findBranches(name);
   }
 
@@ -92,8 +112,8 @@ export class App extends Component {
 
   findBranches = (projectName) => {
     const project = this.props.projects.projectsData.filter((obj) => projectName === obj.name);
-    this.props.dispatch(fetchBranches(project[0]._id));
-    this.props.dispatch(fetchBranchCommits(project[0]._id, project[0].activeBranch));
+    this.props.dispatch(fetchBranches(project[0]._id))
+      .then(() => this.props.dispatch(setNextAction('fetchCommits')));
   }
 
 

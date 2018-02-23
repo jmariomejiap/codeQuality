@@ -18,7 +18,6 @@ export default function () {
       token: uuidv1(),
       dateCreated: new Date('2017-12-25T18:10:08.408+0000'),
       dateUpdated: new Date(),
-      activeBranch: 'featureBranch1',
       isActive: true,
     });
 
