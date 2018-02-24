@@ -31,6 +31,10 @@ const styles = {
     fontFamily: 'Roboto Condensed',
     color: '#394f59',
   },
+  nestedList: {
+    maxHeight: 535,
+    overflow: 'auto',
+  },
 };
 
 
@@ -57,6 +61,7 @@ const DrawerMenu = (props) => {
             primaryText="Projects"
             primaryTogglesNestedList={true} // eslint-disable-line react/jsx-boolean-value
             style={styles.menuItem}
+            nestedListStyle={styles.nestedList}
             nestedItems={listOfProjects()}
             leftIcon={<Menu color={'#394f59'} />}
           />
