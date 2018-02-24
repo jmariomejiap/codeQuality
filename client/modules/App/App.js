@@ -25,6 +25,7 @@ import {
   fetchBranchCommits,
   setNextAction,
   resetBranchDuration,
+  foundEmptyBranches,
 } from './components/actions/BranchActions';
 
 
@@ -105,6 +106,8 @@ export class App extends Component {
     this.props.dispatch(createProjectApi(newProjectName));
     this.handleProjectDialog();
     this.props.dispatch(clearCreateProjectInput());
+    this.props.dispatch(foundEmptyBranches());
+    this.props.dispatch(resetBranchDuration());
   }
 
   chooseProject = (name) => {
