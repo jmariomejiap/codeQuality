@@ -1,7 +1,6 @@
 import callApi from '../../../../util/apiCaller';
 
 // Export Constant
-export const ADD_PROJECT = 'ADD_PROJECT';
 export const DRAWER_EVENT = 'DRAWER_EVENT';
 export const PROJECT_DIALOG_EVENT = 'PROJECT_DIALOG_EVENT';
 export const TOKEN_DIALOG_EVENT = 'TOKEN_DIALOG_EVENT';
@@ -34,14 +33,6 @@ export function controlProjectDialog() {
 }
 
 
-export function createProject(name) {
-  return {
-    type: ADD_PROJECT,
-    newProject: name,
-  };
-}
-
-
 export function selectProject(name) {
   return {
     type: PROJECT_SELECTED,
@@ -56,22 +47,6 @@ export function updateProjectList(listProjects, fullResponse) {
     listProjects,
     fullResponse,
   };
-}
-
-
-export function getBranchesApi(projectId) {
-  return callApi(`v1/branches?projectId=${projectId}`)
-    .then(res => {
-      return res.branches;
-    });
-}
-
-
-export function getCommitsApi(projectId, branchName) {
-  return callApi(`v1/commitsHistory?projectId=${projectId}&branch=${branchName}`)
-    .then(res => {
-      return res.commitsHistory;
-    });
 }
 
 
