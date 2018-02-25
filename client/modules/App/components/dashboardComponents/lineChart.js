@@ -56,38 +56,55 @@ const LineChart = (props) => {
       line: {
         lineTension: 1,
       },
+      point: { radius: 6 },
     },
     lineTension: 1,
     tooltips: {
+      // backgroundColor: 'red',
+      footerFontStyle: 'regular',
+      footerSpacing: 5,
       callbacks: {
-        labelTextColor: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
+        labelColor: (tooltipItem) => {
+          const score = tooltipItem.yLabel;
+          if (score <= 55) {
+            return {
+              borderColor: 'rgb(255, 0, 0)',
+              backgroundColor: 'rgb(255, 0, 0)',
+            };
+          }
+
+          if (score > 55 && score < 85) {
+            return {
+              borderColor: 'rgb(255, 255, 77)',
+              backgroundColor: 'rgb(255, 255, 77)',
+            };
+          }
+
+          return {
+            borderColor: 'rgb(51, 204, 51)',
+            backgroundColor: 'rgb(51, 204, 51)',
+          };
+        },
+        labelTextColor: (tooltipItem) => {
+          const score = tooltipItem.yLabel;
+          if (score <= 55) {
+            return 'rgb(204, 51, 0)';
+          }
+
+          if (score > 55 && score < 85) {
+            return 'rgb(128, 128, 0)';
+          }
+
           return 'white';
         },
-        // title: (tooltipItem, chart) => {
-          // return 'Custome Title';
-        // },
-        // afterLabel: () => {
-          // return 'commitBy: Juan Mejia';
-        // },
-        afterBody: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
+        beforeFooter: (tooltipItem) => {
           const result = findTooltipData(activeBranchData, tooltipItem[0].index);
           return `commitBy: ${result.author}`;
-            // date: 6 February 2018
-            // commit Message: 'this is a hard coded message'
         },
-        beforeFooter: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-          // console.log('this is tooltipItem = ', tooltipItem);
+        footer: (tooltipItem) => {
           const result = findTooltipData(activeBranchData, tooltipItem[0].index);
           return `Message: ${result.message}`;
         },
-        /*
-        footer: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-          return ['Custom footer', 'another Custom footer: '];
-        },
-        afterFooter: (tooltipItem, chart) => { // eslint-disable-line no-unused-vars
-          return 'afterFooter';
-        },
-        */
       },
     },
     maintainAspectRatio: false,
