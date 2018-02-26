@@ -1,26 +1,47 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import { resetBranchDuration, foundEmptyBranches } from '../actions/BranchActions';
+import {
+  updateCreateProjectInput,
+  createProjectApi,
+  controlProjectDialog,
+  clearCreateProjectInput,
+} from '../actions/ProjectActions';
 
 
 const CreateDialog = (props) => {
-  const { handleCreateProjectInput, createNewProject, controlDialog, dialogState } = props;
+  const {
+    dispatch,
+    projectDialogState,
+    nameInput,
+  } = props;
+
+  const closeDialog = () => {
+    dispatch(controlProjectDialog());
+  };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    handleCreateProjectInput(value);
+    dispatch(updateCreateProjectInput(value));
   };
 
   const submitInputValue = () => {
-    createNewProject();
+    const name = nameInput;
+    dispatch(createProjectApi(name));
+    dispatch(controlProjectDialog());
+    dispatch(clearCreateProjectInput());
+    dispatch(foundEmptyBranches());
+    dispatch(resetBranchDuration());
   };
 
   const actions = [
     <FlatButton
       label="Cancel"
       primary="true"
-      onClick={controlDialog}
+      onClick={closeDialog}
     />,
     <FlatButton
       label="Submit"
@@ -36,7 +57,7 @@ const CreateDialog = (props) => {
       titleStyle={{ fontFamily: 'Roboto Condensed' }}
       modal={false}
       actions={actions}
-      open={dialogState}
+      open={projectDialogState}
     >
       <br />
       <TextField
@@ -50,10 +71,17 @@ const CreateDialog = (props) => {
 
 
 CreateDialog.propTypes = {
-  dialogState: PropTypes.bool,
-  controlDialog: PropTypes.func,
-  createNewProject: PropTypes.func,
-  handleCreateProjectInput: PropTypes.func,
+  dispatch: PropTypes.func.isRequired,
+  nameInput: PropTypes.string,
+  projectDialogState: PropTypes.bool,
 };
 
-export default CreateDialog;
+
+function mapStateToProps(store) {
+  return {
+    projectDialogState: store.projects.projectDialogIsOpen,
+    nameInput: store.projects.projectInputValue,
+  };
+}
+
+export default connect(mapStateToProps)(CreateDialog);

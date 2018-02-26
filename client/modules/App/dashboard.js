@@ -23,53 +23,21 @@ const Dashboard = (props) => {
   const {
     // store props
     projects,
-    branchesData,
     // functions
-    createNewProject,
-    handleDrawer,
-    handleProjectDialog,
-    handleTokenDialog,
-    selectBranch,
-    selectProject,
-    handleCreateProjectInput,
   } = props;
 
-  const { drawerIsOpen, projectDialogIsOpen, tokenDialogIsOpen, projectsName, tokenData, activeProject } = projects;
-  const { activeBranchData, branches, branchDurationWeeks, branchDurationDays } = branchesData;
+  const { projectsName } = projects;
 
   return (
     <div style={styles.dashboardStyle} >
-      <Header
-        handleDrawer={handleDrawer}
-        branches={branches}
-        selectBranch={selectBranch}
-        activeProject={activeProject}
-      />
-      <DrawerMenu
-        drawerState={drawerIsOpen}
-        handleDialog={handleProjectDialog}
-        projectsData={projectsName}
-        selectProject={selectProject}
-      />
-      <CreateDialog
-        dialogState={projectDialogIsOpen}
-        controlDialog={handleProjectDialog}
-        createNewProject={createNewProject}
-        handleCreateProjectInput={handleCreateProjectInput}
-      />
-      <TokenDialog
-        tokenData={tokenData}
-        dialogState={tokenDialogIsOpen}
-        controlDialog={handleTokenDialog}
-      />
+      <Header />
+      <DrawerMenu />
+      <CreateDialog />
+      <TokenDialog />
       {(projectsName.length === 0) ?
         <EmptyProjectPage /> :
         <div style={styles.chartStyle}>
-          <LineChart
-            activeBranchData={activeBranchData}
-            branchDurationDays={branchDurationDays}
-            branchDurationWeeks={branchDurationWeeks}
-          />
+          <LineChart />
         </div>
       }
     </div>
@@ -79,14 +47,6 @@ const Dashboard = (props) => {
 
 Dashboard.propTypes = {
   projects: PropTypes.object.isRequired,
-  branchesData: PropTypes.object,
-  createNewProject: PropTypes.func.isRequired,
-  handleDrawer: PropTypes.func.isRequired,
-  handleProjectDialog: PropTypes.func.isRequired,
-  handleTokenDialog: PropTypes.func,
-  handleCreateProjectInput: PropTypes.func,
-  selectBranch: PropTypes.func.isRequired,
-  selectProject: PropTypes.func.isRequired,
 };
 
 export default Dashboard;

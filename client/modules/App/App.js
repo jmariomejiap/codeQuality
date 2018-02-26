@@ -10,14 +10,12 @@ import DevTools from './components/DevTools';
 
 // Import Actions
 import {
-  createProjectApi,
   fetchProjects,
   controlDrawer,
   controlProjectDialog,
   controlTokenDialog,
   selectProject,
   updateCreateProjectInput,
-  clearCreateProjectInput,
 } from './components/actions/ProjectActions';
 
 import {
@@ -25,7 +23,6 @@ import {
   fetchBranchCommits,
   setNextAction,
   resetBranchDuration,
-  foundEmptyBranches,
 } from './components/actions/BranchActions';
 
 
@@ -92,24 +89,16 @@ export class App extends Component {
     this.props.dispatch(controlProjectDialog());
   };
 
+  // inside component TokenDialog.... delete
   handleTokenDialog = () => {
     this.props.dispatch(controlTokenDialog());
   }
-
+// inside componentd ... delete
   handleCreateProjectInput = (value) => {
     this.props.dispatch(updateCreateProjectInput(value));
   }
 
   // functions connect to api
-  createNewProject = () => {
-    const newProjectName = this.props.projects.projectInputValue;
-    this.props.dispatch(createProjectApi(newProjectName));
-    this.handleProjectDialog();
-    this.props.dispatch(clearCreateProjectInput());
-    this.props.dispatch(foundEmptyBranches());
-    this.props.dispatch(resetBranchDuration());
-  }
-
   chooseProject = (name) => {
     this.props.dispatch(selectProject(name));
     this.props.dispatch(resetBranchDuration());
@@ -157,7 +146,6 @@ export class App extends Component {
                   projects: this.props.projects,
                   branchesData: this.props.branches,
                   // functions
-                  createNewProject: this.createNewProject,
                   handleDrawer: this.handleDrawer,
                   handleProjectDialog: this.handleProjectDialog,
                   handleCreateProjectInput: this.handleCreateProjectInput,

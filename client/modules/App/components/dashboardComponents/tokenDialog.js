@@ -1,16 +1,22 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import { controlTokenDialog } from '../actions/ProjectActions';
 
 
 const TokenDialog = (props) => {
-  const { controlDialog, dialogState, tokenData } = props;
+  const { dispatch, tokenDialogState, tokenData } = props;
+
+  const closeTokenDialog = () => {
+    dispatch(controlTokenDialog());
+  };
 
   const actions = [
     <FlatButton
       label="Ok"
       primary="true"
-      onClick={controlDialog}
+      onClick={closeTokenDialog}
     />,
   ];
 
@@ -20,7 +26,7 @@ const TokenDialog = (props) => {
       titleStyle={{ fontFamily: 'Roboto Condensed' }}
       modal={false}
       actions={actions}
-      open={dialogState}
+      open={tokenDialogState}
     >
       <h5>Your project key is:</h5>
       <br />
@@ -30,9 +36,16 @@ const TokenDialog = (props) => {
 };
 
 TokenDialog.propTypes = {
-  dialogState: PropTypes.bool,
-  controlDialog: PropTypes.func,
+  dispatch: PropTypes.func,
+  tokenDialogState: PropTypes.bool,
   tokenData: PropTypes.array,
 };
 
-export default TokenDialog;
+function mapStateToProps(store) {
+  return {
+    tokenDialogState: store.projects.tokenDialogIsOpen,
+    tokenData: store.projects.tokenData,
+  };
+}
+
+export default connect(mapStateToProps)(TokenDialog);

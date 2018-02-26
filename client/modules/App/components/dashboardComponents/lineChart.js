@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import parseDatatoChart from '../../../../util/parseDataToChart';
 
@@ -153,10 +154,27 @@ const LineChart = (props) => {
   );
 };
 
+
 LineChart.propTypes = {
   activeBranchData: PropTypes.array,
   branchDurationDays: PropTypes.number,
   branchDurationWeeks: PropTypes.number,
 };
 
-export default LineChart;
+
+function mapStateToProps(store) {
+  return {
+    activeBranchData: store.branches.activeBranchData,
+    branchDurationDays: store.branches.branchDurationDays,
+    branchDurationWeeks: store.branches.branchDurationWeeks,
+  };
+}
+
+export default connect(mapStateToProps)(LineChart);
+
+
+// solucinar lo del render.
+// calcular dinamicamene Y eje.
+// usar function to determine background color and border. tooltip
+
+// avilitar auto compleate... cuando el usuario borre y escriba. una vez click desabilitar

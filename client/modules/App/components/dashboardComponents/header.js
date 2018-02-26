@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 import TextField from 'material-ui/TextField';
@@ -8,6 +9,8 @@ import AutoComplete from 'material-ui/AutoComplete';
 import MenuItem from 'material-ui/MenuItem';
 import { transparent } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
+import { controlDrawer } from '../actions/ProjectActions';
+import { fetchBranchCommits } from '../actions/BranchActions';
 
 
 const styles = {
@@ -68,7 +71,11 @@ const styles = {
 
 // Main Component
 const Header = (props) => {
-  const { handleDrawer, branches, selectBranch, activeProject } = props;
+  const { listBranches, activeProject, dispatch } = props;
+
+  const handleDrawer = () => dispatch(controlDrawer());
+
+  const selectBranch = (name) => dispatch(fetchBranchCommits(activeProject.projectId, name));
 
   // helper Function
   const createMenuItems = (branchesList) => {
@@ -106,7 +113,7 @@ const Header = (props) => {
             <ToolbarSeparator style={{ marginLeft: 15 }} />
             <ToolbarGroup style={styles.autocompleteToolGroup} >
               {
-                (branches.length === 0) ?
+                (listBranches.length === 0) ?
                   <TextField
                     hintText="Select a Branch..."
                     fullWidth={true} // eslint-disable-line
@@ -115,7 +122,7 @@ const Header = (props) => {
                   /> :
                   <AutoComplete
                     hintText="Select a Branch..."
-                    dataSource={createMenuItems(branches)}
+                    dataSource={createMenuItems(listBranches)}
                     filter={AutoComplete.fuzzyFilter}
                     openOnFocus={true} // eslint-disable-line
                     fullWidth={true} // eslint-disable-line
@@ -136,10 +143,17 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  branches: PropTypes.array,
-  handleDrawer: PropTypes.func,
-  selectBranch: PropTypes.func,
+  dispatch: PropTypes.func,
+  listBranches: PropTypes.array,
   activeProject: PropTypes.object,
 };
 
-export default Header;
+
+function mapStateToProps(store) {
+  return {
+    activeProject: store.projects.activeProject,
+    listBranches: store.branches.branches,
+  };
+}
+
+export default connect(mapStateToProps)(Header);
