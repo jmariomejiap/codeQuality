@@ -1,30 +1,33 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-
-// Import Components
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// components
+import Header from './components/dashboardComponents/header';
+import DrawerMenu from './components/dashboardComponents/drawerMenu';
+import CreateDialog from './components/dashboardComponents/createProjectDialog';
+import TokenDialog from './components/dashboardComponents/tokenDialog';
+import LineChart from './components/dashboardComponents/lineChart';
+import EmptyProjectPage from './EmptyProject';
+
 
 // Import Actions
-import {
-  fetchProjects,
-  controlDrawer,
-  controlProjectDialog,
-  controlTokenDialog,
-  selectProject,
-  updateCreateProjectInput,
-} from './components/actions/ProjectActions';
+import { fetchProjects } from './components/actions/ProjectActions';
+import { fetchBranches, fetchBranchCommits, setNextAction } from './components/actions/BranchActions';
 
-import {
-  fetchBranches,
-  fetchBranchCommits,
-  setNextAction,
-  resetBranchDuration,
-} from './components/actions/BranchActions';
 
+const styles = {
+  chartStyle: {
+    position: 'fixed',
+    bottom: 0,
+    width: '100%',
+  },
+  dashboardStyle: {
+    height: '100vh',
+  },
+};
 
 // material-ui variables.
 const muiTheme = getMuiTheme(
@@ -80,42 +83,6 @@ export class App extends Component {
     }
   }
 
-  // functions to handle dialogs
-  handleDrawer = () => { // eslint-disable-line
-    this.props.dispatch(controlDrawer());
-  }
-
-  handleProjectDialog = () => {
-    this.props.dispatch(controlProjectDialog());
-  };
-
-  // inside component TokenDialog.... delete
-  handleTokenDialog = () => {
-    this.props.dispatch(controlTokenDialog());
-  }
-// inside componentd ... delete
-  handleCreateProjectInput = (value) => {
-    this.props.dispatch(updateCreateProjectInput(value));
-  }
-
-  // functions connect to api
-  chooseProject = (name) => {
-    this.props.dispatch(selectProject(name));
-    this.props.dispatch(resetBranchDuration());
-    this.findBranches(name);
-  }
-
-  chooseBranch = (e) => {
-    this.props.dispatch(fetchBranchCommits(this.props.projects.activeProject.projectId, e));
-  }
-
-  findBranches = (projectName) => {
-    const project = this.props.projects.projectsData.filter((obj) => projectName === obj.name);
-    this.props.dispatch(fetchBranches(project[0]._id))
-      .then(() => this.props.dispatch(setNextAction('fetchCommits')));
-  }
-
-
   render() {
     return (
       <div style={{ backgroundColor: '#FFFFFF', height: '100vh' }}>
@@ -139,20 +106,16 @@ export class App extends Component {
                 ]}
               />
             </div>
-            <div>
-              {
-                React.cloneElement(this.props.children, {
-                  // store props
-                  projects: this.props.projects,
-                  branchesData: this.props.branches,
-                  // functions
-                  handleDrawer: this.handleDrawer,
-                  handleProjectDialog: this.handleProjectDialog,
-                  handleCreateProjectInput: this.handleCreateProjectInput,
-                  handleTokenDialog: this.handleTokenDialog,
-                  selectBranch: this.chooseBranch,
-                  selectProject: this.chooseProject,
-                })
+            <div style={styles.dashboardStyle} >
+              <Header />
+              <DrawerMenu />
+              <CreateDialog />
+              <TokenDialog />
+              {(this.props.projects.projectsName.length === 0) ?
+                <EmptyProjectPage /> :
+                <div style={styles.chartStyle}>
+                  <LineChart />
+                </div>
               }
             </div>
           </div>
@@ -163,9 +126,7 @@ export class App extends Component {
 }
 
 App.propTypes = {
-  children: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
-  location: PropTypes.object,
   branches: PropTypes.object,
   projects: PropTypes.object.isRequired,
 };
