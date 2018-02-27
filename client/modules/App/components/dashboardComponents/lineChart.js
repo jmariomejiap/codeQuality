@@ -68,19 +68,33 @@ const LineChart = (props) => {
     },
     lineTension: 1,
     tooltips: {
+      titleMarginBottom: 15,
+      footerMarginTop: 15,
+      footerFontStyle: 'regular',
+      footerSpacing: 6,
+      bodySpacing: 16,
+      // displayColors: false,
+      // borderColor: 'rgba(55,0,0,0.8)', doesnt work
+      // titleFontSize: 14,
       // backgroundColor: 'red',
       custom: (tooltip) => {
-        if (!tooltip) { return; }
+        if (!tooltip.dataPoints) { return; }
 
-        // console.log('y = ', tooltip);
-        if (tooltip.y < 60) {
-          // tooltip.backgroundColor = '#FFF';
+
+        if (tooltip.dataPoints[0].yLabel < 60) {
+          tooltip.backgroundColor = 'rgba(55,0,0,0.8)'; // eslint-disable-line
+          // return;
         }
-        // let tooltipEl = document.getElementById('chartjs-tooltip');
-        // console.log('tooltipEl = ', tooltipEl);
+
+        if (tooltip.dataPoints[0].yLabel >= 60 && tooltip.dataPoints[0].yLabel < 90) {
+          tooltip.backgroundColor = 'rgba(40, 40, 0, 0.8)'; // eslint-disable-line
+          // return;
+        }
+
+        if (tooltip.dataPoints[0].yLabel > 90) {
+          tooltip.displayColors = true; // eslint-disable-line
+        }
       },
-      footerFontStyle: 'regular',
-      footerSpacing: 5,
       callbacks: {
         labelColor: (tooltipItem) => {
           const score = tooltipItem.yLabel;
@@ -91,10 +105,10 @@ const LineChart = (props) => {
             };
           }
 
-          if (score > 55 && score < 85) {
+          if (score >= 60 && score < 90) {
             return {
-              borderColor: 'rgb(255, 255, 77)',
-              backgroundColor: 'rgb(255, 255, 77)',
+              borderColor: 'rgba(55, 55, 0, 0.9)', // 'rgb(255, 255, 77)',
+              backgroundColor: 'rgba(55, 55, 0, 0.9)', // 'rgb(255, 255, 77)',
             };
           }
 
@@ -106,18 +120,18 @@ const LineChart = (props) => {
         labelTextColor: (tooltipItem) => {
           const score = tooltipItem.yLabel;
           if (score <= 55) {
-            return 'rgb(204, 51, 0)';
+            // return 'rgb(204, 51, 0)';
           }
 
           if (score > 55 && score < 85) {
-            return 'rgb(128, 128, 0)';
+            // return 'rgb(128, 128, 0)';
           }
 
           return 'white';
         },
         beforeFooter: (tooltipItem) => {
           const result = findTooltipData(activeBranchData, tooltipItem[0].index);
-          return `commitBy: ${result.author}`;
+          return `Commit By : ${result.author}`;
         },
         footer: (tooltipItem) => {
           const result = findTooltipData(activeBranchData, tooltipItem[0].index);
@@ -133,6 +147,7 @@ const LineChart = (props) => {
             display: true,
             color: '#aaa',
             borderDash: [1, 5],
+            drawBorder: false,
           },
           ticks: {
             display: false, // 50, 50 , 70 legends
