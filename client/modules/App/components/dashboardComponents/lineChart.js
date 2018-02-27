@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { Line } from 'react-chartjs-2';
 import parseDatatoChart from '../../../../util/parseDataToChart';
 
@@ -44,6 +45,12 @@ const findTooltipData = (arrayCommits, positionTooltip) => {
   };
 };
 
+const findYAxesMin = (arrayCommits) => {
+  const sortedByScore = _.sortBy(arrayCommits, [(objA) => objA.statementsCoveragePorcentage]);
+  const min = sortedByScore[0].statementsCoveragePorcentage;
+  return min;
+};
+
 
 // main component
 const LineChart = (props) => {
@@ -57,11 +64,21 @@ const LineChart = (props) => {
       line: {
         lineTension: 1,
       },
-      point: { radius: 6 },
+      // point: { radius: 5 },
     },
     lineTension: 1,
     tooltips: {
       // backgroundColor: 'red',
+      custom: (tooltip) => {
+        if (!tooltip) { return; }
+
+        // console.log('y = ', tooltip);
+        if (tooltip.y < 60) {
+          // tooltip.backgroundColor = '#FFF';
+        }
+        // let tooltipEl = document.getElementById('chartjs-tooltip');
+        // console.log('tooltipEl = ', tooltipEl);
+      },
       footerFontStyle: 'regular',
       footerSpacing: 5,
       callbacks: {
@@ -113,14 +130,20 @@ const LineChart = (props) => {
       yAxes: [
         {
           gridLines: {
+            display: true,
             color: '#aaa',
-            borderDash: [0, 1],
+            borderDash: [1, 5],
           },
           ticks: {
-            display: false,
+            display: false, // 50, 50 , 70 legends
             color: '#aaa',
+            min: (activeBranchData.length === 0) ? 0 : (findYAxesMin(activeBranchData) - 5),
+            max: 100,
           },
-          display: false,
+          scaleLabel: {
+            display: false,
+          },
+          // display: false,
         },
       ],
       xAxes: [
@@ -173,7 +196,7 @@ function mapStateToProps(store) {
 export default connect(mapStateToProps)(LineChart);
 
 
-// solucinar lo del render.
+// solucinar lo del render. done!!
 // calcular dinamicamene Y eje.
 // usar function to determine background color and border. tooltip
 

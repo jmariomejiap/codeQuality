@@ -1,13 +1,13 @@
+import moment from 'moment';
 const parseDatatoChart = (data) => {
   const result = { labels: [], datasets: [{ label: '', lineTension: 0, data: [], backgroundColor: 'rgba(0, 172, 57, 0.70)' }] };
 
   // array of objects. each object is a json-coverage commit.
   data.map((commitObject, index) => { // eslint-disable-line
-    const splitDate = commitObject.commitDate.slice(0, -1).split('T');
-    const date = splitDate[0];
+    const commitDate = moment(commitObject.commitDate).format('DD-MMM-YYYY');
     const porcentage = commitObject.statementsCoveragePorcentage;
 
-    result.labels.push(date);
+    result.labels.push(commitDate);
     result.datasets[0].label = commitObject.branch;
     result.datasets[0].data.push(porcentage);
   });
