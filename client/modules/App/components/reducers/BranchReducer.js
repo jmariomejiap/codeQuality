@@ -7,12 +7,14 @@ import {
   SET_NEXT_ACTION,
   NO_BRANCHES,
   RESET_BRANCH_DURATION,
+  BRANCH_INPUT,
 } from '../actions/BranchActions';
 
 const initialState = {
   branches: [],
   activeBranchData: [],
   currentBranch: '',
+  searchingBranchInput: '',
   branchDurationWeeks: -1,
   branchDurationDays: -1,
   nextAction: 'loading',
@@ -21,12 +23,17 @@ const initialState = {
 
 const branchReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_NEXT_ACTION: {
+    case SET_NEXT_ACTION:
       return {
         ...state,
         nextAction: action.instruction,
       };
-    }
+
+    case BRANCH_INPUT:
+      return {
+        ...state,
+        searchingBranchInput: action.input,
+      };
 
     case BRANCH_SELECTED:
       return {

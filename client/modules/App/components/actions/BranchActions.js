@@ -8,6 +8,7 @@ export const DURATION_WEEKS = 'DURATION_WEEKS';
 export const SET_NEXT_ACTION = 'SET_NEXT_ACTION';
 export const NO_BRANCHES = 'NO_BRANCHES';
 export const RESET_BRANCH_DURATION = 'RESET_BRANCH_DURATION';
+export const BRANCH_INPUT = 'BRANCH_INPUT';
 
 
 export function setNextAction(instruction) {
@@ -49,6 +50,12 @@ export function branchDurationDays(days) {
   };
 }
 
+export function searchingBranch(input) {
+  return {
+    type: BRANCH_INPUT,
+    input,
+  };
+}
 
 export function calculateBranchDuration(arrayCommits) {
   return (dispatch) => {

@@ -15,7 +15,7 @@ import EmptyProjectPage from './EmptyProject';
 
 // Import Actions
 import { fetchProjects } from './components/actions/ProjectActions';
-import { fetchBranches, fetchBranchCommits, setNextAction } from './components/actions/BranchActions';
+import { fetchBranches, fetchBranchCommits, setNextAction, searchingBranch } from './components/actions/BranchActions';
 
 
 const styles = {
@@ -75,11 +75,18 @@ export class App extends Component {
       }
       if (listBranches.includes('master')) {
         this.props.dispatch(fetchBranchCommits(projectId, 'master'))
-          .then(() => this.props.dispatch(setNextAction('complete')));
+          .then(() => {
+            this.props.dispatch(setNextAction('complete'));
+            this.props.dispatch(searchingBranch('master'));
+          });
         return;
       }
+
       this.props.dispatch(fetchBranchCommits(projectId, listBranches[0]))
-          .then(() => this.props.dispatch(setNextAction('completeNoMaster')));
+          .then(() => {
+            this.props.dispatch(setNextAction('completeNoMaster'));
+            this.props.dispatch(searchingBranch(listBranches[0]));
+          });
     }
   }
 

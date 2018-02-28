@@ -6,11 +6,10 @@ import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import AutoComplete from 'material-ui/AutoComplete';
-import MenuItem from 'material-ui/MenuItem';
 import { transparent } from 'material-ui/styles/colors';
 import Search from 'material-ui/svg-icons/action/search';
 import { controlDrawer } from '../actions/ProjectActions';
-import { fetchBranchCommits } from '../actions/BranchActions';
+import { fetchBranchCommits, searchingBranch } from '../actions/BranchActions';
 
 
 const styles = {
@@ -71,28 +70,14 @@ const styles = {
 
 // Main Component
 const Header = (props) => {
-  const { listBranches, activeProject, dispatch } = props;
+  const { listBranches, activeProject, searchingBranchInput, dispatch } = props;
 
   const handleDrawer = () => dispatch(controlDrawer());
 
   const selectBranch = (name) => dispatch(fetchBranchCommits(activeProject.projectId, name));
 
-  // helper Function
-  const createMenuItems = (branchesList) => {
-    return branchesList.map((name) => {
-      return {
-        text: `Branch ${name}`,
-        value: (
-          <MenuItem
-            style={styles.menuItemsStyle}
-            key={name}
-            primaryText={name}
-            onClick={() => selectBranch(name)}
-          />
-        ),
-      };
-    });
-  };
+  const searching = (value) => dispatch(searchingBranch(value));
+
 
   return (
     <div>
@@ -122,8 +107,11 @@ const Header = (props) => {
                   /> :
                   <AutoComplete
                     hintText="Select a Branch..."
-                    dataSource={createMenuItems(listBranches)}
-                    filter={AutoComplete.fuzzyFilter}
+                    searchText={searchingBranchInput}
+                    dataSource={listBranches}
+                    filter={(searchText, key) => (key.indexOf(searchText) !== -1)}
+                    onUpdateInput={searching}
+                    onNewRequest={selectBranch}
                     openOnFocus={true} // eslint-disable-line
                     fullWidth={true} // eslint-disable-line
                     style={styles.autocompleteStyle}
@@ -146,6 +134,7 @@ Header.propTypes = {
   dispatch: PropTypes.func,
   listBranches: PropTypes.array,
   activeProject: PropTypes.object,
+  searchingBranchInput: PropTypes.string,
 };
 
 
@@ -153,6 +142,7 @@ function mapStateToProps(store) {
   return {
     activeProject: store.projects.activeProject,
     listBranches: store.branches.branches,
+    searchingBranchInput: store.branches.searchingBranchInput,
   };
 }
 
