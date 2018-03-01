@@ -4,6 +4,8 @@ import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import CircularProgress from 'material-ui/CircularProgress';
+
 // components
 import Header from './components/dashboardComponents/header';
 import DrawerMenu from './components/dashboardComponents/drawerMenu';
@@ -27,6 +29,11 @@ const styles = {
   dashboardStyle: {
     height: '100vh',
   },
+  spinnerStyle: {
+    position: 'absolute',
+    top: '50%',
+    left: '45%',
+  },
 };
 
 // material-ui variables.
@@ -45,11 +52,14 @@ const muiTheme = getMuiTheme(
 export class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isMounted: false };
+    this.state = {
+      isMounted: false,
+      spinnerIndicator: 'loading',
+    };
   }
 
   componentDidMount() {
-    this.setState({isMounted: true}); // eslint-disable-line
+    this.setState({isMounted: true, spinnerIndicator: 'mounted'}); // eslint-disable-line
     const nextAction = this.props.branches.nextAction;
     if (nextAction === 'loading') {
       this.props.dispatch(fetchProjects())
@@ -118,12 +128,19 @@ export class App extends Component {
               <DrawerMenu />
               <CreateDialog />
               <TokenDialog />
+              {(this.state.spinnerIndicator === 'loading') ?
+                <div style={styles.spinnerStyle}>
+                  <CircularProgress size={100} thickness={8} />
+                </div> :
+                null
+              }
               {(this.props.projects.projectsName.length === 0) ?
-                <EmptyProjectPage /> :
+                null :
                 <div style={styles.chartStyle}>
                   <LineChart />
                 </div>
               }
+              {(this.props.projects.projectsName.length === 0 && this.state.isMounted) ? <EmptyProjectPage /> : null}
             </div>
           </div>
         </MuiThemeProvider>
@@ -147,3 +164,13 @@ function mapStateToProps(store) {
 }
 
 export default connect(mapStateToProps)(App);
+
+/*
+<RefreshIndicator
+                size={100}
+                left={600}
+                top={400}
+                status={this.state.spinnerIndicator}
+                // style={style.refresh}
+              />
+              */

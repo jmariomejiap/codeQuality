@@ -160,7 +160,7 @@ const LineChart = (props) => {
           scaleLabel: {
             display: false,
           },
-          // display: false,
+          display: false, // grid lines
         },
       ],
       xAxes: [
@@ -180,23 +180,26 @@ const LineChart = (props) => {
         yScaleID: 'y-axis-0',
         yMin: 0,
         yMax: 55,
-        // borderColor: 'rgba(255, 51, 51, 0.25)',
-        // borderWidth: 2,
-        backgroundColor: 'rgba(255, 0, 0, 0.50)',
+        borderColor: 'rgba(255, 51, 51, 0.95)',
+        borderWidth: 2,
+        // backgroundColor: 'rgba(182, 10, 28, 0.60)',
+        // backgroundColor: 'rgba(247, 168, 0, 0.20'
+        backgroundColor: 'rgba(255, 255, 255, 0.10)',
       }, {
         type: 'box',
         yScaleID: 'y-axis-0',
         yMin: 55,
         yMax: 90,
-        borderColor: 'rgba(255, 255, 0, 0.5)',
-        borderWidth: 0.5,
-        backgroundColor: 'rgba(255, 255, 0, 0.05)',
+        // borderColor: 'rgba(255, 255, 0, 0.5)',
+        // borderWidth: 0.5,
+        // backgroundColor: 'rgba(247, 168, 0, 0.20' // 'rgba(255, 255, 0, 0.05)',
+        backgroundColor: 'rgba(255, 255, 255, 0.10)',
       }, {
         type: 'box',
         yScaleID: 'y-axis-0',
         yMin: 90,
         yMax: 100,
-        borderColor: 'rgba(7, 79, 7, 0.20)',
+        borderColor: 'rgba(7, 79, 7, 0.10)',
         borderWidth: 0.5,
         backgroundColor: 'rgba(7, 79, 7, 0.20)',
       }],
