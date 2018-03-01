@@ -84,12 +84,12 @@ const LineChart = (props) => {
 
 
         if (tooltip.dataPoints[0].yLabel < 60) {
-          tooltip.backgroundColor = 'rgba(55,0,0,0.8)'; // eslint-disable-line
+          tooltip.backgroundColor = 'rgba(20,0,0,0.9)'; // eslint-disable-line
           // return;
         }
 
         if (tooltip.dataPoints[0].yLabel >= 60 && tooltip.dataPoints[0].yLabel < 90) {
-          tooltip.backgroundColor = 'rgba(53, 53, 0, 0.9)';  // eslint-disable-line
+          tooltip.backgroundColor = 'rgba(29, 29, 0, 0.9)';  // eslint-disable-line
           // return;
         }
 
@@ -110,7 +110,7 @@ const LineChart = (props) => {
           if (score >= 60 && score < 90) {
             return {
               borderColor: 'rgba(55, 55, 0, 0.9)', // 'rgb(255, 255, 77)',
-              backgroundColor: 'rgba(55, 55, 0, 0.9)', // 'rgb(255, 255, 77)',
+              backgroundColor: 'rgba(255, 255, 100, 0.9)', // 'rgb(255, 255, 77)',
             };
           }
 
@@ -180,7 +180,7 @@ const LineChart = (props) => {
         yScaleID: 'y-axis-0',
         yMin: 0,
         yMax: 55,
-        borderColor: 'rgba(255, 51, 51, 0.95)',
+        borderColor: 'rgba(255, 51, 51, 0.55)',
         borderWidth: 2,
         // backgroundColor: 'rgba(182, 10, 28, 0.60)',
         // backgroundColor: 'rgba(247, 168, 0, 0.20'
@@ -194,6 +194,7 @@ const LineChart = (props) => {
         // borderWidth: 0.5,
         // backgroundColor: 'rgba(247, 168, 0, 0.20' // 'rgba(255, 255, 0, 0.05)',
         backgroundColor: 'rgba(255, 255, 255, 0.10)',
+        borderColor: 'rgba(255, 255, 255, 0.10)',
       }, {
         type: 'box',
         yScaleID: 'y-axis-0',
