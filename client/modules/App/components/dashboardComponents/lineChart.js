@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Line } from 'react-chartjs-2';
+import 'chartjs-plugin-annotation';
 import parseDatatoChart from '../../../../util/parseDataToChart';
 
 const styles = {
@@ -64,9 +65,10 @@ const LineChart = (props) => {
       line: {
         lineTension: 1,
       },
-      // point: { radius: 5 },
+      point: {
+        radius: 4,
+      },
     },
-    lineTension: 1,
     tooltips: {
       titleMarginBottom: 15,
       footerMarginTop: 15,
@@ -87,7 +89,7 @@ const LineChart = (props) => {
         }
 
         if (tooltip.dataPoints[0].yLabel >= 60 && tooltip.dataPoints[0].yLabel < 90) {
-          tooltip.backgroundColor = 'rgba(40, 40, 0, 0.8)'; // eslint-disable-line
+          tooltip.backgroundColor = 'rgba(53, 53, 0, 0.9)';  // eslint-disable-line
           // return;
         }
 
@@ -171,6 +173,34 @@ const LineChart = (props) => {
         },
       ],
     },
+    // background color
+    annotation: {
+      annotations: [{
+        type: 'box',
+        yScaleID: 'y-axis-0',
+        yMin: 0,
+        yMax: 55,
+        // borderColor: 'rgba(255, 51, 51, 0.25)',
+        // borderWidth: 2,
+        backgroundColor: 'rgba(255, 0, 0, 0.50)',
+      }, {
+        type: 'box',
+        yScaleID: 'y-axis-0',
+        yMin: 55,
+        yMax: 90,
+        borderColor: 'rgba(255, 255, 0, 0.5)',
+        borderWidth: 0.5,
+        backgroundColor: 'rgba(255, 255, 0, 0.05)',
+      }, {
+        type: 'box',
+        yScaleID: 'y-axis-0',
+        yMin: 90,
+        yMax: 100,
+        borderColor: 'rgba(7, 79, 7, 0.20)',
+        borderWidth: 0.5,
+        backgroundColor: 'rgba(7, 79, 7, 0.20)',
+      }],
+    }
   };
 
   return (
@@ -209,10 +239,3 @@ function mapStateToProps(store) {
 }
 
 export default connect(mapStateToProps)(LineChart);
-
-
-// solucinar lo del render. done!!
-// calcular dinamicamene Y eje.
-// usar function to determine background color and border. tooltip
-
-// avilitar auto compleate... cuando el usuario borre y escriba. una vez click desabilitar
