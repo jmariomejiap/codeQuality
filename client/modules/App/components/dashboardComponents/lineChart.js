@@ -7,7 +7,8 @@ import parseDatatoChart from '../../../../util/parseDataToChart';
 
 const styles = {
   outsideDiv: {
-    height: '60vh',
+    // height: '100vh',
+    height: 'calc(100vh - 63px)', // calculates height dynamicly
     width: '100%',
     position: 'relative',
   },
@@ -83,12 +84,12 @@ const LineChart = (props) => {
         if (!tooltip.dataPoints) { return; }
 
 
-        if (tooltip.dataPoints[0].yLabel < 60) {
+        if (tooltip.dataPoints[0].yLabel < 50) {
           tooltip.backgroundColor = 'rgba(20,0,0,0.9)'; // eslint-disable-line
           // return;
         }
 
-        if (tooltip.dataPoints[0].yLabel >= 60 && tooltip.dataPoints[0].yLabel < 90) {
+        if (tooltip.dataPoints[0].yLabel >= 50 && tooltip.dataPoints[0].yLabel < 90) {
           tooltip.backgroundColor = 'rgba(29, 29, 0, 0.9)';  // eslint-disable-line
           // return;
         }
@@ -100,14 +101,14 @@ const LineChart = (props) => {
       callbacks: {
         labelColor: (tooltipItem) => {
           const score = tooltipItem.yLabel;
-          if (score <= 55) {
+          if (score <= 50) {
             return {
               borderColor: 'rgb(255, 0, 0)',
               backgroundColor: 'rgb(255, 0, 0)',
             };
           }
 
-          if (score >= 60 && score < 90) {
+          if (score > 50 && score < 90) {
             return {
               borderColor: 'rgba(55, 55, 0, 0.9)', // 'rgb(255, 255, 77)',
               backgroundColor: 'rgba(255, 255, 100, 0.9)', // 'rgb(255, 255, 77)',
@@ -121,11 +122,11 @@ const LineChart = (props) => {
         },
         labelTextColor: (tooltipItem) => {
           const score = tooltipItem.yLabel;
-          if (score <= 55) {
+          if (score <= 50) {
             // return 'rgb(204, 51, 0)';
           }
 
-          if (score > 55 && score < 85) {
+          if (score > 50 && score < 90) {
             // return 'rgb(128, 128, 0)';
           }
 
@@ -179,22 +180,22 @@ const LineChart = (props) => {
         type: 'box',
         yScaleID: 'y-axis-0',
         yMin: 0,
-        yMax: 55,
-        borderColor: 'rgba(255, 51, 51, 0.55)',
+        yMax: 50,
+        borderColor: 'rgba(182, 10, 28, 0.60)',
         borderWidth: 2,
-        // backgroundColor: 'rgba(182, 10, 28, 0.60)',
+        backgroundColor: 'rgba(182, 10, 28, 0.60)',
         // backgroundColor: 'rgba(247, 168, 0, 0.20'
-        backgroundColor: 'rgba(255, 255, 255, 0.10)',
+        // backgroundColor: 'rgba(255, 255, 255, 0.10)', // white transparent
       }, {
         type: 'box',
         yScaleID: 'y-axis-0',
-        yMin: 55,
+        yMin: 50,
         yMax: 90,
-        // borderColor: 'rgba(255, 255, 0, 0.5)',
-        // borderWidth: 0.5,
-        // backgroundColor: 'rgba(247, 168, 0, 0.20' // 'rgba(255, 255, 0, 0.05)',
-        backgroundColor: 'rgba(255, 255, 255, 0.10)',
-        borderColor: 'rgba(255, 255, 255, 0.10)',
+        borderColor: 'rgba(255, 255, 0, 0.5)',
+        borderWidth: 0.5,
+        backgroundColor: 'rgba(247, 168, 0, 0.20', // 'rgba(255, 255, 0, 0.05)',
+        // backgroundColor: 'rgba(255, 255, 255, 0.10)',
+        // borderColor: 'rgba(255, 255, 255, 0.10)',
       }, {
         type: 'box',
         yScaleID: 'y-axis-0',
