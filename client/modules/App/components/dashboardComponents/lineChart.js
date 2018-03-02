@@ -7,7 +7,6 @@ import parseDatatoChart from '../../../../util/parseDataToChart';
 
 const styles = {
   outsideDiv: {
-    // height: '100vh',
     height: 'calc(100vh - 63px)', // calculates height dynamicly
     width: '100%',
     position: 'relative',
@@ -19,7 +18,7 @@ const styles = {
     bottom: 200,
     fontFamily: 'Roboto Condensed',
     fontWeight: 700,
-    color: '#394f59',
+    color: '#262626',
   },
   weeksTerm: {
     fontSize: 30,
@@ -28,7 +27,7 @@ const styles = {
     bottom: 20,
     fontFamily: 'Roboto Condensed',
     fontWeight: 700,
-    color: '#394f59',
+    color: '#262626',
   },
 };
 
@@ -181,9 +180,9 @@ const LineChart = (props) => {
         yScaleID: 'y-axis-0',
         yMin: 0,
         yMax: 50,
-        borderColor: 'rgba(182, 10, 28, 0.60)',
+        borderColor: 'rgba(182, 10, 28, 0.40)',
         borderWidth: 2,
-        backgroundColor: 'rgba(182, 10, 28, 0.60)',
+        backgroundColor: 'rgba(182, 10, 28, 0.3)',
         // backgroundColor: 'rgba(247, 168, 0, 0.20'
         // backgroundColor: 'rgba(255, 255, 255, 0.10)', // white transparent
       }, {
@@ -191,9 +190,9 @@ const LineChart = (props) => {
         yScaleID: 'y-axis-0',
         yMin: 50,
         yMax: 90,
-        borderColor: 'rgba(255, 255, 0, 0.5)',
+        borderColor: 'rgba(247, 168, 0, 0.05)',
         borderWidth: 0.5,
-        backgroundColor: 'rgba(247, 168, 0, 0.20', // 'rgba(255, 255, 0, 0.05)',
+        backgroundColor: 'rgba(247, 168, 0, 0.05', // 'rgba(255, 255, 0, 0.05)',
         // backgroundColor: 'rgba(255, 255, 255, 0.10)',
         // borderColor: 'rgba(255, 255, 255, 0.10)',
       }, {
@@ -201,9 +200,9 @@ const LineChart = (props) => {
         yScaleID: 'y-axis-0',
         yMin: 90,
         yMax: 100,
-        borderColor: 'rgba(7, 79, 7, 0.10)',
+        borderColor: 'rgba(7, 79, 7, 0.07)',
         borderWidth: 0.5,
-        backgroundColor: 'rgba(7, 79, 7, 0.20)',
+        backgroundColor: 'rgba(7, 79, 7, 0.07)',
       }],
     },
   };
