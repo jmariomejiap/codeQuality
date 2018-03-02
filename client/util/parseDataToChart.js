@@ -4,7 +4,7 @@ const parseDatatoChart = (data) => {
 
   // array of objects. each object is a json-coverage commit.
   data.map((commitObject, index) => { // eslint-disable-line
-    const commitDate = moment(commitObject.commitDate).format('DD-MMM-YYYY');
+    const commitDate = moment(commitObject.commitDate).format('MMM DD,  YYYY');
     const porcentage = commitObject.statementsCoveragePorcentage;
 
     result.labels.push(commitDate);
