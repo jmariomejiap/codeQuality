@@ -10,7 +10,7 @@ export const PROJECT_SELECTED = 'PROJECT_SELECTED';
 export const UPDATE_NEXT_ACTION = 'UPDATE_NEXT_ACTION';
 export const CREATE_PROJECT_INPUT = 'CREATE_PROJECT_INPUT';
 export const CLEAR_PROJECT_INPUT = 'CLEAR_PROJECT_INPUT';
-
+export const EMPTY_PROJECTS = 'EMPTY_PROJECTS';
 
 export function controlTokenDialog() {
   return {
@@ -41,6 +41,13 @@ export function selectProject(name) {
 }
 
 
+export function foundEmptyProjects() {
+  return {
+    type: EMPTY_PROJECTS,
+  };
+}
+
+
 export function updateProjectList(listProjects, fullResponse) {
   return {
     type: FETCHED_PROJECTS,
@@ -55,11 +62,15 @@ export function fetchProjects() {
     return callApi('v1/project')
       .then(res => {
         const listProjects = res.projects;
+        if (listProjects.length === 0) {
+          return 'empty projects';
+        }
         const listProjectNames = listProjects.map((projectObject) => projectObject.name);
         const nameLastActiveProject = listProjectNames[0];
 
         dispatch(updateProjectList(listProjectNames, listProjects));
         dispatch(selectProject(nameLastActiveProject));
+        return 'ok';
       });
   };
 }

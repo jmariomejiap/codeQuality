@@ -204,7 +204,7 @@ const LineChart = (props) => {
         borderWidth: 0.5,
         backgroundColor: 'rgba(7, 79, 7, 0.20)',
       }],
-    }
+    },
   };
 
   return (
@@ -212,7 +212,6 @@ const LineChart = (props) => {
       <div style={styles.porcentage}>{(activeBranchData.length === 0) ? null : `${findScore(activeBranchData)}%`}</div>
       <div style={styles.weeksTerm}>{(branchDurationWeeks === -1) ? null : `${branchDurationWeeks} Weeks`}</div>
       <div style={styles.weeksTerm}>{(branchDurationDays === -1) ? null : `${branchDurationDays} Days`}</div>
-
       {(activeBranchData.length === 0) ? null :
         <Line
           data={parseDatatoChart(activeBranchData)}

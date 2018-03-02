@@ -9,6 +9,7 @@ import {
   UPDATE_NEXT_ACTION,
   CREATE_PROJECT_INPUT,
   CLEAR_PROJECT_INPUT,
+  EMPTY_PROJECTS,
 } from '../actions/ProjectActions';
 
 
@@ -21,6 +22,7 @@ const initialState = {
   tokenData: [],
   activeProject: { name: '', token: '', projectId: '' },
   projectInputValue: '',
+  noProjectsFound: false,
 };
 
 
@@ -31,6 +33,13 @@ const createProjectReducer = (state = initialState, action) => {
         ...state,
         projectsName: _.union(state.projectsName, action.listProjects),
         projectsData: _.unionWith(state.projectsData, action.fullResponse, _.isEqual),
+      };
+
+
+    case EMPTY_PROJECTS:
+      return {
+        ...state,
+        noProjectsFound: true,
       };
 
 

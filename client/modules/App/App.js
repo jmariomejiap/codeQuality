@@ -16,7 +16,7 @@ import EmptyProjectPage from './EmptyProject';
 
 
 // Import Actions
-import { fetchProjects } from './components/actions/ProjectActions';
+import { fetchProjects, foundEmptyProjects } from './components/actions/ProjectActions';
 import { fetchBranches, fetchBranchCommits, setNextAction, searchingBranch } from './components/actions/BranchActions';
 
 
@@ -60,18 +60,29 @@ export class App extends Component {
 
   componentDidMount() {
     this.setState({isMounted: true, spinnerIndicator: 'mounted'}); // eslint-disable-line
-    const nextAction = this.props.branches.nextAction;
+    const nextAction = this.props.nextAction;
     if (nextAction === 'loading') {
       this.props.dispatch(fetchProjects())
-        .then(() => this.props.dispatch(setNextAction('fetchBranches')));
+        .then((result) => {
+          if (result === 'empty projects') {
+            this.props.dispatch(setNextAction('No project available'));
+            return this.props.dispatch(foundEmptyProjects());
+          }
+
+          return this.props.dispatch(setNextAction('fetchBranches'));
+        });
     }
   }
 
 
   componentWillReceiveProps(nextProps) {
-    const { nextAction } = nextProps.branches;
-    const projectId = nextProps.projects.activeProject.projectId;
-    const listBranches = nextProps.branches.branches;
+    const { nextAction } = nextProps;
+    if (nextAction === 'No project available') {
+      return;
+    }
+
+    const projectId = nextProps.activeProject.projectId;
+    const listBranches = nextProps.branches;
 
     if (nextAction === 'fetchBranches') {
       this.props.dispatch(fetchBranches(projectId))
@@ -134,13 +145,13 @@ export class App extends Component {
                 </div> :
                 null
               }
-              {(this.props.projects.projectsName.length === 0) ?
+              {(this.props.projectsName.length === 0) ?
                 null :
                 <div style={styles.chartStyle}>
                   <LineChart />
                 </div>
               }
-              {(this.props.projects.projectsName.length === 0 && this.state.isMounted) ? <EmptyProjectPage /> : null}
+              {(this.props.noProjectsFound) ? <EmptyProjectPage /> : null}
             </div>
           </div>
         </MuiThemeProvider>
@@ -151,15 +162,21 @@ export class App extends Component {
 
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  branches: PropTypes.object,
-  projects: PropTypes.object.isRequired,
+  nextAction: PropTypes.string,
+  projectsName: PropTypes.array,
+  activeProject: PropTypes.object,
+  noProjectsFound: PropTypes.bool,
+  branches: PropTypes.array,
 };
 
 // Retrieve data from store and pass them over as props
 function mapStateToProps(store) {
   return {
-    branches: store.branches,
-    projects: store.projects,
+    nextAction: store.branches.nextAction,
+    projectsName: store.projects.projectsName,
+    activeProject: store.projects.activeProject,
+    noProjectsFound: store.projects.noProjectsFound,
+    branches: store.branches.branches,
   };
 }
 
