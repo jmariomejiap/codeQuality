@@ -21,7 +21,7 @@ const styles = {
     height: 63,
   },
   menuItem: {
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: 'Roboto Condensed',
     color: '#394f59',
   },
@@ -30,7 +30,7 @@ const styles = {
     marginTop: 63,
   },
   list: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: 'Roboto Condensed',
     color: '#394f59',
   },
