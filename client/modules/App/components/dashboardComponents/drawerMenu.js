@@ -8,7 +8,7 @@ import { List, ListItem } from 'material-ui/List';
 import Add from 'material-ui/svg-icons/content/add';
 import Menu from 'material-ui/svg-icons/navigation/apps';
 import { controlProjectDialog, selectProject } from '../actions/ProjectActions';
-import { fetchBranches, resetBranchDuration, setNextAction } from '../actions/BranchActions';
+import { fetchBranches, resetBranchDuration, setNextAction, foundEmptyBranches } from '../actions/BranchActions';
 
 const styles = {
   logo: {
@@ -42,7 +42,7 @@ const styles = {
 
 
 const DrawerMenu = (props) => {
-  const { drawerState, projectNames, projectsData, dispatch } = props;
+  const { drawerState, projectNames, projectsData, activeProject, dispatch } = props;
 
   const findBranches = (projectName) => {
     const project = projectsData.filter((obj) => projectName === obj.name);
@@ -55,6 +55,10 @@ const DrawerMenu = (props) => {
   };
 
   const chooseProject = (name) => {
+    if (activeProject.name === name) {
+      return;
+    }
+    dispatch(foundEmptyBranches());
     dispatch(selectProject(name));
     dispatch(resetBranchDuration());
     findBranches(name);
@@ -107,6 +111,7 @@ DrawerMenu.propTypes = {
   drawerState: PropTypes.bool.isRequired,
   projectNames: PropTypes.aray,
   projectsData: PropTypes.array,
+  activeProject: PropTypes.object,
 };
 
 function mapStateToProps(store) {
@@ -114,6 +119,7 @@ function mapStateToProps(store) {
     drawerState: store.projects.drawerIsOpen,
     projectNames: store.projects.projectsName,
     projectsData: store.projects.projectsData,
+    activeProject: store.projects.activeProject,
   };
 }
 
