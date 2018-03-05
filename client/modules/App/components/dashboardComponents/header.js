@@ -70,13 +70,19 @@ const styles = {
 
 // Main Component
 const Header = (props) => {
-  const { listBranches, activeProject, searchingBranchInput, dispatch } = props;
+  const { listBranches, activeProject, searchingBranchInput, drawerIsOpen, dispatch } = props;
 
   const handleDrawer = () => dispatch(controlDrawer());
 
-  const selectBranch = (name) => dispatch(fetchBranchCommits(activeProject.projectId, name));
-
   const searching = (value) => dispatch(searchingBranch(value));
+
+  const selectBranch = (name) => {
+    if (drawerIsOpen) {
+      handleDrawer();
+    }
+
+    dispatch(fetchBranchCommits(activeProject.projectId, name));
+  };
 
 
   return (
@@ -135,6 +141,7 @@ Header.propTypes = {
   listBranches: PropTypes.array,
   activeProject: PropTypes.object,
   searchingBranchInput: PropTypes.string,
+  drawerIsOpen: PropTypes.bool,
 };
 
 
@@ -143,6 +150,7 @@ function mapStateToProps(store) {
     activeProject: store.projects.activeProject,
     listBranches: store.branches.branches,
     searchingBranchInput: store.branches.searchingBranchInput,
+    drawerIsOpen: store.projects.drawerIsOpen,
   };
 }
 

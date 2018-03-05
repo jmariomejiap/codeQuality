@@ -19,6 +19,9 @@ const styles = {
     fontFamily: 'Roboto Condensed',
     fontWeight: 700,
     color: '#262626',
+    // color: 'black',
+    userSelect: 'none',
+    zIndex: 1,
   },
   weeksTerm: {
     fontSize: 30,
@@ -28,7 +31,20 @@ const styles = {
     fontFamily: 'Roboto Condensed',
     fontWeight: 700,
     color: '#262626',
+    // color: 'black',
+    userSelect: 'none',
+    zIndex: 1,
   },
+  scaleLabel: {
+    position: 'absolute',
+    fontFamily: 'Roboto Condensed',
+    color: '#262626',
+    paddingLeft: 5,
+    fontSize: 13,
+    fontWeight: 'bold',
+    zIndex: 0,
+    userSelect: 'none',
+  }
 };
 
 // helper function
@@ -146,29 +162,39 @@ const LineChart = (props) => {
       yAxes: [
         {
           gridLines: {
-            display: true,
+            display: false,
             color: '#aaa',
             borderDash: [1, 5],
             drawBorder: false,
           },
           ticks: {
-            display: false, // 50, 50 , 70 legends
+            display: true, // 50, 50 , 70 legends
             color: '#aaa',
             min: (activeBranchData.length === 0) ? 0 : (findYAxesMin(activeBranchData) - 5),
             max: 100,
           },
           scaleLabel: {
-            display: false,
+            display: true,
+            padding: 0,
           },
           display: false, // grid lines
         },
       ],
       xAxes: [
         {
+          /*
           gridLines: {
             color: '#aaa',
             borderDash: [0, 3],
+            drawBorder: false,
           },
+          ticks: {
+            padding: 0,
+          },
+          scaleLabel: {
+            padding: 0,
+          },
+          */
           display: false,
         },
       ],
@@ -177,16 +203,18 @@ const LineChart = (props) => {
     annotation: {
       annotations: [{
         type: 'box',
+        drawTime: 'beforeDatasetsDraw',
         yScaleID: 'y-axis-0',
         yMin: 0,
         yMax: 50,
-        borderColor: 'rgba(182, 10, 28, 0.40)',
+        borderColor: 'rgba(250, 5, 8, 0.5)',
         borderWidth: 2,
-        backgroundColor: 'rgba(182, 10, 28, 0.3)',
+        backgroundColor: 'rgba(250, 5, 8, 0.5)',
         // backgroundColor: 'rgba(247, 168, 0, 0.20'
         // backgroundColor: 'rgba(255, 255, 255, 0.10)', // white transparent
       }, {
         type: 'box',
+        drawTime: 'beforeDatasetsDraw',
         yScaleID: 'y-axis-0',
         yMin: 50,
         yMax: 90,
@@ -197,6 +225,7 @@ const LineChart = (props) => {
         // borderColor: 'rgba(255, 255, 255, 0.10)',
       }, {
         type: 'box',
+        drawTime: 'beforeDatasetsDraw',
         yScaleID: 'y-axis-0',
         yMin: 90,
         yMax: 100,
@@ -212,6 +241,8 @@ const LineChart = (props) => {
       <div style={styles.porcentage}>{(activeBranchData.length === 0) ? null : `${findScore(activeBranchData)}%`}</div>
       <div style={styles.weeksTerm}>{(branchDurationWeeks === -1) ? null : `${branchDurationWeeks} Weeks`}</div>
       <div style={styles.weeksTerm}>{(branchDurationDays === -1) ? null : `${branchDurationDays} Days`}</div>
+      <div style={{ top: 6, ...styles.scaleLabel }}>-100</div>
+      <div style={{ bottom: 0, ...styles.scaleLabel }}>-50</div>
       {(activeBranchData.length === 0) ? null :
         <Line
           data={parseDatatoChart(activeBranchData)}

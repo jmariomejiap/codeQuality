@@ -1,6 +1,6 @@
 import moment from 'moment';
 const parseDatatoChart = (data) => {
-  const result = { labels: [], datasets: [{ label: ' %', lineTension: 0, data: [], borderColor: '#808080', backgroundColor: 'rgba(149, 149, 149, 0.9)' }] };
+  const result = { labels: [], datasets: [{ label: ' %', lineTension: 0, data: [], borderColor: '#808080', backgroundColor: 'rgba(28, 33, 60, 0.45)' }] };
 
   // array of objects. each object is a json-coverage commit.
   data.map((commitObject, index) => { // eslint-disable-line
@@ -19,3 +19,4 @@ export default parseDatatoChart;
 // 'rgba(0, 98, 196, 0.70)' blue
 // 'rgba(0, 172, 57, 0.70)' green
 // '#B3B7B8' grey
+// 'rgba(83, 89, 106, 0.55)' nice greyBlue
