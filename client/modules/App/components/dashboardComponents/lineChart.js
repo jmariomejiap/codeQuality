@@ -86,6 +86,9 @@ const LineChart = (props) => {
       },
     },
     tooltips: {
+      mode: 'nearest',
+      position: 'nearest',
+      intersect: false,
       titleMarginBottom: 15,
       footerMarginTop: 15,
       footerFontStyle: 'regular',
@@ -241,8 +244,8 @@ const LineChart = (props) => {
       <div style={styles.porcentage}>{(activeBranchData.length === 0) ? null : `${findScore(activeBranchData)}%`}</div>
       <div style={styles.weeksTerm}>{(branchDurationWeeks === -1) ? null : `${branchDurationWeeks} Weeks`}</div>
       <div style={styles.weeksTerm}>{(branchDurationDays === -1) ? null : `${branchDurationDays} Days`}</div>
-      <div style={{ top: 6, ...styles.scaleLabel }}>-100</div>
-      <div style={{ bottom: 0, ...styles.scaleLabel }}>-50</div>
+      <div style={{ top: 6, ...styles.scaleLabel }}>{(activeBranchData.length === 0) ? null : '100 %'}</div>
+      <div style={{ bottom: 0, ...styles.scaleLabel }}>{(activeBranchData.length === 0) ? null : `${(findYAxesMin(activeBranchData) - 5)} %`}</div>
       {(activeBranchData.length === 0) ? null :
         <Line
           data={parseDatatoChart(activeBranchData)}
