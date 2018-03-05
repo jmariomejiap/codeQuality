@@ -40,7 +40,7 @@ const styles = {
     fontFamily: 'Roboto Condensed',
     color: '#262626',
     paddingLeft: 5,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 'bold',
     zIndex: 0,
     userSelect: 'none',
@@ -71,7 +71,7 @@ const findYAxesMin = (arrayCommits) => {
 
 // main component
 const LineChart = (props) => {
-  const { activeBranchData, branchDurationDays, branchDurationWeeks } = props;
+  const { activeBranchData, branchDurationDays, branchDurationWeeks, drawerState } = props;
 
   const options = {
     legend: {
@@ -86,7 +86,8 @@ const LineChart = (props) => {
       },
     },
     tooltips: {
-      mode: 'nearest',
+      mode: 'index',
+      axis: 'x',
       position: 'nearest',
       intersect: false,
       titleMarginBottom: 15,
@@ -210,9 +211,10 @@ const LineChart = (props) => {
         yScaleID: 'y-axis-0',
         yMin: 0,
         yMax: 50,
-        borderColor: 'rgba(250, 5, 8, 0.5)',
-        borderWidth: 2,
-        backgroundColor: 'rgba(250, 5, 8, 0.5)',
+        borderColor: 'rgba(250, 5, 8, 0.45)',
+        borderWidth: 1,
+        // backgroundColor: 'rgba(255, 85, 0, 0.11)',
+        backgroundColor: 'rgba(255, 2, 85, 0.11)',
         // backgroundColor: 'rgba(247, 168, 0, 0.20'
         // backgroundColor: 'rgba(255, 255, 255, 0.10)', // white transparent
       }, {
@@ -221,20 +223,20 @@ const LineChart = (props) => {
         yScaleID: 'y-axis-0',
         yMin: 50,
         yMax: 90,
-        borderColor: 'rgba(247, 168, 0, 0.05)',
-        borderWidth: 0.5,
-        backgroundColor: 'rgba(247, 168, 0, 0.05', // 'rgba(255, 255, 0, 0.05)',
+        // borderColor: 'rgba(250, 5, 8, 0.45)',
+        borderWidth: 1,
+        backgroundColor: 'rgba(247, 168, 0, 0.03', // 'rgba(255, 255, 0, 0.05)',
         // backgroundColor: 'rgba(255, 255, 255, 0.10)',
-        // borderColor: 'rgba(255, 255, 255, 0.10)',
+        borderColor: 'rgba(255, 255, 255, 0.10)',
       }, {
         type: 'box',
         drawTime: 'beforeDatasetsDraw',
         yScaleID: 'y-axis-0',
         yMin: 90,
         yMax: 100,
-        borderColor: 'rgba(7, 79, 7, 0.07)',
-        borderWidth: 0.5,
-        backgroundColor: 'rgba(7, 79, 7, 0.07)',
+        borderColor: 'rgba(7, 79, 7, 0.1)',
+        borderWidth: 1,
+        backgroundColor: 'rgba(7, 79, 7, 0.10)',
       }],
     },
   };
@@ -244,8 +246,8 @@ const LineChart = (props) => {
       <div style={styles.porcentage}>{(activeBranchData.length === 0) ? null : `${findScore(activeBranchData)}%`}</div>
       <div style={styles.weeksTerm}>{(branchDurationWeeks === -1) ? null : `${branchDurationWeeks} Weeks`}</div>
       <div style={styles.weeksTerm}>{(branchDurationDays === -1) ? null : `${branchDurationDays} Days`}</div>
-      <div style={{ top: 6, ...styles.scaleLabel }}>{(activeBranchData.length === 0) ? null : '100 %'}</div>
-      <div style={{ bottom: 0, ...styles.scaleLabel }}>{(activeBranchData.length === 0) ? null : `${(findYAxesMin(activeBranchData) - 5)} %`}</div>
+      <div style={{ top: 6, ...styles.scaleLabel }}>{(activeBranchData.length === 0 || drawerState === true) ? null : '100 %'}</div>
+      <div style={{ bottom: 0, ...styles.scaleLabel }}>{(activeBranchData.length === 0 || drawerState === true) ? null : `${(findYAxesMin(activeBranchData) - 5)} %`}</div>
       {(activeBranchData.length === 0) ? null :
         <Line
           data={parseDatatoChart(activeBranchData)}
@@ -264,6 +266,7 @@ LineChart.propTypes = {
   activeBranchData: PropTypes.array,
   branchDurationDays: PropTypes.number,
   branchDurationWeeks: PropTypes.number,
+  drawerState: PropTypes.bool,
 };
 
 
@@ -272,6 +275,7 @@ function mapStateToProps(store) {
     activeBranchData: store.branches.activeBranchData,
     branchDurationDays: store.branches.branchDurationDays,
     branchDurationWeeks: store.branches.branchDurationWeeks,
+    drawerState: store.projects.drawerIsOpen,
   };
 }
 
