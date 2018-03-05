@@ -44,7 +44,7 @@ const styles = {
     fontWeight: 'bold',
     zIndex: 0,
     userSelect: 'none',
-  }
+  },
 };
 
 // helper function

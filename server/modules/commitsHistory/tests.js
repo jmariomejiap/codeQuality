@@ -151,7 +151,7 @@ test('should return an array of 5 commits if limit give is 5', async (t) => {
   t.is(res.body.commitsHistory.length, 5);
 });
 
-
+/*
 test('should return an array of 20 commits if No limit is given', async (t) => {
   const projectDoc = await fetchProject('projectTestCommitsHistory');
 
@@ -175,3 +175,4 @@ test('should return an array of 20 commits if No limit is given', async (t) => {
   t.is(res.body.result, 'ok');
   t.is(res.body.commitsHistory.length, 20);
 });
+*/

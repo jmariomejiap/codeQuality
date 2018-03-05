@@ -3,7 +3,7 @@ import ProjectCommits from '../../models/commits';
 const validateParams = (req, res, next) => {
   const projectId = req.query.projectId;
   const branch = req.query.branch;
-  const limit = (!req.query.limit) ? 20 : parseInt(req.query.limit, 10);
+  const limit = (!req.query.limit) ? 80 : parseInt(req.query.limit, 10); // modified from 20 to 80
 
   if (!projectId || !branch || !limit) {
     return res.status(404).json({ result: 'error', error: 'missing_params' });
