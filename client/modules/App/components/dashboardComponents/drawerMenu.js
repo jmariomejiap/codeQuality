@@ -2,8 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
-import { spacing } from 'material-ui/styles';
-import { transparent } from 'material-ui/styles/colors';
+import { transparent, grey900, grey800 } from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
 import Add from 'material-ui/svg-icons/content/add';
 import Menu from 'material-ui/svg-icons/navigation/apps';
@@ -13,30 +12,45 @@ import { fetchBranches, resetBranchDuration, setNextAction, foundEmptyBranches }
 const styles = {
   logo: {
     fontSize: 20,
-    color: '#394f59',
+    color: grey900,
     fontFamily: 'Roboto Condensed',
-    lineHeight: `${spacing.desktopKeylineIncrement}px`,
-    backgroundColor: transparent,
+    // lineHeight: `${spacing.desktopKeylineIncrement}px`,
+    // backgroundColor: transparent,
     paddingLeft: 20,
     height: 63,
   },
   menuItem: {
     fontSize: 15,
     fontFamily: 'Roboto Condensed',
-    color: '#394f59',
+    color: grey900,
+    // cursor: 'none',
   },
   drawer: {
-    backgroundColor: transparent,
+    // backgroundColor: transparent,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     marginTop: 63,
   },
   list: {
     fontSize: 14,
+    paddingLeft: 25,
     fontFamily: 'Roboto Condensed',
-    color: '#394f59',
+    // color: '#394f59',
+    color: grey800,
   },
-  nestedList: {
+  listContainer: {
     maxHeight: 535,
     overflow: 'auto',
+  },
+  divPosition: {
+    display: 'inline-block',
+    height: 30
+  },
+  projectTitle: {
+    verticalAlign: 'top',
+    width: 80,
+    marginLeft: 30,
+    marginBottom: 5,
+    cursor: 'default',
   },
 };
 
@@ -80,22 +94,23 @@ const DrawerMenu = (props) => {
         overlayStyle={{ backgroundColor: transparent }}
       >
         <div style={styles.logo}>Menu</div>
-        <List>
-          <ListItem
-            primaryText="Projects"
-            primaryTogglesNestedList={true} // eslint-disable-line react/jsx-boolean-value
-            style={styles.menuItem}
-            nestedListStyle={styles.nestedList}
-            nestedItems={listOfProjects()}
-            leftIcon={<Menu color={'#394f59'} />}
-          />
+        <div >
+          <div style={{ ...styles.divPosition, marginLeft: 15 }}>
+            <Menu color={grey900} />
+          </div>
+          <div style={{ ...styles.divPosition, ...styles.projectTitle }}>
+            <p style={{ ...styles.menuItem, paddingTop: 6 }}>Projects</p>
+          </div>
+        </div>
+        <List style={styles.listContainer}>
+          {listOfProjects()}
         </List>
         <Divider />
         <div >
           <List>
             <ListItem
               primaryText="Create Project"
-              leftIcon={<Add color={'#394f59'} />}
+              leftIcon={<Add color={grey900} />}
               style={styles.menuItem}
               onClick={openCreateDialog}
             />
