@@ -1,9 +1,35 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Line } from 'react-chartjs-2';
+import { Chart, Line } from 'react-chartjs-2';
 import 'chartjs-plugin-annotation';
 import parseDatatoChart from '../../../../util/parseDataToChart';
+
+// custom plugin to draw vertical line over active tooltip
+const myLineDraw = Chart.controllers.line.prototype.draw;
+Chart.helpers.extend(Chart.controllers.line.prototype, {
+  draw(ease) {
+    myLineDraw.call(this, ease);
+
+    if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+      const activePoint = this.chart.tooltip._active[0];
+      const ctx = this.chart.ctx;
+      const x = activePoint.tooltipPosition().x;
+      const topY = this.chart.scales['y-axis-0'].top;
+      const bottomY = this.chart.scales['y-axis-0'].bottom;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.setLineDash([3, 6]);
+      ctx.moveTo(x, topY);
+      ctx.lineTo(x, bottomY);
+      ctx.strokeStyle = '#394f59';
+      ctx.stroke();
+      ctx.restore();
+    }
+  },
+});
+
 
 const styles = {
   outsideDiv: {
@@ -86,7 +112,7 @@ const LineChart = (props) => {
       },
     },
     tooltips: {
-      mode: 'index',
+      mode: 'x-axis',
       axis: 'x',
       position: 'nearest',
       intersect: false,
@@ -102,10 +128,8 @@ const LineChart = (props) => {
       custom: (tooltip) => {
         if (!tooltip.dataPoints) { return; }
 
-
         if (tooltip.dataPoints[0].yLabel < 50) {
           tooltip.backgroundColor = 'rgba(20,0,0,0.9)'; // eslint-disable-line
-          // return;
         }
 
         if (tooltip.dataPoints[0].yLabel >= 50 && tooltip.dataPoints[0].yLabel < 90) {
@@ -237,9 +261,23 @@ const LineChart = (props) => {
         borderColor: 'rgba(7, 79, 7, 0.1)',
         borderWidth: 1,
         backgroundColor: 'rgba(7, 79, 7, 0.10)',
+      }, {
+        type: 'box', // to be DETERMINE
+        drawTime: 'beforeDatasetsDraw',
+        xScaleID: 'x-axis-0',
+        yScaleID: 'y-axis-0',
+        xMin: 25,
+        yMin: 50,
+        yMax: 90,
+        // borderColor: 'rgba(250, 5, 8, 0.45)',
+        borderWidth: 1,
+        backgroundColor: 'rgba(47, 168, 0, 0.3', // 'rgba(255, 255, 0, 0.05)',
+        // backgroundColor: 'rgba(255, 255, 255, 0.10)',
+        borderColor: 'rgba(255, 255, 255, 0.10)',
       }],
     },
   };
+
 
   return (
     <div style={styles.outsideDiv} >
