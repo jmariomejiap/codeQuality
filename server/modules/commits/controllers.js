@@ -9,8 +9,10 @@ const validateParams = (req, res, next) => {
   const author = req.body.author;
   const branch = req.body.branch;
   const commitHash = req.body.commitHash;
+  const message = req.body.message;
+  const date = req.body.date;
 
-  if (!token || !commitJson || !author || !branch || !commitHash) {
+  if (!token || !commitJson || !author || !branch || !commitHash || !message || !date) {
     return res.status(404).json({ result: 'error', error: 'missing_params' });
   }
 
@@ -20,7 +22,6 @@ const validateParams = (req, res, next) => {
 
 const parseJson = (req, res, next) => {
   const coverage = req.body.commitJson;
-
   const { lines, statements, functions, branches } = coverage.total;
 
   if (!lines || !statements || !functions || !branches) {
@@ -73,13 +74,20 @@ const findBranch = async (req, res, next) => {
 
 /* istanbul ignore next */
 const createRecord = async (req, res, next) => {
+  const { lines, statements, functions, branches } = req.coverage;
+
   const commit = {
     projectId: req.projectDoc._id,
     branch: req.body.branch,
-    commitDate: new Date(),
-    testCoveragePorcentage: req.coverage,
+    commitDate: req.body.date,
+    statementsCoveragePorcentage: statements.pct,
+    functionsCoveragePorcentage: functions.pct,
+    branchesCoveragePorcentage: branches.pct,
+    linesCoveragePorcentage: lines.pct,
+    fullTestCoverage: req.coverage,
     author: req.body.author,
     gitCommitHash: req.body.commitHash,
+    message: req.body.message,
   };
 
   try {
@@ -97,11 +105,10 @@ const updateProject = async (req, res) => {
   const projectId = req.projectDoc._id;
 
   try {
-    await Project.update({ projectId }, { $set: { dateUpdated: new Date() } });
+    await Project.findOneAndUpdate({ _id: projectId }, { dateUpdated: new Date() }, { upsert: false });
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
-
   return res.status(200).json({ result: 'ok', error: '' });
 };
 

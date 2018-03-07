@@ -25,7 +25,8 @@ const getBranches = async (req, res) => {
   if (branches.length === 0) {
     return res.status(404).json({ result: 'error', error: 'invalid_value' });
   }
-  return res.status(200).json({ result: 'ok', branches });
+  const arrayBranches = branches.slice(0, 100);
+  return res.status(200).json({ result: 'ok', branches: arrayBranches });
 };
 
 export { validateToken, getBranches };

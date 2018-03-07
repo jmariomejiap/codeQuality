@@ -29,6 +29,8 @@
   "dependencies": {
     "babel-core": "6.9.1",
     "body-parser": "1.15.1",
+    "chart.js": "2.7.1",
+    "chartjs-plugin-annotation": "^0.5.7",
     "compression": "1.6.2",
     "cross-env": "1.0.8",
     "cuid": "1.3.8",
@@ -38,8 +40,11 @@
     "isomorphic-fetch": "2.2.1",
     "limax": "1.3.0",
     "lodash": "4.17.4",
+    "material-ui": "0.20.0",
+    "moment": "2.20.1",
     "mongoose": "4.4.20",
     "react": "15.1.0",
+    "react-chartjs-2": "2.7.0",
     "react-dom": "15.1.0",
     "react-helmet": "3.1.0",
     "react-intl": "2.1.2",
@@ -111,11 +116,12 @@
     "webpack-manifest-plugin": "1.0.1"
   },
   "engines": {
-    "node": ">=4"
+    "node": "8.9.1"
   },
   "ava": {
     "files": [
-      "server/**/tests*.js"
+      "server/**/tests*.js",
+      "client/**/tests*.js"
     ],
     "source": [
       "client/**/*.js",
