@@ -43,7 +43,7 @@ const styles = {
   },
   divPosition: {
     display: 'inline-block',
-    height: 30
+    height: 30,
   },
   projectTitle: {
     verticalAlign: 'top',
