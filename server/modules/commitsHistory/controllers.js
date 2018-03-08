@@ -18,11 +18,13 @@ const validateParams = (req, res, next) => {
 const findCommits = async (req, res, next) => {
   const projectId = req.query.projectId;
   const branch = req.query.branch;
+  const limit = req.limit;
+
 
   let commitsDoc;
 
   try {
-    commitsDoc = await ProjectCommits.find({ projectId, branch });
+    commitsDoc = await ProjectCommits.find({ projectId, branch }).sort({ commitDate: 'descending' }).limit(limit);
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
@@ -37,12 +39,9 @@ const findCommits = async (req, res, next) => {
 
 
 const sendHistory = (req, res) => {
-  const limit = req.limit;
-  const arrayCommits = req.commitsDoc.sort((commitA, commitB) => {
+  const commitsHistory = req.commitsDoc.sort((commitA, commitB) => {
     return new Date(commitA.commitDate) - new Date(commitB.commitDate);
   });
-
-  const commitsHistory = arrayCommits.slice(0, limit);
 
   return res.status(200).json({ result: 'ok', commitsHistory });
 };
