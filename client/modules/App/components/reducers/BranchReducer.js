@@ -8,6 +8,8 @@ import {
   NO_BRANCHES,
   RESET_BRANCH_DURATION,
   BRANCH_INPUT,
+  SUBSCRIBE_SOCKET,
+  ADD_NEW_COMMIT,
 } from '../actions/BranchActions';
 
 const initialState = {
@@ -18,11 +20,24 @@ const initialState = {
   branchDurationWeeks: -1,
   branchDurationDays: -1,
   nextAction: 'loading',
+  socket: () => {},
 };
 
 
 const branchReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SUBSCRIBE_SOCKET:
+      return {
+        ...state,
+        socket: action.socket,
+      };
+
+    case ADD_NEW_COMMIT:
+      return {
+        ...state,
+        activeBranchData: [...state.activeBranchData, action.commitData],
+      };
+
     case SET_NEXT_ACTION:
       return {
         ...state,
