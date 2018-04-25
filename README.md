@@ -4,7 +4,7 @@
 
 
 
-**Code Quality** is a platform to track and visualize testing code coverage during your entire development cycle. 
+**Code Quality** is a platform to track and visualize testing code coverage during the entire development cycle. 
 So you can easily see all changes and trends.
 
 Why tracking and visualizing your test coverage results?
