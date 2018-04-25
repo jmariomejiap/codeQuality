@@ -62,12 +62,12 @@ ___
 
 * After project is created use **projectId** as your token in your **CI/CD** environment variables.
 
-add [`CodeQualityCLI`](https://github.com/jmariomejiap/codeQualityCLI) as a dependency to the project to which you want to do codeQuality and follow its instruccions to how configure **CodeQualityCLI** to you **CI/CD**
+add [`CodeQualityCLI`](https://github.com/jmariomejiap/codeQualityCLI) as a dependency to the project to which you want to do codeQuality and follow its instructions on how to configure **CodeQualityCLI** to your **CI/CD**
 
 
-things to remember:
+Things to remember:
 
-Configure your CI/CD enviroment variable. 
+Configure your CI/CD environment variables. 
 
 ```
   CODE_QUALITY_SERVER_URL = https://<..........>/api/v1/commit
@@ -78,6 +78,6 @@ Configure your CI/CD enviroment variable.
 
 
 ## Contributing
-I welcome contributions! Please open an issues if you have any feature ideas or find any bugs. I also accept pull requests with open arms. I will go over the issues when I have time. :)
+I welcome contributions! Please open an issue if you have any feature ideas or find any bugs. I also accept pull requests with open arms. I will go over the issues when I have time. :)
 
 
