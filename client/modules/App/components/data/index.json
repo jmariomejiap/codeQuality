@@ -1,0 +1,485 @@
+[{ 
+  "_id" : "5a3e9c00a9424f4008db5bcb", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "master", 
+  "commitDate" : "2017-12-23T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+          "1" : 8, 
+          "2" : 6, 
+          "3" : 3, 
+          "56" : 6, 
+          "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 61.88, 
+        "skipped" : 0,
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Neo", 
+  "gitCommitHash" : "adefe45a", 
+  "__v" : 0
+},
+{ 
+  "_id" : "5a3e9c00a9424f4008db5bcc", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "master", 
+  "commitDate" : "2017-12-24T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+        "1" : 8, 
+        "2" : 6, 
+        "3" : 3, 
+        "56" : 6,
+        "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 69.88, 
+        "skipped" : 0, 
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Neo", 
+  "gitCommitHash" : "adefe45b", 
+  "__v" : 0
+},
+{ 
+  "_id" : "5a3e9c00a9424f4008db5bcb", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "master", 
+  "commitDate" : "2017-12-31T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+          "1" : 8, 
+          "2" : 6, 
+          "3" : 3, 
+          "56" : 6, 
+          "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 71.88, 
+        "skipped" : 0,
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Neo", 
+  "gitCommitHash" : "adefe45c", 
+  "__v" : 0
+}, { 
+  "_id" : "5a3e9c00a9424f4008db5bcb", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "develop", 
+  "commitDate" : "2017-12-29T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+          "1" : 8, 
+          "2" : 6, 
+          "3" : 3, 
+          "56" : 6, 
+          "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 71.88, 
+        "skipped" : 0,
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Morpheus", 
+  "gitCommitHash" : "adefe45a", 
+  "__v" : 0
+},
+{ 
+  "_id" : "5a3e9c00a9424f4008db5bcc", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "develop", 
+  "commitDate" : "2017-12-31T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+        "1" : 8, 
+        "2" : 6, 
+        "3" : 3, 
+        "56" : 6,
+        "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 79.88, 
+        "skipped" : 0, 
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Morpheus", 
+  "gitCommitHash" : "adefe45b", 
+  "__v" : 0
+},
+{ 
+  "_id" : "5a3e9c00a9424f4008db5bcb", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "develop", 
+  "commitDate" : "2018-01-03T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+          "1" : 8, 
+          "2" : 6, 
+          "3" : 3, 
+          "56" : 6, 
+          "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 81.88, 
+        "skipped" : 0,
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Morpheus", 
+  "gitCommitHash" : "adefe45c", 
+  "__v" : 0
+} , { 
+  "_id" : "5a3e9c00a9424f4008db5bcb", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "develop", 
+  "commitDate" : "2018-01-23T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+          "1" : 8, 
+          "2" : 6, 
+          "3" : 3, 
+          "56" : 6, 
+          "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 85.88, 
+        "skipped" : 0,
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Morpheus", 
+  "gitCommitHash" : "adefe45a", 
+  "__v" : 0
+},
+{ 
+  "_id" : "5a3e9c00a9424f4008db5bcc", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "feature1", 
+  "commitDate" : "2017-12-23T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+        "1" : 8, 
+        "2" : 6, 
+        "3" : 3, 
+        "56" : 6,
+        "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 89.88, 
+        "skipped" : 0, 
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Trinity", 
+  "gitCommitHash" : "adefe45b", 
+  "__v" : 0
+},
+{ 
+  "_id" : "5a3e9c00a9424f4008db5bcb", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "feature1", 
+  "commitDate" : "2018-01-27T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+          "1" : 8, 
+          "2" : 6, 
+          "3" : 3, 
+          "56" : 6, 
+          "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 31.88, 
+        "skipped" : 0,
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Trinity", 
+  "gitCommitHash" : "adefe45c", 
+  "__v" : 0
+},
+{ 
+  "_id" : "5a3e9c00a9424f4008db5bcb", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "feature1", 
+  "commitDate" : "2018-02-01T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+          "1" : 8, 
+          "2" : 6, 
+          "3" : 3, 
+          "56" : 6, 
+          "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 81.88, 
+        "skipped" : 0,
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Trinity", 
+  "gitCommitHash" : "adefe45c", 
+  "__v" : 0
+},
+{ 
+  "_id" : "5a3e9c00a9424f4008db5bcb", 
+  "projectId" : "5a3e9c00a9424f4008db5bc6", 
+  "branch" : "feature1", 
+  "commitDate" : "2018-02-05T18:10:08.408+0000", 
+  "testCoveragePorcentage" : {
+    "total" : {
+      "linesCovered" : {
+          "1" : 8, 
+          "2" : 6, 
+          "3" : 3, 
+          "56" : 6, 
+          "151" : 3
+      }, 
+      "branches" : {
+        "pct" : 61.83, 
+        "skipped" : 1, 
+        "covered" : 1, 
+        "total" : 2
+      }, 
+      "functions" : {
+        "pct" : 52.8, 
+        "skipped" : 0,
+        "covered" : 8, 
+        "total" : 1
+      }, 
+      "statements" : {
+        "pct" : 80.39, 
+        "skipped" : 1, 
+        "covered" : 6, 
+        "total" : 7
+      }, 
+      "lines" : {
+        "pct" : 91.88, 
+        "skipped" : 0,
+        "covered" : 3, 
+        "total" : 4
+      }
+    }
+  }, 
+  "author" : "Trinity", 
+  "gitCommitHash" : "adefe45c", 
+  "__v" : 0
+}
+
+]
+

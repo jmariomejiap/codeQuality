@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Code Quality Server and web app to visualize Test Coverage of multiple repositories",
   "scripts": {
-    "test": "cross-env NODE_ENV=test PORT=8080 MONGO_URL=mongodb://localhost:27017/mern-test node_modules/.bin/nyc node node_modules/.bin/ava",
+    "test": "cross-env NODE_ENV=test PORT=8080 MONGO_URL=mongodb://localhost:27017/codeQuality-test node node_modules/.bin/ava --serial -v",
     "watch:test": "npm run test -- --watch",
     "cover": "nyc npm run test",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
@@ -24,11 +24,13 @@
     "type": "git",
     "url": "git@gitlab.com:mejiasgroup/codeQualityServer.git"
   },
-  "author": "Prashant Abhishek <prashant.abhishek7g@gmail.com>, Mayank Chandola <imayankchd@gmail.com>, Sandeep Panda <sandeep@hashnode.com>, Syed Fazle Rahman <fazle@hashnode.com>, Alkshendra Maurya <alkshendra@hashnode.com>",
+  "author": "Mario Mejia <jmariomejiap@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "babel-core": "6.9.1",
     "body-parser": "1.15.1",
+    "chart.js": "2.7.1",
+    "chartjs-plugin-annotation": "0.5.7",
     "compression": "1.6.2",
     "cross-env": "1.0.8",
     "cuid": "1.3.8",
@@ -37,8 +39,12 @@
     "intl-locales-supported": "1.0.0",
     "isomorphic-fetch": "2.2.1",
     "limax": "1.3.0",
+    "lodash": "4.17.4",
+    "material-ui": "0.20.0",
+    "moment": "2.20.1",
     "mongoose": "4.4.20",
     "react": "15.1.0",
+    "react-chartjs-2": "2.7.0",
     "react-dom": "15.1.0",
     "react-helmet": "3.1.0",
     "react-intl": "2.1.2",
@@ -46,7 +52,12 @@
     "react-router": "2.4.1",
     "redux": "3.5.2",
     "redux-thunk": "2.1.0",
-    "sanitize-html": "1.11.4"
+    "sanitize-html": "1.11.4",
+    "socket.io": "2.0.4",
+    "socket.io-client": "2.0.4",
+    "supertest": "3.0.0",
+    "supertest-as-promised": "4.0.2",
+    "uuid": "3.1.0"
   },
   "devDependencies": {
     "ava": "0.15.2",
@@ -98,7 +109,6 @@
     "rimraf": "2.5.2",
     "sinon": "1.17.4",
     "style-loader": "0.13.1",
-    "supertest": "1.2.0",
     "url-loader": "0.5.7",
     "webpack": "2.1.0-beta.8",
     "webpack-dev-middleware": "1.6.1",
@@ -108,17 +118,18 @@
     "webpack-manifest-plugin": "1.0.1"
   },
   "engines": {
-    "node": ">=4"
+    "node": "8.9.1"
   },
   "ava": {
     "files": [
-      "client/**/*.spec.js",
-      "server/**/*.spec.js"
+      "server/**/tests*.js",
+      "client/**/tests*.js"
     ],
     "source": [
       "client/**/*.js",
       "server/**/*.js"
     ],
+    "concurrency": 1,
     "failFast": true,
     "babel": "inherit",
     "require": [
@@ -143,7 +154,8 @@
     "reporter": [
       "lcov",
       "text",
-      "html"
+      "html",
+      "json-summary"
     ]
   }
 }

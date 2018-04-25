@@ -3,7 +3,10 @@ import compression from 'compression';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
-import IntlWrapper from '../client/modules/Intl/IntlWrapper';
+// new for socket.io configuration
+import http from 'http';
+import socketIO from 'socket.io';
+
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -15,6 +18,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 const app = new Express();
 
 // Run Webpack dev server in development mode
+/* istanbul ignore if */
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
@@ -32,30 +36,68 @@ import Helmet from 'react-helmet';
 // Import required modules
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
-import posts from './routes/post.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
+import project from './modules/project/routes';
+import branches from './modules/branches/routes';
+import commits from './modules/commits/routes';
+import commitsHistory from './modules/commitsHistory/routes';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
 
 // MongoDB Connection
 mongoose.connect(serverConfig.mongoURL, (error) => {
+  /* istanbul ignore if */
   if (error) {
     console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
     throw error;
   }
 
   // feed some dummy data in DB.
-  dummyData();
+  /* istanbul ignore if */
+  if (process.env.NODE_ENV === 'development') {
+    dummyData();
+  }
 });
+
+
+// socket.io config
+const server = http.createServer(app);
+const io = socketIO(server);
+
+const activeSockets = { dummy: {} };
+
+app.set('socketIO', io);
+
+io.on('connection', (socket) => {
+  // console.log('a user connected', socket.id);
+  activeSockets[socket.id] = {};
+  socket.emit('message', 'my message from server');
+
+  socket.on('user current position', (data) => {
+    const { projectId, branch } = data;
+    activeSockets[socket.id] = { projectId, branch };
+  });
+
+
+  socket.on('disconnect', () => {
+    delete activeSockets[socket.id];
+  });
+});
+
+app.set('activeSockets', activeSockets);
+
 
 // Apply body Parser and server public assets and routes
 app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-app.use('/api', posts);
+app.use('/api/v1/project', project);
+app.use('/api/v1/branches', branches);
+app.use('/api/v1/commit', commits);
+app.use('/api/v1/commitshistory', commitsHistory);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
@@ -78,6 +120,7 @@ const renderFullPage = (html, initialState) => {
         ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
         <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
         <link rel="shortcut icon" href="http://res.cloudinary.com/hashnode/image/upload/v1455629445/static_imgs/mern/mern-favicon-circle-fill.png" type="image/png" />
+        <link href="https://fonts.googleapis.com/css?family=Squada+One|Roboto|Roboto+Condensed:400,700" rel="stylesheet">
       </head>
       <body>
         <div id="root">${html}</div>
@@ -105,14 +148,17 @@ const renderError = err => {
 // Server Side Rendering based on routes matched by React-router.
 app.use((req, res, next) => {
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
+    /* istanbul ignore if */
     if (err) {
       return res.status(500).end(renderError(err));
     }
 
+    /* istanbul ignore if */
     if (redirectLocation) {
       return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     }
 
+    /* istanbul ignore if */
     if (!renderProps) {
       return next();
     }
@@ -123,9 +169,7 @@ app.use((req, res, next) => {
       .then(() => {
         const initialView = renderToString(
           <Provider store={store}>
-            <IntlWrapper>
-              <RouterContext {...renderProps} />
-            </IntlWrapper>
+            <RouterContext {...renderProps} />
           </Provider>
         );
         const finalState = store.getState();
@@ -140,7 +184,8 @@ app.use((req, res, next) => {
 });
 
 // start app
-app.listen(serverConfig.port, (error) => {
+// app.listen(serverConfig.port, (error) => {
+server.listen(serverConfig.port, (error) => {
   if (!error) {
     console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
   }
