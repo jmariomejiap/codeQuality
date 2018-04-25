@@ -9,13 +9,13 @@ So you can easily see all changes and trends.
 
 Why tracking and visualizing your test coverage results?
 * It allows seamless cooperation between Team members.
-* Develop with confidence that your code is covered.
-* Track development progress.
+* Develop with the peace of mind that your code is covered.
+* Track the progress of your project.
 * Track all Branches in your project.
 * Clearly see every commit and its essential data.
 * takes the pain out of tracking your code coverage.
 
-**Code Quality** is an isomorphic app built using Mongo, Express, React, Material-UI, NodeJS and Socket.IO for real time updates.
+**Code Quality** is an isomorphic app built using MongoDB, Express.js, React.js, Material-UI, Node.js and Socket.IO for real time updates.
 
 
 ## Demo
