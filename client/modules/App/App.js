@@ -201,13 +201,3 @@ function mapStateToProps(store) {
 }
 
 export default connect(mapStateToProps)(App);
-
-/*
-<RefreshIndicator
-                size={100}
-                left={600}
-                top={400}
-                status={this.state.spinnerIndicator}
-                // style={style.refresh}
-              />
-              */

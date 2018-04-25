@@ -1,4 +1,4 @@
-// import _ from 'lodash';
+
 import {
   BRANCH_SELECTED,
   FETCHED_BRANCHES,

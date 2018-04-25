@@ -24,7 +24,7 @@
     "type": "git",
     "url": "git@gitlab.com:mejiasgroup/codeQualityServer.git"
   },
-  "author": "Prashant Abhishek <prashant.abhishek7g@gmail.com>, Mayank Chandola <imayankchd@gmail.com>, Sandeep Panda <sandeep@hashnode.com>, Syed Fazle Rahman <fazle@hashnode.com>, Alkshendra Maurya <alkshendra@hashnode.com>",
+  "author": "Mario Mejia <jmariomejiap@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "babel-core": "6.9.1",
