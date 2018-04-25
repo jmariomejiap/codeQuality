@@ -3,6 +3,9 @@ import compression from 'compression';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
+// new for socket.io configuration
+import http from 'http';
+import socketIO from 'socket.io';
 
 
 // Webpack Requirements
@@ -15,6 +18,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 const app = new Express();
 
 // Run Webpack dev server in development mode
+/* istanbul ignore if */
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
@@ -44,6 +48,7 @@ mongoose.Promise = global.Promise;
 
 // MongoDB Connection
 mongoose.connect(serverConfig.mongoURL, (error) => {
+  /* istanbul ignore if */
   if (error) {
     console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
     throw error;
@@ -51,10 +56,38 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
 
   // feed some dummy data in DB.
   /* istanbul ignore if */
-  // if (process.env.NODE_ENV === 'development') {
-  dummyData();
-  // }
+  if (process.env.NODE_ENV === 'development') {
+    dummyData();
+  }
 });
+
+
+// socket.io config
+const server = http.createServer(app);
+const io = socketIO(server);
+
+const activeSockets = { dummy: {} };
+
+app.set('socketIO', io);
+
+io.on('connection', (socket) => {
+  // console.log('a user connected', socket.id);
+  activeSockets[socket.id] = {};
+  socket.emit('message', 'my message from server');
+
+  socket.on('user current position', (data) => {
+    const { projectId, branch } = data;
+    activeSockets[socket.id] = { projectId, branch };
+  });
+
+
+  socket.on('disconnect', () => {
+    delete activeSockets[socket.id];
+  });
+});
+
+app.set('activeSockets', activeSockets);
+
 
 // Apply body Parser and server public assets and routes
 app.use(compression());
@@ -115,14 +148,17 @@ const renderError = err => {
 // Server Side Rendering based on routes matched by React-router.
 app.use((req, res, next) => {
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
+    /* istanbul ignore if */
     if (err) {
       return res.status(500).end(renderError(err));
     }
 
+    /* istanbul ignore if */
     if (redirectLocation) {
       return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     }
 
+    /* istanbul ignore if */
     if (!renderProps) {
       return next();
     }
@@ -148,7 +184,8 @@ app.use((req, res, next) => {
 });
 
 // start app
-app.listen(serverConfig.port, (error) => {
+// app.listen(serverConfig.port, (error) => {
+server.listen(serverConfig.port, (error) => {
   if (!error) {
     console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
   }

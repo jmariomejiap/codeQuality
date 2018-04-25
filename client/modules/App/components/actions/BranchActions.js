@@ -9,6 +9,24 @@ export const SET_NEXT_ACTION = 'SET_NEXT_ACTION';
 export const NO_BRANCHES = 'NO_BRANCHES';
 export const RESET_BRANCH_DURATION = 'RESET_BRANCH_DURATION';
 export const BRANCH_INPUT = 'BRANCH_INPUT';
+export const SUBSCRIBE_SOCKET = 'SUBSCRIBE_SOCKET';
+export const ADD_NEW_COMMIT = 'ADD_NEW_COMMIT';
+
+
+export function subscribeSocket(socket) {
+  return {
+    type: SUBSCRIBE_SOCKET,
+    socket,
+  };
+}
+
+
+export function addNewCommit(commitData) {
+  return {
+    type: ADD_NEW_COMMIT,
+    commitData,
+  };
+}
 
 
 export function setNextAction(instruction) {

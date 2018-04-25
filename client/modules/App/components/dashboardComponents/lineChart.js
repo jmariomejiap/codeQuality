@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import moment from 'moment';
 import { Chart, Line } from 'react-chartjs-2';
 import 'chartjs-plugin-annotation';
 import parseDatatoChart from '../../../../util/parseDataToChart';
@@ -10,7 +11,6 @@ const myLineDraw = Chart.controllers.line.prototype.draw;
 Chart.helpers.extend(Chart.controllers.line.prototype, {
   draw(ease) {
     myLineDraw.call(this, ease);
-
     if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
       const activePoint = this.chart.tooltip._active[0];
       const ctx = this.chart.ctx;
@@ -29,6 +29,37 @@ Chart.helpers.extend(Chart.controllers.line.prototype, {
     }
   },
 });
+
+
+// helper function
+const findScore = (arrayCommits) => {
+  const lastCommit = arrayCommits[arrayCommits.length - 1];
+  const score = lastCommit.statementsCoveragePorcentage;
+  return score;
+};
+
+// helper function
+const findTooltipData = (arrayCommits, positionTooltip) => {
+  const currentCommitObject = arrayCommits[positionTooltip];
+  return {
+    author: currentCommitObject.author,
+    message: currentCommitObject.message,
+  };
+};
+
+// use to dinamicly generate Y axis
+const findYAxesMin = (arrayCommits) => {
+  const sortedByScore = _.sortBy(arrayCommits, [(objA) => objA.statementsCoveragePorcentage]);
+  const min = sortedByScore[0].statementsCoveragePorcentage;
+  return min;
+};
+
+// use to determine X-axis for box coloring
+const fetchLastLabel = (arrayCommits) => {
+  const last = arrayCommits[arrayCommits.length - 1];
+  const label = moment(last.commitDate).format('MMM DD,  YYYY');
+  return label;
+};
 
 
 const styles = {
@@ -73,27 +104,6 @@ const styles = {
   },
 };
 
-// helper function
-const findScore = (arrayCommits) => {
-  const lastCommit = arrayCommits[arrayCommits.length - 1];
-  const score = lastCommit.statementsCoveragePorcentage;
-  return score;
-};
-// helper function
-const findTooltipData = (arrayCommits, positionTooltip) => {
-  const currentCommitObject = arrayCommits[positionTooltip];
-  return {
-    author: currentCommitObject.author,
-    message: currentCommitObject.message,
-  };
-};
-
-const findYAxesMin = (arrayCommits) => {
-  const sortedByScore = _.sortBy(arrayCommits, [(objA) => objA.statementsCoveragePorcentage]);
-  const min = sortedByScore[0].statementsCoveragePorcentage;
-  return min;
-};
-
 
 // main component
 const LineChart = (props) => {
@@ -121,10 +131,6 @@ const LineChart = (props) => {
       footerFontStyle: 'regular',
       footerSpacing: 6,
       bodySpacing: 16,
-      // displayColors: false,
-      // borderColor: 'rgba(55,0,0,0.8)', doesnt work
-      // titleFontSize: 14,
-      // backgroundColor: 'red',
       custom: (tooltip) => {
         if (!tooltip.dataPoints) { return; }
 
@@ -134,7 +140,6 @@ const LineChart = (props) => {
 
         if (tooltip.dataPoints[0].yLabel >= 50 && tooltip.dataPoints[0].yLabel < 90) {
           tooltip.backgroundColor = 'rgba(29, 29, 0, 0.9)';  // eslint-disable-line
-          // return;
         }
 
         if (tooltip.dataPoints[0].yLabel > 90) {
@@ -196,7 +201,7 @@ const LineChart = (props) => {
             drawBorder: false,
           },
           ticks: {
-            display: true, // 50, 50 , 70 legends
+            display: true,
             color: '#aaa',
             min: (activeBranchData.length === 0) ? 0 : (findYAxesMin(activeBranchData) - 5),
             max: 100,
@@ -205,55 +210,59 @@ const LineChart = (props) => {
             display: true,
             padding: 0,
           },
-          display: false, // grid lines
+          display: false,
         },
       ],
       xAxes: [
         {
-          /*
-          gridLines: {
-            color: '#aaa',
-            borderDash: [0, 3],
-            drawBorder: false,
-          },
-          ticks: {
-            padding: 0,
-          },
-          scaleLabel: {
-            padding: 0,
-          },
-          */
           display: false,
         },
       ],
     },
-    // background color
     annotation: {
       annotations: [{
-        type: 'box',
+        type: 'box', // low coverage area
         drawTime: 'beforeDatasetsDraw',
         yScaleID: 'y-axis-0',
         yMin: 0,
         yMax: 50,
-        borderColor: 'rgba(250, 5, 8, 0.45)',
+        borderColor: 'rgba(250, 5, 8, 0.075)',
         borderWidth: 1,
-        // backgroundColor: 'rgba(255, 85, 0, 0.11)',
-        backgroundColor: 'rgba(255, 2, 85, 0.11)',
-        // backgroundColor: 'rgba(247, 168, 0, 0.20'
-        // backgroundColor: 'rgba(255, 255, 255, 0.10)', // white transparent
+        backgroundColor: 'rgba(255, 2, 85, 0.05)',
       }, {
-        type: 'box',
+        type: 'box', // red box right side
+        drawTime: 'afterDatasetsDraw',
+        yScaleID: 'y-axis-0',
+        xScaleID: 'x-axis-0',
+        yMin: 0,
+        yMax: 50,
+        xMin: (activeBranchData.length === 0) ? 0 : fetchLastLabel(activeBranchData),
+        xMax: (activeBranchData.length === 0) ? 0 : fetchLastLabel(activeBranchData),
+        borderColor: 'rgba(250, 5, 8, 0.9)',
+        borderWidth: 15,
+        backgroundColor: 'rgba(255, 2, 85, 0.9)',
+      }, {
+        type: 'box', // medium coverage area
         drawTime: 'beforeDatasetsDraw',
         yScaleID: 'y-axis-0',
         yMin: 50,
         yMax: 90,
-        // borderColor: 'rgba(250, 5, 8, 0.45)',
         borderWidth: 1,
         backgroundColor: 'rgba(247, 168, 0, 0.03', // 'rgba(255, 255, 0, 0.05)',
-        // backgroundColor: 'rgba(255, 255, 255, 0.10)',
         borderColor: 'rgba(255, 255, 255, 0.10)',
       }, {
-        type: 'box',
+        type: 'box', // Yellow box right side
+        drawTime: 'afterDatasetsDraw',
+        yScaleID: 'y-axis-0',
+        xScaleID: 'x-axis-0',
+        yMin: 50,
+        yMax: 90,
+        xMin: (activeBranchData.length === 0) ? 0 : fetchLastLabel(activeBranchData),
+        xMax: (activeBranchData.length === 0) ? 0 : fetchLastLabel(activeBranchData),
+        borderWidth: 15,
+        borderColor: 'rgba(255, 215, 0, 0.9)',
+      }, {
+        type: 'box', // high coverage area
         drawTime: 'beforeDatasetsDraw',
         yScaleID: 'y-axis-0',
         yMin: 90,
@@ -262,19 +271,18 @@ const LineChart = (props) => {
         borderWidth: 1,
         backgroundColor: 'rgba(7, 79, 7, 0.10)',
       }, {
-        type: 'box', // to be DETERMINE
-        drawTime: 'beforeDatasetsDraw',
-        xScaleID: 'x-axis-0',
+        type: 'box', // Green box right side
+        drawTime: 'afterDatasetsDraw',
         yScaleID: 'y-axis-0',
-        xMin: 25,
-        yMin: 50,
-        yMax: 90,
-        // borderColor: 'rgba(250, 5, 8, 0.45)',
-        borderWidth: 1,
-        backgroundColor: 'rgba(47, 168, 0, 0.3', // 'rgba(255, 255, 0, 0.05)',
-        // backgroundColor: 'rgba(255, 255, 255, 0.10)',
-        borderColor: 'rgba(255, 255, 255, 0.10)',
-      }],
+        xScaleID: 'x-axis-0',
+        yMin: 90,
+        yMax: 100,
+        xMin: (activeBranchData.length === 0) ? 0 : fetchLastLabel(activeBranchData),
+        xMax: (activeBranchData.length === 0) ? 0 : fetchLastLabel(activeBranchData),
+        borderWidth: 15,
+        borderColor: 'rgba(0, 128, 0, 0.9)',
+      },
+    ],
     },
   };
 
@@ -289,7 +297,7 @@ const LineChart = (props) => {
       {(activeBranchData.length === 0) ? null :
         <Line
           data={parseDatatoChart(activeBranchData)}
-          redraw={true} // eslint-disable-line
+          // redraw={true} // eslint-disable-line removes FLICKERING.
           width={200}
           height={500}
           options={options}

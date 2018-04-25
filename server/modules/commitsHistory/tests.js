@@ -151,8 +151,8 @@ test('should return an array of 5 commits if limit give is 5', async (t) => {
   t.is(res.body.commitsHistory.length, 5);
 });
 
-/*
-test('should return an array of 20 commits if No limit is given', async (t) => {
+
+test('should return an array of max 80 commits if No limit is given', async (t) => {
   const projectDoc = await fetchProject('projectTestCommitsHistory');
 
   const temp = {
@@ -164,7 +164,7 @@ test('should return an array of 20 commits if No limit is given', async (t) => {
     gitCommitHash: 'qwsssw5a',
   };
 
-  const arrCommits = generateExamples(temp, 25);
+  const arrCommits = generateExamples(temp, 95);
 
   await ProjectCommits.create(arrCommits);
 
@@ -173,6 +173,5 @@ test('should return an array of 20 commits if No limit is given', async (t) => {
 
   t.is(res.status, 200);
   t.is(res.body.result, 'ok');
-  t.is(res.body.commitsHistory.length, 20);
+  t.is(res.body.commitsHistory.length, 80);
 });
-*/

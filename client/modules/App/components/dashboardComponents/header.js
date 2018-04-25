@@ -70,7 +70,7 @@ const styles = {
 
 // Main Component
 const Header = (props) => {
-  const { listBranches, activeProject, searchingBranchInput, drawerIsOpen, dispatch } = props;
+  const { listBranches, activeProject, searchingBranchInput, drawerIsOpen, dispatch, socket } = props;
 
   const handleDrawer = () => dispatch(controlDrawer());
 
@@ -82,6 +82,7 @@ const Header = (props) => {
     }
 
     dispatch(fetchBranchCommits(activeProject.projectId, name));
+    socket.emit('user current position', { projectId: activeProject.projectId, branch: name });
   };
 
 
@@ -142,6 +143,7 @@ Header.propTypes = {
   activeProject: PropTypes.object,
   searchingBranchInput: PropTypes.string,
   drawerIsOpen: PropTypes.bool,
+  socket: PropTypes.func,
 };
 
 
@@ -151,6 +153,7 @@ function mapStateToProps(store) {
     listBranches: store.branches.branches,
     searchingBranchInput: store.branches.searchingBranchInput,
     drawerIsOpen: store.projects.drawerIsOpen,
+    socket: store.branches.socket,
   };
 }
 
