@@ -10,7 +10,7 @@ So you can easily see all changes and trends.
 Why tracking and visualizing your test coverage results?
 * It allows seamless cooperation between Team members.
 * Develop with confidence that your code is covered.
-* There might be an entire area of your application that is no cover with your test. If you don't see it you don't know it
+* Track development progress.
 * Track all Branches in your project.
 * Clearly see every commit and its essential data.
 * takes the pain out of tracking your code coverage.
@@ -28,11 +28,10 @@ Why tracking and visualizing your test coverage results?
 
 ## Getting Started
 
-##### Installation
+#### Installation
 
 
-
-First
+Clone project.
 ```
 $ git clone https://github.com/jmariomejiap/codeQuality.git
 ```
@@ -46,6 +45,35 @@ or
 $ yarn install
 ```
 
+#### Deploy
+___
+
+Deploy **CodeQuality** to your PaaS of choice. (demo example. Heroku)
+
+Create your first project 
+
+![cqcreateproject](https://user-images.githubusercontent.com/22829270/39227592-4f655f74-480e-11e8-96a8-d5cb083b6d00.gif)
+
+
+
+
+#### Configure CI/CD
+___
+
+* After project is created use **projectId** as your token in your **CI/CD** environment variables.
+
+add [`CodeQualityCLI`](https://github.com/jmariomejiap/codeQualityCLI) as a dependency to the project to which you want to do codeQuality and follow its instruccions to how configure **CodeQualityCLI** to you **CI/CD**
+
+
+things to remember:
+
+Configure your CI/CD enviroment variable. 
+
+```
+  CODE_QUALITY_SERVER_URL = https://<..........>/api/v1/commit
+  CODE_QUALITY_TOKEN = the projectId after you created the project
+  
+```
 
 
 
