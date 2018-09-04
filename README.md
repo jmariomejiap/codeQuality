@@ -2,6 +2,8 @@
 
 # Code Quality
 
+[![Build Status](https://travis-ci.org/jmariomejiap/codeQuality.svg?branch=master)](https://travis-ci.org/jmariomejiap/codeQuality)
+
 
 
 **Code Quality** is a platform to track and visualize testing code coverage during the entire development cycle. 
