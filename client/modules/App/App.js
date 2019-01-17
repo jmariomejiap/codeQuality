@@ -1,10 +1,14 @@
 import React, { Component, PropTypes } from 'react';
+
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CircularProgress from 'material-ui/CircularProgress';
+// socket.io
+import io from 'socket.io-client';
+
 
 // components
 import Header from './components/dashboardComponents/header';
@@ -17,7 +21,7 @@ import EmptyProjectPage from './EmptyProject';
 
 // Import Actions
 import { fetchProjects, foundEmptyProjects } from './components/actions/ProjectActions';
-import { fetchBranches, fetchBranchCommits, setNextAction, searchingBranch } from './components/actions/BranchActions';
+import { fetchBranches, fetchBranchCommits, setNextAction, searchingBranch, subscribeSocket, addNewCommit } from './components/actions/BranchActions';
 
 
 const styles = {
@@ -58,8 +62,19 @@ export class App extends Component {
     };
   }
 
+
   componentDidMount() {
-    this.setState({isMounted: true, spinnerIndicator: 'mounted'}); // eslint-disable-line
+    const socketIO = io('/');
+    socketIO.on('connect', () => {
+      this.props.dispatch(subscribeSocket(socketIO));
+    });
+
+    socketIO.on('new commit', (data) => {
+      this.props.dispatch(addNewCommit(data));
+    });
+
+    this.setState({isMounted: true, spinnerIndicator: 'mounted' }); // eslint-disable-line
+
     const nextAction = this.props.nextAction;
     if (nextAction === 'loading') {
       this.props.dispatch(fetchProjects())
@@ -99,6 +114,7 @@ export class App extends Component {
           .then(() => {
             this.props.dispatch(setNextAction('complete'));
             this.props.dispatch(searchingBranch('master'));
+            this.props.socket.emit('user current position', { projectId, branch: 'master' });
           });
         return;
       }
@@ -107,6 +123,8 @@ export class App extends Component {
           .then(() => {
             this.props.dispatch(setNextAction('completeNoMaster'));
             this.props.dispatch(searchingBranch(listBranches[0]));
+
+            this.props.socket.emit('user current position', { projectId, branch: listBranches[0] });
           });
     }
   }
@@ -167,6 +185,7 @@ App.propTypes = {
   activeProject: PropTypes.object,
   noProjectsFound: PropTypes.bool,
   branches: PropTypes.array,
+  socket: PropTypes.func,
 };
 
 // Retrieve data from store and pass them over as props
@@ -177,17 +196,8 @@ function mapStateToProps(store) {
     activeProject: store.projects.activeProject,
     noProjectsFound: store.projects.noProjectsFound,
     branches: store.branches.branches,
+    socket: store.branches.socket,
   };
 }
 
 export default connect(mapStateToProps)(App);
-
-/*
-<RefreshIndicator
-                size={100}
-                left={600}
-                top={400}
-                status={this.state.spinnerIndicator}
-                // style={style.refresh}
-              />
-              */

@@ -96,6 +96,16 @@ const createRecord = async (req, res, next) => {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
 
+  const socketIO = req.app.get('socketIO');
+
+  const activeSockets = req.app.get('activeSockets');
+
+  for (const user in activeSockets) { // eslint-disable-line
+    if (activeSockets[user].projectId === req.projectDoc._id.toString() && activeSockets[user].branch === req.body.branch) {
+      socketIO.to(user).emit('new commit', commit);
+    }
+  }
+
   return next();
 };
 
@@ -109,6 +119,7 @@ const updateProject = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ result: 'error', error: 'internal_error' });
   }
+
   return res.status(200).json({ result: 'ok', error: '' });
 };
 
