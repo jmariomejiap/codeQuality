@@ -1,4 +1,4 @@
-import callApi from '../../../../util/apiCaller';
+import callApi from '../../util/apiCaller';
 
 // Export Constant
 export const DRAWER_EVENT = 'DRAWER_EVENT';
@@ -14,94 +14,85 @@ export const EMPTY_PROJECTS = 'EMPTY_PROJECTS';
 
 export function controlTokenDialog() {
   return {
-    type: TOKEN_DIALOG_EVENT,
+    type: TOKEN_DIALOG_EVENT
   };
 }
-
 
 export function controlDrawer() {
   return {
-    type: DRAWER_EVENT,
+    type: DRAWER_EVENT
   };
 }
-
 
 export function controlProjectDialog() {
   return {
-    type: PROJECT_DIALOG_EVENT,
+    type: PROJECT_DIALOG_EVENT
   };
 }
-
 
 export function selectProject(name) {
   return {
     type: PROJECT_SELECTED,
-    name,
+    name
   };
 }
-
 
 export function foundEmptyProjects() {
   return {
-    type: EMPTY_PROJECTS,
+    type: EMPTY_PROJECTS
   };
 }
-
 
 export function updateProjectList(listProjects, fullResponse) {
   return {
     type: FETCHED_PROJECTS,
     listProjects,
-    fullResponse,
+    fullResponse
   };
 }
-
 
 export function fetchProjects() {
-  return (dispatch) => {
-    return callApi('v1/project')
-      .then(res => {
-        const listProjects = res.projects;
-        if (listProjects.length === 0) {
-          return 'empty projects';
-        }
-        const listProjectNames = listProjects.map((projectObject) => projectObject.name);
-        const nameLastActiveProject = listProjectNames[0];
+  return dispatch => {
+    return callApi('v1/project').then(res => {
+      const listProjects = res.projects;
+      if (listProjects.length === 0) {
+        return 'empty projects';
+      }
+      const listProjectNames = listProjects.map(
+        projectObject => projectObject.name
+      );
+      const nameLastActiveProject = listProjectNames[0];
 
-        dispatch(updateProjectList(listProjectNames, listProjects));
-        dispatch(selectProject(nameLastActiveProject));
-        return 'ok';
-      });
+      dispatch(updateProjectList(listProjectNames, listProjects));
+      dispatch(selectProject(nameLastActiveProject));
+      return 'ok';
+    });
   };
 }
-
 
 export function receivedToken(tokenMessage) {
   return {
     type: RECEIVED_TOKEN,
-    tokenMessage,
+    tokenMessage
   };
 }
-
 
 export function updateCreateProjectInput(value) {
   return {
     type: CREATE_PROJECT_INPUT,
-    value,
+    value
   };
 }
-
 
 export function clearCreateProjectInput() {
   return {
-    type: CLEAR_PROJECT_INPUT,
+    type: CLEAR_PROJECT_INPUT
   };
 }
 
-
 export function createProjectApi(name) {
   const body = { projectName: name };
-  return (dispatch) => {
+  return dispatch => {
     return callApi('v1/project', 'post', body).then(res => {
       dispatch(receivedToken(res));
       dispatch(controlTokenDialog());
@@ -110,10 +101,9 @@ export function createProjectApi(name) {
   };
 }
 
-
 export function updateNextAction(name) {
   return {
     type: UPDATE_NEXT_ACTION,
-    name,
+    name
   };
 }

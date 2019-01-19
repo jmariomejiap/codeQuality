@@ -7,7 +7,6 @@ import path from 'path';
 import http from 'http';
 import socketIO from 'socket.io';
 
-
 // Webpack Requirements
 import webpack from 'webpack';
 import config from '../webpack.config.dev';
@@ -21,12 +20,17 @@ const app = new Express();
 /* istanbul ignore if */
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+  app.use(
+    webpackDevMiddleware(compiler, {
+      noInfo: true,
+      publicPath: config.output.publicPath
+    })
+  );
   app.use(webpackHotMiddleware(compiler));
 }
 
 // React And Redux Setup
-import { configureStore } from '../client/store';
+import { configureStore } from '../client/redux/store';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
@@ -47,20 +51,22 @@ import commitsHistory from './modules/commitsHistory/routes';
 mongoose.Promise = global.Promise;
 
 // MongoDB Connection
-mongoose.connect(serverConfig.mongoURL, (error) => {
-  /* istanbul ignore if */
-  if (error) {
-    console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
-    throw error;
-  }
+mongoose.connect(
+  serverConfig.mongoURL,
+  error => {
+    /* istanbul ignore if */
+    if (error) {
+      console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
+      throw error;
+    }
 
-  // feed some dummy data in DB.
-  /* istanbul ignore if */
-  if (process.env.NODE_ENV === 'development') {
-    dummyData();
+    // feed some dummy data in DB.
+    /* istanbul ignore if */
+    if (process.env.NODE_ENV === 'development') {
+      dummyData();
+    }
   }
-});
-
+);
 
 // socket.io config
 const server = http.createServer(app);
@@ -70,16 +76,15 @@ const activeSockets = { dummy: {} };
 
 app.set('socketIO', io);
 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   // console.log('a user connected', socket.id);
   activeSockets[socket.id] = {};
   socket.emit('message', 'my message from server');
 
-  socket.on('user current position', (data) => {
+  socket.on('user current position', data => {
     const { projectId, branch } = data;
     activeSockets[socket.id] = { projectId, branch };
   });
-
 
   socket.on('disconnect', () => {
     delete activeSockets[socket.id];
@@ -87,7 +92,6 @@ io.on('connection', (socket) => {
 });
 
 app.set('activeSockets', activeSockets);
-
 
 // Apply body Parser and server public assets and routes
 app.use(compression());
@@ -104,8 +108,11 @@ const renderFullPage = (html, initialState) => {
   const head = Helmet.rewind();
 
   // Import Manifests
-  const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
-  const chunkManifest = process.env.webpackChunkAssets && JSON.parse(process.env.webpackChunkAssets);
+  const assetsManifest =
+    process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
+  const chunkManifest =
+    process.env.webpackChunkAssets &&
+    JSON.parse(process.env.webpackChunkAssets);
 
   return `
     <!doctype html>
@@ -117,7 +124,11 @@ const renderFullPage = (html, initialState) => {
         ${head.link.toString()}
         ${head.script.toString()}
 
-        ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
+        ${
+          process.env.NODE_ENV === 'production'
+            ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />`
+            : ''
+        }
         <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
         <link rel="shortcut icon" href="http://res.cloudinary.com/hashnode/image/upload/v1455629445/static_imgs/mern/mern-favicon-circle-fill.png" type="image/png" />
         <link href="https://fonts.googleapis.com/css?family=Squada+One|Roboto|Roboto+Condensed:400,700" rel="stylesheet">
@@ -126,13 +137,24 @@ const renderFullPage = (html, initialState) => {
         <div id="root">${html}</div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
-          ${process.env.NODE_ENV === 'production' ?
-          `//<![CDATA[
+          ${
+            process.env.NODE_ENV === 'production'
+              ? `//<![CDATA[
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
-          //]]>` : ''}
+          //]]>`
+              : ''
+          }
         </script>
-        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/vendor.js'] : '/vendor.js'}'></script>
-        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/app.js'] : '/app.js'}'></script>
+        <script src='${
+          process.env.NODE_ENV === 'production'
+            ? assetsManifest['/vendor.js']
+            : '/vendor.js'
+        }'></script>
+        <script src='${
+          process.env.NODE_ENV === 'production'
+            ? assetsManifest['/app.js']
+            : '/app.js'
+        }'></script>
       </body>
     </html>
   `;
@@ -140,8 +162,13 @@ const renderFullPage = (html, initialState) => {
 
 const renderError = err => {
   const softTab = '&#32;&#32;&#32;&#32;';
-  const errTrace = process.env.NODE_ENV !== 'production' ?
-    `:<br><br><pre style="color:red">${softTab}${err.stack.replace(/\n/g, `<br>${softTab}`)}</pre>` : '';
+  const errTrace =
+    process.env.NODE_ENV !== 'production'
+      ? `:<br><br><pre style="color:red">${softTab}${err.stack.replace(
+          /\n/g,
+          `<br>${softTab}`
+        )}</pre>`
+      : '';
   return renderFullPage(`Server Error${errTrace}`, {});
 };
 
@@ -155,7 +182,10 @@ app.use((req, res, next) => {
 
     /* istanbul ignore if */
     if (redirectLocation) {
-      return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+      return res.redirect(
+        302,
+        redirectLocation.pathname + redirectLocation.search
+      );
     }
 
     /* istanbul ignore if */
@@ -179,15 +209,17 @@ app.use((req, res, next) => {
           .status(200)
           .end(renderFullPage(initialView, finalState));
       })
-      .catch((error) => next(error));
+      .catch(error => next(error));
   });
 });
 
 // start app
 // app.listen(serverConfig.port, (error) => {
-server.listen(serverConfig.port, (error) => {
+server.listen(serverConfig.port, error => {
   if (!error) {
-    console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
+    console.log(
+      `MERN is running on port: ${serverConfig.port}! Build something amazing!`
+    ); // eslint-disable-line
   }
 });
 

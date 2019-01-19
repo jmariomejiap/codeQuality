@@ -1,67 +1,72 @@
-import React, { Component, PropTypes } from 'react';
-
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import DevTools from './components/DevTools';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CircularProgress from 'material-ui/CircularProgress';
+import DevTools from './DevTools';
 // socket.io
 import io from 'socket.io-client';
 
-
 // components
-import Header from './components/dashboardComponents/header';
-import DrawerMenu from './components/dashboardComponents/drawerMenu';
-import CreateDialog from './components/dashboardComponents/createProjectDialog';
-import TokenDialog from './components/dashboardComponents/tokenDialog';
-import LineChart from './components/dashboardComponents/lineChart';
-import EmptyProjectPage from './EmptyProject';
-
+import Header from '../components/Header';
+import DrawerMenu from '../components/DrawerMenu';
+import CreateDialog from '../components/CreateProjectDialog';
+import TokenDialog from '../components/TokenDialog';
+import LineChart from '../components/LineChart';
+import EmptyProjectPage from '../components/EmptyProject';
 
 // Import Actions
-import { fetchProjects, foundEmptyProjects } from './components/actions/ProjectActions';
-import { fetchBranches, fetchBranchCommits, setNextAction, searchingBranch, subscribeSocket, addNewCommit } from './components/actions/BranchActions';
-
+import {
+  fetchProjects,
+  foundEmptyProjects
+} from '../redux/actions/ProjectActions';
+import {
+  fetchBranches,
+  fetchBranchCommits,
+  setNextAction,
+  searchingBranch,
+  subscribeSocket,
+  addNewCommit
+} from '../redux/actions/BranchActions';
 
 const styles = {
   chartStyle: {
     position: 'fixed',
     bottom: 0,
-    width: '100%',
+    width: '100%'
   },
   dashboardStyle: {
-    height: '100vh',
+    height: '100vh'
   },
   spinnerStyle: {
     position: 'absolute',
     top: '50%',
-    left: '45%',
-  },
+    left: '45%'
+  }
 };
 
 // material-ui variables.
 const muiTheme = getMuiTheme(
   {
-    palette: {},
-  }, {
+    palette: {}
+  },
+  {
     avatar: {
-      borderColor: null,
+      borderColor: null
     },
-    userAgent: 'all',
+    userAgent: 'all'
   }
 );
 
-
-export class App extends Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isMounted: false,
-      spinnerIndicator: 'loading',
+      spinnerIndicator: 'loading'
     };
   }
-
 
   componentDidMount() {
     const socketIO = io('/');
@@ -69,26 +74,24 @@ export class App extends Component {
       this.props.dispatch(subscribeSocket(socketIO));
     });
 
-    socketIO.on('new commit', (data) => {
+    socketIO.on('new commit', data => {
       this.props.dispatch(addNewCommit(data));
     });
 
-    this.setState({isMounted: true, spinnerIndicator: 'mounted' }); // eslint-disable-line
+    this.setState({ isMounted: true, spinnerIndicator: 'mounted' }); // eslint-disable-line
 
     const nextAction = this.props.nextAction;
     if (nextAction === 'loading') {
-      this.props.dispatch(fetchProjects())
-        .then((result) => {
-          if (result === 'empty projects') {
-            this.props.dispatch(setNextAction('No project available'));
-            return this.props.dispatch(foundEmptyProjects());
-          }
+      this.props.dispatch(fetchProjects()).then(result => {
+        if (result === 'empty projects') {
+          this.props.dispatch(setNextAction('No project available'));
+          return this.props.dispatch(foundEmptyProjects());
+        }
 
-          return this.props.dispatch(setNextAction('fetchBranches'));
-        });
+        return this.props.dispatch(setNextAction('fetchBranches'));
+      });
     }
   }
-
 
   componentWillReceiveProps(nextProps) {
     const { nextAction } = nextProps;
@@ -100,7 +103,8 @@ export class App extends Component {
     const listBranches = nextProps.branches;
 
     if (nextAction === 'fetchBranches') {
-      this.props.dispatch(fetchBranches(projectId))
+      this.props
+        .dispatch(fetchBranches(projectId))
         .then(() => this.props.dispatch(setNextAction('fetchCommits')));
     }
 
@@ -110,31 +114,41 @@ export class App extends Component {
         return;
       }
       if (listBranches.includes('master')) {
-        this.props.dispatch(fetchBranchCommits(projectId, 'master'))
+        this.props
+          .dispatch(fetchBranchCommits(projectId, 'master'))
           .then(() => {
             this.props.dispatch(setNextAction('complete'));
             this.props.dispatch(searchingBranch('master'));
-            this.props.socket.emit('user current position', { projectId, branch: 'master' });
+            this.props.socket.emit('user current position', {
+              projectId,
+              branch: 'master'
+            });
           });
         return;
       }
 
-      this.props.dispatch(fetchBranchCommits(projectId, listBranches[0]))
-          .then(() => {
-            this.props.dispatch(setNextAction('completeNoMaster'));
-            this.props.dispatch(searchingBranch(listBranches[0]));
+      this.props
+        .dispatch(fetchBranchCommits(projectId, listBranches[0]))
+        .then(() => {
+          this.props.dispatch(setNextAction('completeNoMaster'));
+          this.props.dispatch(searchingBranch(listBranches[0]));
 
-            this.props.socket.emit('user current position', { projectId, branch: listBranches[0] });
+          this.props.socket.emit('user current position', {
+            projectId,
+            branch: listBranches[0]
           });
+        });
     }
   }
 
   render() {
     return (
       <div style={{ backgroundColor: '#FFFFFF', height: '100vh' }}>
-        {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
+        {this.state.isMounted &&
+          !window.devToolsExtension &&
+          process.env.NODE_ENV === 'development' && <DevTools />}
         <MuiThemeProvider muiTheme={muiTheme}>
-          <div >
+          <div>
             <div>
               <Helmet
                 title="Code Quality"
@@ -143,33 +157,31 @@ export class App extends Component {
                   { charset: 'utf-8' },
                   {
                     'http-equiv': 'X-UA-Compatible',
-                    content: 'IE=edge',
+                    content: 'IE=edge'
                   },
                   {
                     name: 'viewport',
-                    content: 'width=device-width, initial-scale=1',
-                  },
+                    content: 'width=device-width, initial-scale=1'
+                  }
                 ]}
               />
             </div>
-            <div style={styles.dashboardStyle} >
+            <div style={styles.dashboardStyle}>
               <Header />
               <DrawerMenu />
               <CreateDialog />
               <TokenDialog />
-              {(this.state.spinnerIndicator === 'loading') ?
+              {this.state.spinnerIndicator === 'loading' ? (
                 <div style={styles.spinnerStyle}>
                   <CircularProgress size={100} thickness={8} />
-                </div> :
-                null
-              }
-              {(this.props.projectsName.length === 0) ?
-                null :
+                </div>
+              ) : null}
+              {this.props.projectsName.length === 0 ? null : (
                 <div style={styles.chartStyle}>
                   <LineChart />
                 </div>
-              }
-              {(this.props.noProjectsFound) ? <EmptyProjectPage /> : null}
+              )}
+              {this.props.noProjectsFound ? <EmptyProjectPage /> : null}
             </div>
           </div>
         </MuiThemeProvider>
@@ -185,7 +197,7 @@ App.propTypes = {
   activeProject: PropTypes.object,
   noProjectsFound: PropTypes.bool,
   branches: PropTypes.array,
-  socket: PropTypes.func,
+  socket: PropTypes.func
 };
 
 // Retrieve data from store and pass them over as props
@@ -196,7 +208,7 @@ function mapStateToProps(store) {
     activeProject: store.projects.activeProject,
     noProjectsFound: store.projects.noProjectsFound,
     branches: store.branches.branches,
-    socket: store.branches.socket,
+    socket: store.branches.socket
   };
 }
 

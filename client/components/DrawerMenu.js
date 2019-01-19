@@ -6,8 +6,16 @@ import { transparent, grey900, grey800 } from 'material-ui/styles/colors';
 import { List, ListItem } from 'material-ui/List';
 import Add from 'material-ui/svg-icons/content/add';
 import Menu from 'material-ui/svg-icons/navigation/apps';
-import { controlProjectDialog, selectProject } from '../actions/ProjectActions';
-import { fetchBranches, resetBranchDuration, setNextAction, foundEmptyBranches } from '../actions/BranchActions';
+import {
+  controlProjectDialog,
+  selectProject
+} from '../redux/actions/ProjectActions';
+import {
+  fetchBranches,
+  resetBranchDuration,
+  setNextAction,
+  foundEmptyBranches
+} from '../redux/actions/BranchActions';
 
 const styles = {
   logo: {
@@ -17,58 +25,64 @@ const styles = {
     // lineHeight: `${spacing.desktopKeylineIncrement}px`,
     // backgroundColor: transparent,
     paddingLeft: 20,
-    height: 63,
+    height: 63
   },
   menuItem: {
     fontSize: 15,
     fontFamily: 'Roboto Condensed',
-    color: grey900,
+    color: grey900
     // cursor: 'none',
   },
   drawer: {
     // backgroundColor: transparent,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    marginTop: 63,
+    marginTop: 63
   },
   list: {
     fontSize: 14,
     paddingLeft: 25,
     fontFamily: 'Roboto Condensed',
     // color: '#394f59',
-    color: grey800,
+    color: grey800
   },
   listContainer: {
     maxHeight: 535,
-    overflow: 'auto',
+    overflow: 'auto'
   },
   divPosition: {
     display: 'inline-block',
-    height: 30,
+    height: 30
   },
   projectTitle: {
     verticalAlign: 'top',
     width: 80,
     marginLeft: 30,
     marginBottom: 5,
-    cursor: 'default',
-  },
+    cursor: 'default'
+  }
 };
 
+const DrawerMenu = props => {
+  const {
+    drawerState,
+    projectNames,
+    projectsData,
+    activeProject,
+    dispatch
+  } = props;
 
-const DrawerMenu = (props) => {
-  const { drawerState, projectNames, projectsData, activeProject, dispatch } = props;
-
-  const findBranches = (projectName) => {
-    const project = projectsData.filter((obj) => projectName === obj.name);
-    dispatch(fetchBranches(project[0]._id))
-      .then(() => dispatch(setNextAction('fetchCommits')));
+  const findBranches = projectName => {
+    const project = projectsData.filter(obj => projectName === obj.name);
+    dispatch(fetchBranches(project[0]._id)).then(() =>
+      dispatch(setNextAction('fetchCommits'))
+    );
   };
 
   const openCreateDialog = () => {
     dispatch(controlProjectDialog());
   };
 
-  const chooseProject = (name) => {
+  const chooseProject = name => {
     if (activeProject.name === name) {
       return;
     }
@@ -79,11 +93,17 @@ const DrawerMenu = (props) => {
   };
 
   const listOfProjects = () => {
-    return projectNames.map((name) => {
-      return <ListItem key={name} style={styles.list} primaryText={name} onClick={() => chooseProject(name)} />;
+    return projectNames.map(name => {
+      return (
+        <ListItem
+          key={name}
+          style={styles.list}
+          primaryText={name}
+          onClick={() => chooseProject(name)}
+        />
+      );
     });
   };
-
 
   return (
     <div>
@@ -94,7 +114,7 @@ const DrawerMenu = (props) => {
         overlayStyle={{ backgroundColor: transparent }}
       >
         <div style={styles.logo}>Menu</div>
-        <div >
+        <div>
           <div style={{ ...styles.divPosition, marginLeft: 15 }}>
             <Menu color={grey900} />
           </div>
@@ -102,11 +122,9 @@ const DrawerMenu = (props) => {
             <p style={{ ...styles.menuItem, paddingTop: 6 }}>Projects</p>
           </div>
         </div>
-        <List style={styles.listContainer}>
-          {listOfProjects()}
-        </List>
+        <List style={styles.listContainer}>{listOfProjects()}</List>
         <Divider />
-        <div >
+        <div>
           <List>
             <ListItem
               primaryText="Create Project"
@@ -126,7 +144,7 @@ DrawerMenu.propTypes = {
   drawerState: PropTypes.bool.isRequired,
   projectNames: PropTypes.aray,
   projectsData: PropTypes.array,
-  activeProject: PropTypes.object,
+  activeProject: PropTypes.object
 };
 
 function mapStateToProps(store) {
@@ -134,7 +152,7 @@ function mapStateToProps(store) {
     drawerState: store.projects.drawerIsOpen,
     projectNames: store.projects.projectsName,
     projectsData: store.projects.projectsData,
-    activeProject: store.projects.activeProject,
+    activeProject: store.projects.activeProject
   };
 }
 
