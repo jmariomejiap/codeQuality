@@ -1,5 +1,5 @@
 import moment from 'moment';
-import callApi from '../../../../util/apiCaller';
+import callApi from '../../util/apiCaller';
 export const BRANCH_SELECTED = 'BRANCH_SELECTED';
 export const FETCHED_BRANCHES = 'FETCHED_BRANCHES';
 export const DURATION_DAYS = 'DURATION_DAYS';
@@ -12,71 +12,64 @@ export const BRANCH_INPUT = 'BRANCH_INPUT';
 export const SUBSCRIBE_SOCKET = 'SUBSCRIBE_SOCKET';
 export const ADD_NEW_COMMIT = 'ADD_NEW_COMMIT';
 
-
 export function subscribeSocket(socket) {
   return {
     type: SUBSCRIBE_SOCKET,
-    socket,
+    socket
   };
 }
-
 
 export function addNewCommit(commitData) {
   return {
     type: ADD_NEW_COMMIT,
-    commitData,
+    commitData
   };
 }
-
 
 export function setNextAction(instruction) {
   return {
     type: SET_NEXT_ACTION,
-    instruction,
+    instruction
   };
 }
-
 
 export function activateSelectedBranch(branchName, branchData) {
   return {
     type: BRANCH_SELECTED,
     branchName,
-    branchData,
+    branchData
   };
 }
-
 
 export function resetBranchDuration() {
   return {
-    type: RESET_BRANCH_DURATION,
+    type: RESET_BRANCH_DURATION
   };
 }
-
 
 export function branchDurationWeeks(weeks) {
   return {
     type: DURATION_WEEKS,
-    duration: weeks,
+    duration: weeks
   };
 }
-
 
 export function branchDurationDays(days) {
   return {
     type: DURATION_DAYS,
-    duration: days,
+    duration: days
   };
 }
 
 export function searchingBranch(input) {
   return {
     type: BRANCH_INPUT,
-    input,
+    input
   };
 }
 
 export function calculateBranchDuration(arrayCommits) {
-  return (dispatch) => {
+  return dispatch => {
     const firstCommit = arrayCommits[0].commitDate;
     const lastCommit = arrayCommits[arrayCommits.length - 1].commitDate;
     const start = moment(firstCommit);
@@ -92,48 +85,45 @@ export function calculateBranchDuration(arrayCommits) {
   };
 }
 
-
 // gets call when user clicks a specific branch.
 export function fetchBranchCommits(projectId, branchName) {
-  return (dispatch) => {
-    return callApi(`v1/commitsHistory?projectId=${projectId}&branch=${branchName}`)
-      .then(res => {
-        dispatch(activateSelectedBranch(branchName, res.commitsHistory));
+  return dispatch => {
+    return callApi(
+      `v1/commitsHistory?projectId=${projectId}&branch=${branchName}`
+    ).then(res => {
+      dispatch(activateSelectedBranch(branchName, res.commitsHistory));
 
-        dispatch(calculateBranchDuration(res.commitsHistory));
-      });
+      dispatch(calculateBranchDuration(res.commitsHistory));
+    });
   };
 }
-
 
 export function updateBranchList(listBranches) {
   return {
     type: FETCHED_BRANCHES,
-    listBranches,
+    listBranches
   };
 }
-
 
 export function foundEmptyBranches() {
   return {
-    type: NO_BRANCHES,
+    type: NO_BRANCHES
   };
 }
 
-
 // gets call when user selects a project.
-export function fetchBranches(projectId) { // eslint-disable-line
-  return (dispatch) => {
-    return callApi(`v1/branches?projectId=${projectId}`)
-      .then(res => {
-        if (res.branches) {
-          const listBranches = res.branches.map(branchObject => {
-            return branchObject.name;
-          });
-          dispatch(updateBranchList(listBranches));
-          return;
-        }
-        dispatch(foundEmptyBranches());
-      });
+export function fetchBranches(projectId) {
+  // eslint-disable-line
+  return dispatch => {
+    return callApi(`v1/branches?projectId=${projectId}`).then(res => {
+      if (res.branches) {
+        const listBranches = res.branches.map(branchObject => {
+          return branchObject.name;
+        });
+        dispatch(updateBranchList(listBranches));
+        return;
+      }
+      dispatch(foundEmptyBranches());
+    });
   };
 }

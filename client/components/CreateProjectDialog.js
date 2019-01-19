@@ -3,27 +3,25 @@ import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
-import { resetBranchDuration, foundEmptyBranches } from '../actions/BranchActions';
+import {
+  resetBranchDuration,
+  foundEmptyBranches
+} from '../redux/actions/BranchActions';
 import {
   updateCreateProjectInput,
   createProjectApi,
   controlProjectDialog,
-  clearCreateProjectInput,
-} from '../actions/ProjectActions';
+  clearCreateProjectInput
+} from '../redux/actions/ProjectActions';
 
-
-const CreateDialog = (props) => {
-  const {
-    dispatch,
-    projectDialogState,
-    nameInput,
-  } = props;
+const CreateDialog = props => {
+  const { dispatch, projectDialogState, nameInput } = props;
 
   const closeDialog = () => {
     dispatch(controlProjectDialog());
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const value = e.target.value;
     dispatch(updateCreateProjectInput(value));
   };
@@ -38,17 +36,13 @@ const CreateDialog = (props) => {
   };
 
   const actions = [
-    <FlatButton
-      label="Cancel"
-      primary="true"
-      onClick={closeDialog}
-    />,
+    <FlatButton label="Cancel" primary="true" onClick={closeDialog} />,
     <FlatButton
       label="Submit"
       primary="true"
       keyboardFocused="true"
       onClick={submitInputValue}
-    />,
+    />
   ];
 
   return (
@@ -69,18 +63,16 @@ const CreateDialog = (props) => {
   );
 };
 
-
 CreateDialog.propTypes = {
   dispatch: PropTypes.func.isRequired,
   nameInput: PropTypes.string,
-  projectDialogState: PropTypes.bool,
+  projectDialogState: PropTypes.bool
 };
-
 
 function mapStateToProps(store) {
   return {
     projectDialogState: store.projects.projectDialogIsOpen,
-    nameInput: store.projects.projectInputValue,
+    nameInput: store.projects.projectInputValue
   };
 }
 

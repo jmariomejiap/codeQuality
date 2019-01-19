@@ -2,10 +2,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { controlTokenDialog } from '../actions/ProjectActions';
+import { controlTokenDialog } from '../redux/actions/ProjectActions';
 
-
-const TokenDialog = (props) => {
+const TokenDialog = props => {
   const { dispatch, tokenDialogState, tokenData } = props;
 
   const closeTokenDialog = () => {
@@ -13,11 +12,7 @@ const TokenDialog = (props) => {
   };
 
   const actions = [
-    <FlatButton
-      label="Ok"
-      primary="true"
-      onClick={closeTokenDialog}
-    />,
+    <FlatButton label="Ok" primary="true" onClick={closeTokenDialog} />
   ];
 
   return (
@@ -30,7 +25,7 @@ const TokenDialog = (props) => {
     >
       <h5>Your project key is:</h5>
       <br />
-      <p>{(tokenData.length === 0) ? null : tokenData[0].saved.token}</p>
+      <p>{tokenData.length === 0 ? null : tokenData[0].saved.token}</p>
     </Dialog>
   );
 };
@@ -38,13 +33,13 @@ const TokenDialog = (props) => {
 TokenDialog.propTypes = {
   dispatch: PropTypes.func,
   tokenDialogState: PropTypes.bool,
-  tokenData: PropTypes.array,
+  tokenData: PropTypes.array
 };
 
 function mapStateToProps(store) {
   return {
     tokenDialogState: store.projects.tokenDialogIsOpen,
-    tokenData: store.projects.tokenData,
+    tokenData: store.projects.tokenData
   };
 }
 
