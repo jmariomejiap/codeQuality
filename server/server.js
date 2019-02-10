@@ -51,22 +51,19 @@ import commitsHistory from './modules/commitsHistory/routes';
 mongoose.Promise = global.Promise;
 
 // MongoDB Connection
-mongoose.connect(
-  serverConfig.mongoURL,
-  error => {
-    /* istanbul ignore if */
-    if (error) {
-      console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
-      throw error;
-    }
-
-    // feed some dummy data in DB.
-    /* istanbul ignore if */
-    if (process.env.NODE_ENV === 'development') {
-      dummyData();
-    }
+mongoose.connect(serverConfig.mongoURL, error => {
+  /* istanbul ignore if */
+  if (error) {
+    console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
+    throw error;
   }
-);
+
+  // feed some dummy data in DB.
+  /* istanbul ignore if */
+  if (process.env.NODE_ENV === 'development') {
+    dummyData();
+  }
+});
 
 // socket.io config
 const server = http.createServer(app);
@@ -218,7 +215,9 @@ app.use((req, res, next) => {
 server.listen(serverConfig.port, error => {
   if (!error) {
     console.log(
-      `MERN is running on port: ${serverConfig.port}! Build something amazing!`
+      `CodeQuality is running on port: ${
+        serverConfig.port
+      }! Send your code coverage!`
     ); // eslint-disable-line
   }
 });
